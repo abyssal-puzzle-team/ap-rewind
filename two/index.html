@@ -143,6 +143,30 @@
         .overlay button:hover {
             background-color: #666;
         }
+        .close-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 20px;
+            height: 20px;
+            font-size: 16px;
+            color: white;
+            cursor: pointer;
+            background: none;
+            border: 1px solid white;
+            border-radius: 3px;
+            padding: 0;
+            margin: 0;
+            line-height: 18px;
+            text-align: center;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .close-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -153,6 +177,7 @@
         <div class="image-wrapper" id="image1">
             <img src="/two/L1.png" alt="图片1" class="middle-image grayscale" onclick="toggleOverlay('image1')">
             <div class="overlay">
+                <button class="close-btn" onclick="closeOverlay('image1')">&times;</button>
                 <div class="overlay-content">
                     <p>镌刻法则:
                         •像素塔不断崩溃,两人手牵手走向最终的结局.
@@ -178,6 +203,7 @@
             <div class="image-wrapper" id="image3">
                 <img src="/two/L3.png" alt="图片3" class="side-image grayscale" onclick="toggleOverlay('image3')">
                 <div class="overlay">
+                    <button class="close-btn" onclick="closeOverlay('image3')">&times;</button>
                     <div class="overlay-content">
                         <p>镌刻法则:
                             •倾盆大雨落下,淋到雨的人们再也没有醒来.雨丝串联起来的不只是事物,更是情感.
@@ -200,6 +226,7 @@
             <div class="image-wrapper" id="image2">
                 <img src="/two/L2.png" alt="图片2" class="side-image grayscale" onclick="toggleOverlay('image2')">
                 <div class="overlay">
+                    <button class="close-btn" onclick="closeOverlay('image2')">&times;</button>
                     <div class="overlay-content">
                         <p>镌刻法则:
                             一切的开端,是如此悄无声息
@@ -227,6 +254,7 @@
         <div class="image-wrapper" id="image7">
             <img src="/two/middle.png" alt="图片7" class="middle-image grayscale" onclick="toggleOverlay('image7')">
             <div class="overlay">
+                <button class="close-btn" onclick="closeOverlay('image7')">&times;</button>
                 <div class="overlay-content">
                     <p>镌刻法则:
                         •你所仰仗的一切,都将灰飞烟灭.这一点,|绝对|无误.
@@ -260,6 +288,7 @@
             <div class="image-wrapper" id="image5">
                         <img src="/two/R1.png" alt="图片5" class="side-image grayscale" onclick="toggleOverlay('image5')">
                         <div class="overlay">
+                            <button class="close-btn" onclick="closeOverlay('image5')">&times;</button>
                             <div class="overlay-content">
                                 <p>镌刻法则:
                                         •一缕和谐的光芒,正与那音乐纷争交错的失落世界中等候着你.
@@ -292,6 +321,7 @@
                         </div><div class="image-wrapper" id="image6">
             <img src="/two/R2.png" alt="图片6" class="side-image grayscale" onclick="toggleOverlay('image6')">
             <div class="overlay">
+                <button class="close-btn" onclick="closeOverlay('image6')">&times;</button>
                 <div class="overlay-content">
                     <p>镌刻法则:
                             •棋盘上的交锋,永夜城的黎明,穿过迷宫,光与暗交织在故事的始与末.
@@ -318,6 +348,7 @@
         <div class="image-wrapper" id="image4">
             <img src="/two/R3.png" alt="图片4" class="middle-image grayscale" onclick="toggleOverlay('image4')">
             <div class="overlay">
+                <button class="close-btn" onclick="closeOverlay('image4')">&times;</button>
                 <div class="overlay-content">
                     <p>镌刻法则:
                         •往事重现,一群少女在跑道上披荆斩棘,冲向故事的彼岸.
@@ -369,10 +400,19 @@
 
             function toggleOverlay(imageId) {
                 const wrapper = document.getElementById(imageId);
+                const overlay = wrapper.querySelector('.overlay');
 
                 if (wrapper.classList.contains('unlocked') || unlockOrder[currentStep] === imageId) {
-                    wrapper.classList.toggle('active');
                     if (wrapper.classList.contains('active')) {
+                        // 关闭时使用淡出动画
+                        overlay.style.opacity = '0';
+                        overlay.style.visibility = 'hidden';
+                        wrapper.classList.remove('active');
+                    } else {
+                        // 打开时使用淡入动画
+                        wrapper.classList.add('active');
+                        overlay.style.opacity = '1';
+                        overlay.style.visibility = 'visible';
                         const input = wrapper.querySelector('input');
                         input && input.focus();
                     }
@@ -395,6 +435,9 @@
                         input.disabled = true;
                         setTimeout(() => {
                             wrapper.classList.add('unlocked');
+                            const overlay = wrapper.querySelector('.overlay');
+                            overlay.style.opacity = '0';
+                            overlay.style.visibility = 'hidden';
                             wrapper.classList.remove('active');
                             currentStep++;
                             input.disabled = false;
@@ -444,10 +487,19 @@
                 }
             }
 
+            function closeOverlay(imageId) {
+                const wrapper = document.getElementById(imageId);
+                const overlay = wrapper.querySelector('.overlay');
+                overlay.style.opacity = '0';
+                overlay.style.visibility = 'hidden';
+                wrapper.classList.remove('active');
+            }
+
             // 绑定函数到全局作用域，以便在 HTML 中调用
             window.toggleOverlay = toggleOverlay;
             window.unlockImage = unlockImage;
             window.handleKeyPress = handleKeyPress;
+            window.closeOverlay = closeOverlay;
         }
 
     </script>
