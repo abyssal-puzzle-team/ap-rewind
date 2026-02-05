@@ -151,7 +151,7 @@
 
     <div class="container">
         <div class="image-wrapper" id="image1">
-            <img src="L1.png" alt="图片1" class="middle-image grayscale" onclick="toggleOverlay('image1')">
+            <img src="/two/L1.png" alt="图片1" class="middle-image grayscale" onclick="toggleOverlay('image1')">
             <div class="overlay">
                 <div class="overlay-content">
                     <p>镌刻法则:
@@ -176,7 +176,7 @@
 
         <div class="left-group">
             <div class="image-wrapper" id="image3">
-                <img src="L3.png" alt="图片3" class="side-image grayscale" onclick="toggleOverlay('image3')">
+                <img src="/two/L3.png" alt="图片3" class="side-image grayscale" onclick="toggleOverlay('image3')">
                 <div class="overlay">
                     <div class="overlay-content">
                         <p>镌刻法则:
@@ -198,7 +198,7 @@
                 </div>
             </div>
             <div class="image-wrapper" id="image2">
-                <img src="L2.png" alt="图片2" class="side-image grayscale" onclick="toggleOverlay('image2')">
+                <img src="/two/L2.png" alt="图片2" class="side-image grayscale" onclick="toggleOverlay('image2')">
                 <div class="overlay">
                     <div class="overlay-content">
                         <p>镌刻法则:
@@ -225,7 +225,7 @@
         </div>
 
         <div class="image-wrapper" id="image7">
-            <img src="middle.png" alt="图片7" class="middle-image grayscale" onclick="toggleOverlay('image7')">
+            <img src="/two/middle.png" alt="图片7" class="middle-image grayscale" onclick="toggleOverlay('image7')">
             <div class="overlay">
                 <div class="overlay-content">
                     <p>镌刻法则:
@@ -258,7 +258,7 @@
 
         <div class="right-group">
             <div class="image-wrapper" id="image5">
-                        <img src="R1.png" alt="图片5" class="side-image grayscale" onclick="toggleOverlay('image5')">
+                        <img src="/two/R1.png" alt="图片5" class="side-image grayscale" onclick="toggleOverlay('image5')">
                         <div class="overlay">
                             <div class="overlay-content">
                                 <p>镌刻法则:
@@ -290,7 +290,7 @@
                                 </div>
                             </div>
                         </div><div class="image-wrapper" id="image6">
-            <img src="R2.png" alt="图片6" class="side-image grayscale" onclick="toggleOverlay('image6')">
+            <img src="/two/R2.png" alt="图片6" class="side-image grayscale" onclick="toggleOverlay('image6')">
             <div class="overlay">
                 <div class="overlay-content">
                     <p>镌刻法则:
@@ -316,7 +316,7 @@
         </div>
 
         <div class="image-wrapper" id="image4">
-            <img src="R3.png" alt="图片4" class="middle-image grayscale" onclick="toggleOverlay('image4')">
+            <img src="/two/R3.png" alt="图片4" class="middle-image grayscale" onclick="toggleOverlay('image4')">
             <div class="overlay">
                 <div class="overlay-content">
                     <p>镌刻法则:
@@ -346,7 +346,7 @@
     <script>
         let encryptedKeysData; 
 
-        fetch('keys.json') 
+        fetch('/two/keys.json')
             .then(response => response.json()) 
             .then(data => {
                 encryptedKeysData = data.imageKeys; 
