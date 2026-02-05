@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abyssal Puzzle 2 | Abyssal Puzzle Rewind</title>
+    <link rel="icon" href="/favicon.ico">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        input[type="text"] {
+            background-color: #222;
+            color: white;
+            border: 2px solid #444;
+            padding: 12px;
+            margin-top: 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            outline: none;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+        input[type="text"]:focus {
+            border-color: #666;
+        }
+        button {
+            padding: 12px 30px;
+            margin: 10px 0;
+            font-size: 16px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #666;
+        }
+        #final-message {
+            visibility: hidden;
+            text-align: center;
+            margin-top: 20px;
+        }
+        #final-message p {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <a href="../finalpage/index.html" target="_blank" style="position: absolute; top: 10px; right: 10px; color: #888; text-decoration: underline; font-size: 14px; z-index: 10;">Abyssal Puzzle Rewind</a>
+    <h1>真正的谱师:flowers</h1>
+    <input type="text" placeholder="输入密钥" id="final-password">
+    <button onclick="checkFinalPassword()">验证密钥</button>
+    <div id="final-message">
+        <p>恭喜你，密钥正确！</p>
+        <p>这就是解谜的结尾了，感谢你能玩到这</p>
+    </div>
+
+    <script src="newpage.js"></script>
+</body>
+</html>
