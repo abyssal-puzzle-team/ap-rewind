@@ -3,133 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abyssal Puzzle 2 | Abyssal Puzzle Rewind</title>
+    <title>Abyssal Puzzle 2 | Front Meta</title>
     <link rel="icon" href="/favicon.ico">
     <style>
         body {
             background-color: black;
-            background-size: contain;
-            background-repeat: no-repeat;
-            margin: 0;
-            height: 100vh;
-            overflow: hidden;
-        }
-        .container {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            height: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-        .left-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .right-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .image-wrapper {
-            position: relative;
-            display: inline-block;
-            z-index: 1;
-        }
-        .middle-image, .side-image {
-            width: 150px;
-            height: 150px;
-            cursor: pointer;
-            transition: filter 0.3s ease;
-            border-radius: 10px;
-        }
-        .grayscale {
-            filter: grayscale(100%) opacity(0.5);
-        }
-        .highlight {
-            border: 3px solid white;
-            border-radius: 10px;
-        }
-        .overlay {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px;
-            max-height: 500px;
-            background-color: rgba(0, 0, 0, 0.95);
             color: white;
+            font-family: sans-serif;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
             align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-            z-index: 1000;
-            visibility: hidden;
-            padding: 20px;
-            font-size: 16px;
-            line-height: 1.6;
-            text-align: center;
-            overflow: hidden;
-            border: 2px solid white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
         }
-
-        .overlay-content {
-            overflow-y: auto;
-            overflow-x: hidden;
-            width: 100%;
-            padding-right: 5px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .overlay p{
-            font-size: 16px;
-            line-height: 1.6;
-            margin: 10px 0;
-            text-align: left;
-        }
-
-        .overlay h6{
-            font-size: 14px;
-            line-height: 1.5;
-            margin: 10px 0;
-        }
-        .unlocked {
-            filter: blur(0px);
-            cursor: default;
-        }
-        .unlocked .overlay {
-            display: none;
-        }
-        .image-wrapper.active .overlay {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto;
-        }
-        .image-wrapper.active {
-            z-index: 100;
-        }
-        .overlay input {
-            width: 80%;
-            padding: 12px;
-            margin: 10px 0;
-            font-size: 16px;
-            border: 2px solid #444;
-            border-radius: 5px;
+        input[type="text"] {
             background-color: #222;
             color: white;
+            border: 2px solid #444;
+            padding: 12px;
+            margin-top: 20px;
+            font-size: 16px;
+            border-radius: 5px;
             outline: none;
+            transition: border-color 0.3s, background-color 0.3s;
         }
-        .overlay input:focus {
+        input[type="text"]:focus {
             border-color: #666;
         }
-        .overlay button {
+        button {
             padding: 12px 30px;
             margin: 10px 0;
             font-size: 16px;
@@ -140,368 +42,73 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
-        .overlay button:hover {
+        button:hover {
             background-color: #666;
         }
-        .close-btn {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 20px;
-            height: 20px;
-            font-size: 16px;
-            color: white;
-            cursor: pointer;
-            background: none;
-            border: 1px solid white;
-            border-radius: 3px;
-            padding: 0;
-            margin: 0;
-            line-height: 18px;
+        #final-message {
+            visibility: hidden;
             text-align: center;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            margin-top: 20px;
         }
-        .close-btn:hover {
-            background-color: rgba(255, 255, 255, 0.2);
+        #final-message p {
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
-    <a href="/two/finalpage/index.html" target="_blank" style="position: absolute; top: 10px; right: 10px; color: #888; text-decoration: underline; font-size: 14px; z-index: 10;">Abyssal Puzzle Rewind</a>
-    <div id="message" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); color: #ff4444; font-size: 18px; font-weight: bold; z-index: 2000; display: none; text-shadow: 0 0 5px rgba(0,0,0,0.5);"></div>
+    <a href="./finalpage/index.html" target="_blank" style="position: absolute; top: 10px; right: 10px; color: #888; text-decoration: underline; font-size: 14px; z-index: 10;">Abyssal Puzzle Rewind</a>
+    <h1>Front Meta</h1>
 
-    <div class="container">
-        <div class="image-wrapper" id="image1">
-            <img src="/two/L1.png" alt="图片1" class="middle-image grayscale" onclick="toggleOverlay('image1')">
-            <div class="overlay">
-                <button class="close-btn" onclick="closeOverlay('image1')">&times;</button>
-                <div class="overlay-content">
-                    <p>镌刻法则:
-                        •像素塔不断崩溃,两人手牵手走向最终的结局.
-                    </p>
-                    <p>(1)
-                        "neumac hignu"
-                        情杀，枪杀，早夭
-                        看那粉色宝石在月下闪烁着光芒。
-                        你是谁？
-                    </p>
-                    <p>
-                        (2)
-                        找到她所在的位置,向下走一层,进入那一层所代表的章节,寻找前往上方其他章节的隐藏入口,入口的那段旋律便为答案.
-                    </p>
-                    <h6>注：如果有单词的话首字母请大写</h6>
-                    <input type="text" placeholder="输入密钥" id="password-image1" onkeypress="handleKeyPress(event, 'image1')">
-                    <button onclick="unlockImage('image1')">解锁</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="left-group">
-            <div class="image-wrapper" id="image3">
-                <img src="/two/L3.png" alt="图片3" class="side-image grayscale" onclick="toggleOverlay('image3')">
-                <div class="overlay">
-                    <button class="close-btn" onclick="closeOverlay('image3')">&times;</button>
-                    <div class="overlay-content">
-                        <p>镌刻法则:
-                            •倾盆大雨落下,淋到雨的人们再也没有醒来.雨丝串联起来的不只是事物,更是情感.
-                        </p>
-                        <p>(1)
-                            水波般荡漾,年轮般稠密.用雨丝将线索连起,便可找到答案.
-                            •👁🌧💃👍🖱
-                            •🔎💀🖱👍✳️
-                            •👁🌧💃
-                        </p>
-                        <p>(2)
-                            Inverted World.
-                        </p>
-                        <h6>注：若有字母请大写</h6>
-                        <input type="text" placeholder="输入密钥" id="password-image3" onkeypress="handleKeyPress(event, 'image3')">
-                        <button onclick="unlockImage('image3')">解锁</button>
-                    </div>
-                </div>
-            </div>
-            <div class="image-wrapper" id="image2">
-                <img src="/two/L2.png" alt="图片2" class="side-image grayscale" onclick="toggleOverlay('image2')">
-                <div class="overlay">
-                    <button class="close-btn" onclick="closeOverlay('image2')">&times;</button>
-                    <div class="overlay-content">
-                        <p>镌刻法则:
-                            一切的开端,是如此悄无声息
-                            音轨跃动,旋律交织.缤纷音乐之旅即将启程.
-                        </p>
-                        <p>(1)
-                            •寻找到故事启程时最初的旋律,它并未枯萎,只是转化为了缩写,变成了一把钥匙.
-                            •(锁),天穹水蓝犹如静海,(乱码),像素塔历242年的尾声,一切都好似梦境.
-                            •镌刻法则暂时破碎,用那把钥匙在另一个时空打开那把锁.
-                            你便能寻找到对应的那个旋律.
-                        </p>
-                        <p>(2)
-                            •镌刻法则彻底破碎,前往另一侧的时空,找到星白去过的的另一处对应地,向右移动直至寻找到阿古亚星灾难所在地.
-                        </p>
-                        <p>(3)
-                            突破自我,找到那旋律速度的极限.
-                        </p>
-                        <input type="text" placeholder="输入密钥" id="password-image2" onkeypress="handleKeyPress(event, 'image2')">
-                        <button onclick="unlockImage('image2')">解锁</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="image-wrapper" id="image7">
-            <img src="/two/middle.png" alt="图片7" class="middle-image grayscale" onclick="toggleOverlay('image7')">
-            <div class="overlay">
-                <button class="close-btn" onclick="closeOverlay('image7')">&times;</button>
-                <div class="overlay-content">
-                    <p>镌刻法则:
-                        •你所仰仗的一切,都将灰飞烟灭.这一点,|绝对|无误.
-                    </p>
-                    <p>[旋律]Meta核心:
-                        曲师:(1)
-                        难度:(2)
-                        谱师:?
-                        音乐游戏:(3)
-                    </p>
-                    <p>(1)
-                        蝴蝶之梦,寻找破茧的回忆.
-                    </p>
-                    <p>(2)
-                        Time:古往今来,而今而后,亘古不变,时间,超乎你的想象....
-                        Answer=[Time]-20
-                    </p>
-                    <p>(3)
-                        一切旋律的瑕疵都将会被它所修复.他就是属于律动星所有人的异想之物.
-                    </p>
-                    <p>
-                        若有符号请使用英文符号，符号左右不需要空格
-                    </p>
-                    <input type="text" placeholder="输入密钥" id="password-image7" onkeypress="handleKeyPress(event, 'image7')">
-                    <button onclick="unlockImage('image7')">解锁</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="right-group">
-            <div class="image-wrapper" id="image5">
-                        <img src="/two/R1.png" alt="图片5" class="side-image grayscale" onclick="toggleOverlay('image5')">
-                        <div class="overlay">
-                            <button class="close-btn" onclick="closeOverlay('image5')">&times;</button>
-                            <div class="overlay-content">
-                                <p>镌刻法则:
-                                        •一缕和谐的光芒,正与那音乐纷争交错的失落世界中等候着你.
-                                        tsoqalvmuyc
-                                        那天,腥红色的血月升起,为这片大地笼罩上了诡异的色彩.它改变了大家,改变了世界.
-                                    </p>
-                                    <p>(1)
-                                        •花束落下,璀璨的蓝宝石闪闪发光,那是独属于她的加冕礼
-                                        •她露出了洁白的手臂,原本的些小亮光化为大量繁星,哭泣的左眼变得红润
-                                        •摘下那顶帽子,紫色的长裙在微风中摆动,故事的结局由此改写.
-                                        •六芒星是他们准确无误的和.
-                                    </p>
-                                    <p>(2)
-                                        月满之时,她们的强大到达了顶点.
-                                        "0"=48
-                                        <F S O>
-                                        •六芒星+59 g "7"
-                                        •s 六芒星+49 K
-                                        找到她们的小家.
-                                    </p>
-                                    <p>(3)
-                                        找到那个小家故事开始的那天,让悲剧不再发生,归为是与否的终止.
-                                        找到那把钥匙,时空流转,镌刻法则破碎,她所在的地方,在你的下一个目的地.找到她,念出她所站立的地方.
-                                    </p>
-                                    <h6>注：若有单词开头请大写</h6>
-                                    <input type="text" placeholder="输入密钥" id="password-image5" onkeypress="handleKeyPress(event, 'image5')">
-                                    <button onclick="unlockImage('image5')">解锁</button>
-                                </div>
-                            </div>
-                        </div><div class="image-wrapper" id="image6">
-            <img src="/two/R2.png" alt="图片6" class="side-image grayscale" onclick="toggleOverlay('image6')">
-            <div class="overlay">
-                <button class="close-btn" onclick="closeOverlay('image6')">&times;</button>
-                <div class="overlay-content">
-                    <p>镌刻法则:
-                            •棋盘上的交锋,永夜城的黎明,穿过迷宫,光与暗交织在故事的始与末.
-                        </p>
-                        <p>(1)
-                            •特殊的箱庭轮回,找到为她铺展画卷的人.带着那个人回到上一层的时空,在回忆档案馆里找到那个人的<2 16 13>.
-                            •带着那个人的(<2 16 13>+17)前往迷宫找到影子.
-                        </p>
-                        <p>(2)
-                            影子左边刻着谜题:
-                            Purple+Green-Orange=x
-                            x++
-                        </p>
-                        <p>(3)
-                            在CPx中的red里,你会找到突破时空的答案.
-                        </p>
-                        <input type="text" placeholder="输入密钥" id="password-image6" onkeypress="handleKeyPress(event, 'image6')">
-                        <button onclick="unlockImage('image6')">解锁</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="image-wrapper" id="image4">
-            <img src="/two/R3.png" alt="图片4" class="middle-image grayscale" onclick="toggleOverlay('image4')">
-            <div class="overlay">
-                <button class="close-btn" onclick="closeOverlay('image4')">&times;</button>
-                <div class="overlay-content">
-                    <p>镌刻法则:
-                        •往事重现,一群少女在跑道上披荆斩棘,冲向故事的彼岸.
-                    </p>
-                    <p>(1)
-                        她,
-                        •曲折的命运重演,黑白相间的字幕预示着命运的终结.
-                        •从拉可弥拉的序列开始衰减,直到1为尽头.
-                        •穿透时空的人声,被历史铭记.
-                    </p>
-                    <p>(2)
-                        她蒙上历史的尘埃,却有新生为他致敬
-                        •BOF:14 20
-                        找到为他致敬的新生.
-                    </p>
-                    <p>(3)
-                        •隐藏于幽冥之中的难度乍现,念出它的名字,便可破除时空障碍.
-                    </p>
-                    <input type="text" placeholder="输入密钥" id="password-image4" onkeypress="handleKeyPress(event, 'image4')">
-                    <button onclick="unlockImage('image4')">解锁</button>
-                </div>
-            </div>
-        </div>
+    <div style="max-width: 600px; margin: 0 20px 30px 20px; color: #ccc; line-height: 1.6; text-align: center; font-size: 14px;">
+        <p style="margin: 0;">(1)[adj.].asterveil.(2)</p>
+        <p style="margin: 15px 0;">(1) Find the same point.</p>
+        <p style="margin: 10px 0; text-align: left;">A.<br>•cop2024决赛终于要开始了 新饼要出现了！ 好炫的PV Xi VS 削除? wc太豪华了 Msv17? wc我一辈子 范式你是我叠😭😭😭<br>B.<br>•又到了吃饼(划掉)初见时间了 看看版本号 2.4.3? (2分钟后) 终于更新完了 phi,启动!<br>C.<br>•"v20170309"</p>
+        <p style="margin: 15px 0;">(2)<br>hold/hold*3/tap hold hold tap</p>
     </div>
 
+    <input type="text" placeholder="输入密钥" id="front-password">
+    <button onclick="checkFrontPassword()">验证密钥</button>
+    <div id="final-message">
+        <p>恭喜你，密钥正确！</p>
+        <p>前往主谜题...</p>
+    </div>
+
+    <script src="/two/newpage/newpage.js"></script>
     <script>
-        let encryptedKeysData; 
+        const FRONT_PASSWORD = 'abyssal.asterveil.top';
 
-        fetch('/two/keys.json')
-            .then(response => response.json()) 
-            .then(data => {
-                encryptedKeysData = data.imageKeys; 
-                init(); 
-            })
-            .catch(error => console.error('加载 keys.json 出错:', error)); // 错误处理
+        function checkFrontPassword() {
+            const input = document.getElementById('front-password');
+            const enteredKey = input.value;
 
-        function init() { // 初始化函数，在密钥加载完成后调用
-            const unlockOrder = ['image1', 'image2', 'image3', 'image4', 'image5', 'image6', 'image7'];
-            let currentStep = 0;
-
-            function showMessage(text) {
-                const msg = document.getElementById('message');
-                msg.textContent = text;
-                msg.style.display = 'block';
+            if (enteredKey === FRONT_PASSWORD) {
+                input.style.borderColor = '#4CAF50';
+                input.style.backgroundColor = '#1a5f20';
+                input.value = '密钥正确';
+                input.disabled = true;
                 setTimeout(() => {
-                    msg.style.display = 'none';
-                }, 2000);
+                    window.location.href = '/two/main';
+                }, 1000);
+            } else {
+                input.style.borderColor = '#f44336';
+                input.style.backgroundColor = '#5f1a1a';
+                input.value = '密钥错误';
+                setTimeout(() => {
+                    input.value = '';
+                    input.style.borderColor = '#444';
+                    input.style.backgroundColor = '#222';
+                }, 1000);
             }
-
-            function toggleOverlay(imageId) {
-                const wrapper = document.getElementById(imageId);
-                const overlay = wrapper.querySelector('.overlay');
-
-                if (wrapper.classList.contains('unlocked') || unlockOrder[currentStep] === imageId) {
-                    if (wrapper.classList.contains('active')) {
-                        // 关闭时使用淡出动画
-                        overlay.style.opacity = '0';
-                        overlay.style.visibility = 'hidden';
-                        wrapper.classList.remove('active');
-                    } else {
-                        // 打开时使用淡入动画
-                        wrapper.classList.add('active');
-                        overlay.style.opacity = '1';
-                        overlay.style.visibility = 'visible';
-                        const input = wrapper.querySelector('input');
-                        input && input.focus();
-                    }
-                } else {
-                    showMessage(`请先解锁图像：${unlockOrder[currentStep]}`);
-                }
-            }
-
-            function unlockImage(imageId) {
-                const input = document.getElementById(`password-${imageId}`);
-                const enteredKey = input.value;
-                const correctKey = encryptedKeysData[imageId]; // 从加载的 JSON 数据中获取密钥
-
-                if (imageId === unlockOrder[currentStep]) {
-                  if (enteredKey === correctKey) {
-                        const wrapper = document.getElementById(imageId);
-                        input.style.borderColor = '#4CAF50';
-                        input.style.backgroundColor = '#1a5f20';
-                        input.value = '密钥正确';
-                        input.disabled = true;
-                        setTimeout(() => {
-                            wrapper.classList.add('unlocked');
-                            const overlay = wrapper.querySelector('.overlay');
-                            overlay.style.opacity = '0';
-                            overlay.style.visibility = 'hidden';
-                            wrapper.classList.remove('active');
-                            currentStep++;
-                            input.disabled = false;
-                            input.value = '';
-                            input.style.borderColor = '#444';
-                            input.style.backgroundColor = '#222';
-                            updateImageStates();
-                            if (imageId === 'image7') {
-                                window.location.href = '/two/newpage';
-                            }
-                        }, 500);
-                    } else {
-                        input.style.borderColor = '#f44336';
-                        input.style.backgroundColor = '#5f1a1a';
-                        input.value = '密钥错误';
-                        setTimeout(() => {
-                            input.value = '';
-                            input.style.borderColor = '#444';
-                            input.style.backgroundColor = '#222';
-                        }, 1000);
-                    }
-                }
-            }
-
-            function updateImageStates() {
-                unlockOrder.forEach((imageId, index) => {
-                    const imageWrapper = document.getElementById(imageId);
-                    const image = imageWrapper.querySelector('img');
-                    if (index < currentStep) {
-                        image.classList.remove('grayscale');
-                        image.classList.remove('highlight');
-                    } else if (index === currentStep) {
-                        image.classList.add('grayscale');
-                        image.classList.add('highlight');
-                    } else {
-                        image.classList.add('grayscale');
-                        image.classList.remove('highlight');
-                    }
-                });
-            }
-
-            updateImageStates();
-
-            function handleKeyPress(event, imageId) {
-                if (event.key === 'Enter') {
-                    unlockImage(imageId);
-                }
-            }
-
-            function closeOverlay(imageId) {
-                const wrapper = document.getElementById(imageId);
-                const overlay = wrapper.querySelector('.overlay');
-                overlay.style.opacity = '0';
-                overlay.style.visibility = 'hidden';
-                wrapper.classList.remove('active');
-            }
-
-            // 绑定函数到全局作用域，以便在 HTML 中调用
-            window.toggleOverlay = toggleOverlay;
-            window.unlockImage = unlockImage;
-            window.handleKeyPress = handleKeyPress;
-            window.closeOverlay = closeOverlay;
         }
 
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('front-password');
+            input.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    checkFrontPassword();
+                }
+            });
+        });
     </script>
 </body>
 </html>
