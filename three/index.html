@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Abyssal Puzzle 3 | Abyssal Puzzle Rewind</title>
-    <link rel="stylesheet" href="./common.css">
+    <link rel="stylesheet" href="/three/common.css">
     <style>
         /* --- 基础和布局样式 --- */
         body {
@@ -18,7 +18,7 @@
             align-items: center;            /* 垂直居中 */
             min-height: 100vh;              /* 最小高度为视口高度 */
             /* 添加背景图片 */
-            background-image: url('./img/background.jpeg');
+            background-image: url('/three/img/background.jpeg');
             background-size: cover;         /* 图片覆盖整个背景区域 */
             background-repeat: no-repeat;   /* 图片不重复 */
             background-attachment: fixed;   /* 背景图片固定，不随滚动条滚动 */
@@ -209,10 +209,10 @@
 </head>
 <body>
     <div id="message" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); color: #fff; font-size: 18px; font-weight: bold; z-index: 2000; display: none; text-shadow: 0 0 5px rgba(0,0,0,0.5);"></div>
-    <a href="./analysis" target="_blank" style="position: absolute; top: 10px; right: 10px; color: #6cf; text-decoration: underline; font-size: 14px; z-index: 10;">Abyssal Puzzle Rewind</a>
+    <a href="/three/analysis" target="_blank" style="position: absolute; top: 10px; right: 10px; color: #6cf; text-decoration: underline; font-size: 14px; z-index: 10;">Abyssal Puzzle Rewind</a>
     <!-- === 背景音乐标签 === -->
     <audio id="backgroundAudio" loop> <!-- 移除 autoplay，由 JS 控制 -->
-        <source src="./mp3/main.mp3" type="audio/mpeg">
+        <source src="/three/mp3/main.mp3" type="audio/mpeg">
         您的浏览器不支持音频元素。
     </audio>
     <!-- === 音频结束 === -->
@@ -251,7 +251,7 @@
         </div>
     </div>
 
-<script src="./common.js"></script>
+<script src="/three/common.js"></script>
 <script>
     // ========== 可配置参数 ==========
     const COOLDOWN_SECONDS = 10; // 冷却时间（秒）
@@ -392,7 +392,7 @@ tip:超链接指向的视频可能起到剧情氛围与范围方向提示作用�
     ];
     const animationDuration = 1000; // 单个路径段动画时长 (毫秒)
     const fullCircleSegmentDuration = 1000; // 闭合圆环动画时长 (毫秒)
-    const NEXT_PAGE_URL = 'next'; // 点击中心节点后跳转的页面
+    const NEXT_PAGE_URL = '/three/next'; // 点击中心节点后跳转的页面
     // ========== 配置结束 ==========
 
     // --- 获取 DOM 元素 ---

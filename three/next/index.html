@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abyssal Puzzle 3 | Abyssal Puzzle Rewind</title>
     <link rel="icon" href="/favicon.ico">
-    <link rel="stylesheet" href="../common.css">
+    <link rel="stylesheet" href="/three/common.css">
     <style>
         /* CSS 样式部分 */
-        body { margin: 0; padding: 0; background: #121212; color: #fff; font-family: Arial, sans-serif; overflow-x: hidden; overflow-y: auto; display: flex; align-items: center; /* 改为 center 使内容垂直居中 */ min-height: 100vh; flex-direction: column; background-image: url('../img/nextground.jpeg'); background-size: cover; background-repeat: no-repeat; background-attachment: fixed; background-position: center; padding-top: 50px; padding-bottom: 50px; box-sizing: border-box; justify-content: center; /* 新增，配合 align-items: center */ }
+        body { margin: 0; padding: 0; background: #121212; color: #fff; font-family: Arial, sans-serif; overflow-x: hidden; overflow-y: auto; display: flex; align-items: center; /* 改为 center 使内容垂直居中 */ min-height: 100vh; flex-direction: column; background-image: url('/three/img/nextground.jpeg'); background-size: cover; background-repeat: no-repeat; background-attachment: fixed; background-position: center; padding-top: 50px; padding-bottom: 50px; box-sizing: border-box; justify-content: center; /* 新增，配合 align-items: center */ }
         h1 { color: white; text-align: center; margin-bottom: 30px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); width: 100%; order: -1; /* 让标题在 flex 布局中靠前 */}
 
         .main-content-wrapper { display: flex; justify-content: center; align-items: center; width: 90%; max-width: 900px; margin: 0 auto 40px auto; gap: 40px; }
@@ -74,11 +74,11 @@
     </style>
 </head>
 <body>
-    <a href="../analysis" target="_blank" style="position: absolute; top: 10px; right: 10px; color: #6cf; text-decoration: underline; font-size: 14px; z-index: 10;">Abyssal Puzzle Rewind</a>
+    <a href="/three/analysis" target="_blank" style="position: absolute; top: 10px; right: 10px; color: #6cf; text-decoration: underline; font-size: 14px; z-index: 10;">Abyssal Puzzle Rewind</a>
     <h1>META</h1>
 
     <div class="main-content-wrapper">
-        <img id="side-image" src="../img/meta.jpeg" alt="meta示意图">
+        <img id="side-image" src="/three/img/meta.jpeg" alt="meta示意图">
 
         <!-- 新增的节点布局容器 -->
         <div class="nodes-layout">
@@ -105,7 +105,7 @@
                     </div>
                 </div>
                 <!-- 其他节点保持不变 -->
-                <div class="node" data-node-id="2"><div class="node-circle">谜题B</div><div class="node-details"><button class="close-details-btn">×</button><h3>谜题B</h3><p>水天一色,空中的半径却不再围绕着圆旋转 <br> 云彩勾勒出美妙的弧线,它们移动,它们变幻. <br> rmqrbr <br><img src="../img/help.png" alt="斐波那契弧线"></p></div></div>
+                <div class="node" data-node-id="2"><div class="node-circle">谜题B</div><div class="node-details"><button class="close-details-btn">×</button><h3>谜题B</h3><p>水天一色,空中的半径却不再围绕着圆旋转 <br> 云彩勾勒出美妙的弧线,它们移动,它们变幻. <br> rmqrbr <br><img src="/three/img/help.png" alt="斐波那契弧线"></p></div></div>
                 <div class="node" data-node-id="3"><div class="node-circle">谜题C</div><div class="node-details"><button class="close-details-btn">×</button><h3>谜题C</h3><p>找到一切的开始. <br> **st eert*on <br> een n un <br> UD <br> **rtfct <br> te <br> 已开:s t e r o n u d e f c</p></div></div>
                 <div class="node" data-node-id="4"><div class="node-circle">谜题D</div><div class="node-details"><button class="close-details-btn">×</button><h3>谜题D</h3><p>也许世界上曾存在着一片乐土,后来的破面告诉原来的人们:这个世界从来都不平等,也不允许光芒存在. <br> 2LightvfrGShedwHCdrSYYvSheSwsyZ7HKwoN26Mf7YbZLexbiHXWkJpwdnqAnVTQjmuuLAyD2Ukinir2MB3Kie3ijy78AdLJjWmKNK3bnNVYL3kJJ4qrxYKdVG11m6DEEtL3wE6XbuxzuedFgGx9oUS3XSQjQmnqQBLPWzXAaMBfGFNjfkcawZRyncbBK7yEwoRGNFjctUnaDS3W5uTtoWWEdBhj6zki53hY7bnnCBdmUG1i5bGK4DQpppvgLtgZ8ddN3NDuvFSScgpecUYkyC9== <br> 找到那片乐土.</p></div></div>
             </div>
@@ -119,9 +119,9 @@
         <div class="error" id="errorMsg"></div>
     </div>
 
-    <audio id="background-music" src="../mp3/next.mp3" loop preload="auto"></audio>
+    <audio id="background-music" src="/three/mp3/next.mp3" loop preload="auto"></audio>
 
-    <script src="../common.js"></script>
+    <script src="/three/common.js"></script>
     <script>
         // ========== 可配置参数 ==========
         const COOLDOWN_SECONDS = 10; // 冷却时间（秒）
@@ -165,7 +165,7 @@
                 console.log("下一阶段密码正确！正在跳转...");
                 cooldownManager.clearCooldownState(true);
                 cooldownManager.clearCooldown(); // 清除冷却
-                window.location.href = '../final'; // 跳转到图片
+                window.location.href = '/three/final'; // 跳转到图片
             } else {
                 // 密码错误
                 console.log("密码错误！");
