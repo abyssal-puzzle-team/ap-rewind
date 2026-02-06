@@ -17,7 +17,7 @@ function checkFinalPassword() {
         input.value = '密钥正确';
         input.disabled = true;
         setTimeout(() => {
-            window.location.href = '../finalpage';
+            window.location.href = '/two/finalpage';
         }, 1000);
     } else {
         input.style.borderColor = '#f44336';

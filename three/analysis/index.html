@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abyssal Puzzle 3 | Abyssal Puzzle Rewind</title>
+    <link rel="icon" href="/favicon.ico">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: sans-serif;
+            padding: 40px 20px;
+            margin: 0;
+            min-height: 100vh;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 48px;
+            margin: 0 0 10px 0;
+            letter-spacing: 2px;
+            color: #6cf;
+        }
+        .header h2 {
+            font-size: 24px;
+            margin: 0;
+            color: #888;
+            font-weight: normal;
+        }
+        .solutions-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        .solution-box {
+            background-color: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 12px;
+            padding: 20px;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .solution-box:hover {
+            border-color: #6cf;
+            transform: translateY(-2px);
+        }
+        .solution-box h3 {
+            margin: 0 0 15px 0;
+            font-size: 20px;
+            color: #6cf;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+        .solution-box .answer {
+            margin: 10px 0;
+            color: #4caf50;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .solution-box p {
+            margin: 10px 0;
+            color: #888;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .section-title {
+            grid-column: 1 / -1;
+            font-size: 28px;
+            color: #fff;
+            margin: 20px 0 10px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #6cf;
+        }
+        .footer {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .footer a {
+            padding: 10px 25px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .footer a:hover {
+            background-color: #555;
+        }
+        @media (max-width: 768px) {
+            .solutions-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Abyssal Puzzle 3</h1>
+        <h2>谜题解析</h2>
+    </div>
+
+    <div class="solutions-container">
+        <div class="section-title">主谜题</div>
+        
+        <div class="solution-box">
+            <h3>谜题1</h3>
+            <p>1.摩斯电码-----/-..-/....-/.....转换0x45，ascii转换成e<br>
+2.摩斯电码翻译为-..-/-..../-----/-....-/-..-/...--/-----，翻译成x60-x30，向前一步倒推就是向后移一位，w59x-w29。颠倒世界意味着颠倒，及92w-96w。获得的评级对应phigros（塔）即为s<br>
+3.诗歌暗示光速<br>
+综合起来得出c这个答案<br>
+综合三个谜题得出ESC<br>
+(天文台PV渲染剧情氛围,光速神授说PV提示答案)
+</p>
+        </div>
+
+        <div class="solution-box">
+            <h3>谜题2</h3>
+            <p>第一行提示年份2023，VII=7<br>
+鹖鴠X表示不鸣叫 老虎面对面两只表示交配求偶 荔挺⬆️表示生长.<br>
+鹖鴠出 虎始交 荔挺出 为大雪节气三候，体现了2023年的12月7日，加上七天为2023年的12月14日，像素塔象征着Phigros，0.33体现了视频对应的时间，Phigros在2023年12月14日于B站官方发布了中二联动的预览视频，0:33处是领土战争预览视频中形似魔方的一个画面，提示了要从魔方的角度考虑；下文为与魔方有关的秘文，做n次魔方公式可以回归原来，上面做六次，下面做四次，n=4*6=24，因为25=z，所以24=y，故答案为y<br>
+(Phigros界面曲目PV提示解密运用知识范围)
+</p>
+        </div>
+
+        <div class="solution-box">
+            <h3>谜题3</h3>
+            <p>三地的时差换算为北京时间为交错解码活动开启时间，六种颜色即为六个勋章，第四种为蓝色，WIFI密码指明范式主线中RA的位置，蓝谱难度为5<br>
+(范式Aweaken in Ruins PV提示解密运用知识范围)
+</p>
+        </div>
+
+        <div class="solution-box">
+            <h3>谜题4</h3>
+            <p>ZrfZaylla凯撒移位7(July提示7)位后的SkyStreet代表了天空街区域<br>
+在code中的2首歌和末尾那一段话是代表了天空街5<br>
+括号里的提示代表了找数字5<br>
+(maimai天空街曲目PV提示解密运用知识范围)
+</p>
+        </div>
+
+        <div class="solution-box">
+            <h3>谜题5</h3>
+            <p>快速发展的历史的总和，象征着歌曲BPM的总和<br>
+Wish upon a Snow BPM:218<br>
+First Snow BPM:88<br>
+Snow White BPM:150<br>
+Testify BPM:178<br>
+苏醒文明 BPM:194<br>
+失落文明 BPM:75~210(取极值210)<br>
+总和为1038<br>
+1100001101二转十进制表示为781<br>
+1038+781=1819<br>
+地图方位上北下南左西右东，NSWE分别与四个数字相对应，体现了字母与数字的转换，所以要使用数字转字母：<br>
+数字转字母为RS<br>
+(Arcaea Testify公式PV与范式Abyssgazer PV提示解密运用知识范围)
+</p>
+        </div>
+
+        <div class="solution-box">
+            <h3>中心</h3>
+            <p>根据24节气排列并将第一位放至最后排序为小暑 小寒 大寒 立夏，按照节气序号即11 23 24 7,依据'0'=A提示转换为字母为lxyh，答案为"你猜~喵~"<br>
+(一开始的文字提示24节气的时间作用)</p>
+        </div>
+        
+                <div class="section-title">Meta谜题</div>
+
+                <img src="../img/analysis.jpg" alt="解析图片" style="max-width: 100%; margin: 20px 0; display: block; border-radius: 8px;">
+
+                <div class="solution-box">
+                    <h3>Meta 1</h3>
+            <p>3*3-5=4=d<br>
+2+2*4-5=5=e<br>
+5*4-1=19=s<br>
+3*3=9=i<br>
+7=g<br>
+5+6+7-4=14=n<br>
+1=a<br>
+4*4-2=14=n<br>
+5+5*3=20=t<br>
+注意最后的"."<br>
+答案为Designant. 
+</p>
+        </div>
+
+        <div class="solution-box">
+            <h3>Meta 2</h3>
+            <p>不平等也不允许光芒存在，意味着要删除第一行的light与最后的两个等于号,将这一行密文加入base58解码,可得圣经原文关于伊甸园的介绍,<br>
+答案为eden
+</p>
+        </div>
+
+        <div class="solution-box">
+            <h3>Meta 3</h3>
+            <p>水天一色，空中的半径不旋转象征着要将除了r以外的字符倒着看,即rwbrqr<br>
+弧线为斐波那契弧线，与移动变换共同象征着以斐波那契数列为规则进行移位<br>
+原字母	斐波那契步长	新位置计算	新字母<br>
+a (0) 1→(0+1)=1 b<br>
+i (8)	34→8 (8+8)=16	q<br>
+s (18)	4181→25	(18+25)=43→17 	r<br>
+t (19)	6765→3	(19+3)=22 	w<br>
+详解:<br>
+i 以0为开始原来是第8位 这一位斐波那契数列为34超了34mod26≡8<br>
+所以原位置8加上偏移8就是16现位置q，其余同理<br>
+答案为Stasis
+</p>
+        </div>
+
+        <div class="solution-box">
+            <h3>Meta 4</h3>
+            <p>开字母结果为:<br>
+Last Celebration<br>
+Aweaken In Ruins<br>
+MVURBD<br>
+iL-Artifact<br>
+Altale<br>
+一切的开始提示首字母<br>
+答案为LAMIA
+</p>
+        </div>
+
+        <div class="solution-box">
+            <h3>Final Meta</h3>
+            <p>将表格正确填对,根据"Number Rainbow Answer"依次填入数字(1~6)颜色(红~紫)对应的字母,得答案Aszcrm Rwzssao,凯撒移位14位后得答案Melody Dilemma
+</p>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <a href="../../">返回Abyssal Puzzle Rewind</a>
+        <button onclick="clearData()" style="padding: 10px 25px; background-color: #d32f2f; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; margin-left: 10px; transition: background-color 0.3s;">清除进度</button>
+    </div>
+    <script>
+        function clearData() {
+            localStorage.removeItem('abyssal_unlocked');
+            localStorage.removeItem('abyssal_cooldown');
+            alert("游戏进度已清除");
+        }
+    </script>
+</body>
+</html>
