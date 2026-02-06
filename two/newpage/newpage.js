@@ -1,6 +1,6 @@
 let finalKey;
 
-fetch('../keys.json')
+fetch('/two/keys.json')
     .then(response => response.json())
     .then(data => {
         finalKey = data.finalKey;
