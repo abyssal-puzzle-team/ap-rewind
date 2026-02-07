@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abyssal Puzzle 1 | Abyssal Puzzle Rewind</title>
+    <link rel="icon" href="/favicon.ico">
+    <style>
+        body {
+            background-color: black;
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin: 0;
+            min-height: 100vh;
+        }
+        .header {
+            text-align: center;
+            padding: 10px 0;
+            color: white;
+        }
+        .main-title {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        .meta-key {
+            font-size: 14px;
+            margin-top: 10px;
+            color: #aaa;
+            font-family: monospace;
+        }
+        .meta-desc {
+            font-size: 12px;
+            margin-top: 8px;
+            color: #666;
+            line-height: 1.4;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 180px;
+            padding: 10px;
+            box-sizing: border-box;
+            gap: 15px;
+        }
+        .button-wrapper {
+            display: inline-block;
+        }
+        .puzzle-button {
+            width: 150px;
+            height: 150px;
+            background-color: #333;
+            border: 2px solid #555;
+            border-radius: 10px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .puzzle-button:hover {
+            background-color: #333;
+            border-color: #666;
+            transform: scale(1.05);
+        }
+        .puzzle-button span {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .puzzle-button small {
+            font-size: 12px;
+            color: #888;
+        }
+        .image-wrapper {
+            position: relative;
+            display: inline-block;
+            z-index: 1;
+        }
+        .grayscale.highlight {
+            border: 3px solid white !important;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+        .highlight {
+            border: 3px solid white !important;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+        .unlocked .puzzle-button {
+            background-color: #1a5f20 !important;
+            border-color: #4CAF50 !important;
+        }
+        .overlay {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            max-height: 500px;
+            background-color: rgba(0, 0, 0, 0.95);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 1000;
+            visibility: hidden;
+            padding: 20px;
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: center;
+            overflow: hidden;
+            border: 2px solid white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .overlay-content {
+            overflow-y: auto;
+            overflow-x: hidden;
+            width: 100%;
+            padding-right: 5px;
+            position: relative;
+            z-index: 1;
+        }
+        .overlay p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 10px 0;
+            text-align: left;
+        }
+        .overlay h6 {
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+        .unlocked {
+            filter: blur(0px);
+            cursor: default;
+        }
+        .unlocked .overlay {
+            display: none;
+        }
+        .image-wrapper.active .overlay {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        .image-wrapper.active {
+            z-index: 100;
+        }
+        .overlay input {
+            width: 80%;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 2px solid #444;
+            border-radius: 5px;
+            background-color: #222;
+            color: white;
+            outline: none;
+        }
+        .overlay input:focus {
+            border-color: #666;
+        }
+        .overlay button {
+            padding: 12px 30px;
+            margin: 10px 0;
+            font-size: 16px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .overlay button:hover {
+            background-color: #666;
+        }
+        .close-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 20px;
+            height: 20px;
+            font-size: 16px;
+            color: white;
+            cursor: pointer;
+            background: none;
+            border: 1px solid white;
+            border-radius: 3px;
+            padding: 0;
+            margin: 0;
+            line-height: 18px;
+            text-align: center;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .close-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .bottom-section {
+            text-align: center;
+            padding: 40px 20px 40px 20px;
+        }
+        .meta-text {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            color: #aaa;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-width: 700px;
+            margin: 0 auto 20px auto;
+            text-align: left;
+            background-color: #0a0a0a;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            line-height: 1.6;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        .meta-input-container {
+            margin-top: 20px;
+        }
+        .meta-input-label {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .meta-input {
+            width: 300px;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #444;
+            border-radius: 5px;
+            background-color: #222;
+            color: white;
+            outline: none;
+        }
+        .meta-input:focus {
+            border-color: #666;
+        }
+        .meta-submit-btn {
+            padding: 12px 30px;
+            margin: 10px 0;
+            font-size: 16px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .meta-submit-btn:hover {
+            background-color: #666;
+        }
+        .footer {
+            text-align: center;
+            padding: 30px 20px 50px 20px;
+            color: #666;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <a href="/one/final" style="position: absolute; top: 10px; right: 10px; color: #888; text-decoration: underline; font-size: 14px; z-index: 10;">Abyssal Puzzle Rewind</a>
+
+    <div class="header">
+        <h1 class="main-title">Abyssal Puzzle</h1>
+        <div class="meta-key">Meta Key: 2 22(0)/__(1)/__(2)/__(3)/_(4)/___(5)</div>
+        <div class="meta-desc">"/"仅起分割作用,最终要将如上一整行合并进行最终解谜.<br>"(n)"表示各个区域的代号,每个区域各为一个关卡.</div>
+    </div>
+
+    <div id="message" style="text-align: center; color: #ff4444; font-size: 18px; font-weight: bold; margin-bottom: 10px; display: none; text-shadow: 0 0 5px rgba(0,0,0,0.5);"></div>
+
+    <div class="container">
+        <div class="image-wrapper" id="image1">
+            <button class="puzzle-button grayscale" onclick="toggleOverlay('image1')">
+                <span>(1)</span>
+                <small>A number</small>
+            </button>
+            <div class="overlay">
+                <button class="close-btn" onclick="closeOverlay('image1')">&times;</button>
+                <div class="overlay-content">
+                    <p>A number<br>
+🔄<br>
+①•2 22/fifteenSfouryoneksevenKg<br>
+②•2 22/onewQfourynineteentwn<br>
+UGhlIHNoYXJoIHllYXIgb2YgdGhlIHRud2UyCg==
+</p>
+                    <input type="text" placeholder="输入密钥" id="password-image1" onkeypress="handleKeyPress(event, 'image1')">
+                    <button onclick="unlockImage('image1')">解锁</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="image-wrapper" id="image2">
+            <button class="puzzle-button grayscale" onclick="toggleOverlay('image2')">
+                <span>(2)</span>
+                <small>A song</small>
+            </button>
+            <div class="overlay">
+                <button class="close-btn" onclick="closeOverlay('image2')">&times;</button>
+                <div class="overlay-content">
+                    <p>A song<br>
+e szaauqqxauhvp<br>
+•sanzione~202412150519<br>
+•"数年后，你是否还会记得当初踏上旅程时的心情？<br>
+"-旋转音律国服上架纪念-"<br>
+•but delete:?<br>
+a song:<br>
+Creat by:one BLACK thing of this year aka "Didn't see that coming?"<br>
+Chart by ➡️ 🌟(north⬆️)
+</p>
+                    <input type="text" placeholder="输入密钥" id="password-image2" onkeypress="handleKeyPress(event, 'image2')">
+                    <button onclick="unlockImage('image2')">解锁</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="image-wrapper" id="image3">
+            <button class="puzzle-button grayscale" onclick="toggleOverlay('image3')">
+                <span>(3)</span>
+                <small>A music game</small>
+            </button>
+            <div class="overlay">
+                <button class="close-btn" onclick="closeOverlay('image3')">&times;</button>
+                <div class="overlay-content">
+                    <p>A music game<br>
+在弧光中由你所喜爱的开始向右疾驰,越过回忆,见过永恒核心,踏过分离的世界...最终到达了终焉的彼岸,寻找到了那最终的答案.
+</p>
+                    <input type="text" placeholder="输入密钥" id="password-image3" onkeypress="handleKeyPress(event, 'image3')">
+                    <button onclick="unlockImage('image3')">解锁</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="image-wrapper" id="image4">
+            <button class="puzzle-button grayscale" onclick="toggleOverlay('image4')">
+                <span>(4)</span>
+                <small>A number</small>
+            </button>
+            <div class="overlay">
+                <button class="close-btn" onclick="closeOverlay('image4')">&times;</button>
+                <div class="overlay-content">
+                    <p>A number<br>
+an activity includes:<br>
+{<br>
+•2.0 13/2 11.1 14.9 _<br>
+•乱流に卷き込まれ •RORT -p 20:02:21<br>
+•..."风吹铃动，大自然自有其音律，苹果树下，少年们向着”外面的世界”出发。吟游诗人弹奏夜半的小曲，摩擦圆盘唤回满心的华彩。"...<br>
+•O Fortuna velut luna statu variabilis…… }
+</p>
+                    <input type="text" placeholder="输入密钥" id="password-image4" onkeypress="handleKeyPress(event, 'image4')">
+                    <button onclick="unlockImage('image4')">解锁</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="image-wrapper" id="image5">
+            <button class="puzzle-button grayscale" onclick="toggleOverlay('image5')">
+                <span>(5)</span>
+                <small>A name</small>
+            </button>
+            <div class="overlay">
+                <button class="close-btn" onclick="closeOverlay('image5')">&times;</button>
+                <div class="overlay-content">
+                    <p>Kanagawa Cyber Culvert 1<br>
+Glow 1<br>
+Purple Verse 1<br>
+Lapis 0<br>
+Give me a nightmare 0<br>
+Mazy Metroplex 1<br>
+Seclusion 1<br>
+...
+</p>
+                    <input type="text" placeholder="输入密钥" id="password-image5" onkeypress="handleKeyPress(event, 'image5')">
+                    <button onclick="unlockImage('image5')">解锁</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-section">
+        <div class="meta-text">Meta Key Extra:<br>[ASCll-32]: (5)&the end of(3)<br>Meta:<br>bWk9MQpmYT0yCnQ9Mwpyb3A9NApjaGU9NQptb3I9NgpzZWs9NwpxPTgKbmlnPTkKZmxpPTEwCmNvbmk9MTEKcHJlPTEyCmVkPTEzCmtlPTE0CmJlPTE1Cm5sbz0xNgp3cnU9MTcKZW49MTgKY29zZT0xOQpvbG09MjAKdHJlPTIxCmVtPTIyCmV3PTIzCnBvcj0yNAptaXY9MjUKLi4uCnR0PTMxMApycj0zMTEKc3M9MzEyCm5uPTMxMwpwcD0zMTQKbGw9MzE1Ci4uLgpFTkQ9MTAwMA
+</div>
+        <div class="meta-input-container">
+            <input type="text" class="meta-input" id="metaKeyInput" placeholder="输入最终的答案: 英文(有含义)" onkeypress="handleMetaKeyPress(event)">
+            <button class="meta-submit-btn" onclick="submitMetaKey()">提交</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        Finally you can find the True Meta.<br>
+        Good luck.<br>
+        Chart by<br>
+        芙兰群加密解密小组(不含芙兰) a.k.a.<br>
+        "Afternoon with CupS oF Tea/Coffee"
+    </div>
+
+    <script>
+        let encryptedKeysData;
+
+        fetch('/one/keys.json')
+            .then(response => response.json())
+            .then(data => {
+                encryptedKeysData = data.imageKeys;
+                init();
+            })
+            .catch(error => console.error('加载 keys.json 出错:', error));
+
+        function init() {
+            const unlockOrder = ['image1', 'image2', 'image3', 'image4', 'image5'];
+            let currentStep = 0;
+
+            function showMessage(text) {
+                const msg = document.getElementById('message');
+                msg.textContent = text;
+                msg.style.display = 'block';
+                setTimeout(() => {
+                    msg.style.display = 'none';
+                }, 2000);
+            }
+
+            function toggleOverlay(imageId) {
+                const wrapper = document.getElementById(imageId);
+                const overlay = wrapper.querySelector('.overlay');
+
+                if (wrapper.classList.contains('unlocked') || unlockOrder[currentStep] === imageId) {
+                    if (wrapper.classList.contains('active')) {
+                        overlay.style.opacity = '0';
+                        overlay.style.visibility = 'hidden';
+                        wrapper.classList.remove('active');
+                    } else {
+                        wrapper.classList.add('active');
+                        overlay.style.opacity = '1';
+                        overlay.style.visibility = 'visible';
+                        const input = wrapper.querySelector('input');
+                        input && input.focus();
+                    }
+                } else {
+                    const currentNum = unlockOrder[currentStep].replace('image', '');
+                    showMessage(`请先解锁关卡：(${currentNum})`);
+                }
+            }
+
+            function unlockImage(imageId) {
+                const input = document.getElementById(`password-${imageId}`);
+                const enteredKey = input.value;
+                const correctKey = encryptedKeysData[imageId];
+
+                if (imageId === unlockOrder[currentStep]) {
+                    if (enteredKey === correctKey) {
+                        const wrapper = document.getElementById(imageId);
+                        const button = wrapper.querySelector('.puzzle-button');
+                        const smallText = button.querySelector('small');
+                        input.style.borderColor = '#4CAF50';
+                        input.style.backgroundColor = '#1a5f20';
+                        input.value = '密钥正确';
+                        input.disabled = true;
+                        setTimeout(() => {
+                            wrapper.classList.add('unlocked');
+                            const overlay = wrapper.querySelector('.overlay');
+                            overlay.style.opacity = '0';
+                            overlay.style.visibility = 'hidden';
+                            wrapper.classList.remove('active');
+                            smallText.textContent = correctKey;
+                            currentStep++;
+                            input.disabled = false;
+                            input.value = '';
+                            input.style.borderColor = '#444';
+                            input.style.backgroundColor = '#222';
+                            updateImageStates();
+                        }, 500);
+                    } else {
+                        input.style.borderColor = '#f44336';
+                        input.style.backgroundColor = '#5f1a1a';
+                        input.value = '密钥错误';
+                        setTimeout(() => {
+                            input.value = '';
+                            input.style.borderColor = '#444';
+                            input.style.backgroundColor = '#222';
+                        }, 1000);
+                    }
+                }
+            }
+
+            function updateImageStates() {
+                unlockOrder.forEach((imageId, index) => {
+                    const imageWrapper = document.getElementById(imageId);
+                    const button = imageWrapper.querySelector('.puzzle-button');
+                    if (index < currentStep) {
+                        button.classList.remove('grayscale');
+                        button.classList.remove('highlight');
+                    } else if (index === currentStep) {
+                        button.classList.add('grayscale');
+                        button.classList.add('highlight');
+                    } else {
+                        button.classList.add('grayscale');
+                        button.classList.remove('highlight');
+                    }
+                });
+            }
+
+            updateImageStates();
+
+            function handleKeyPress(event, imageId) {
+                if (event.key === 'Enter') {
+                    unlockImage(imageId);
+                }
+            }
+
+            function closeOverlay(imageId) {
+                const wrapper = document.getElementById(imageId);
+                const overlay = wrapper.querySelector('.overlay');
+                overlay.style.opacity = '0';
+                overlay.style.visibility = 'hidden';
+                wrapper.classList.remove('active');
+            }
+
+            function handleMetaKeyPress(event) {
+                if (event.key === 'Enter') {
+                    submitMetaKey();
+                }
+            }
+
+            function submitMetaKey() {
+                const input = document.getElementById('metaKeyInput');
+                const enteredKey = input.value;
+                const correctKey = 'Fated Empress';
+
+                if (enteredKey === correctKey) {
+                    input.style.borderColor = '#4CAF50';
+                    input.style.backgroundColor = '#1a5f20';
+                    input.value = '密钥正确';
+                    setTimeout(() => {
+                        window.location.href = '/one/final';
+                    }, 500);
+                } else {
+                    input.style.borderColor = '#f44336';
+                    input.style.backgroundColor = '#5f1a1a';
+                    input.value = '密钥错误';
+                    setTimeout(() => {
+                        input.value = '';
+                        input.style.borderColor = '#444';
+                        input.style.backgroundColor = '#222';
+                    }, 1000);
+                }
+            }
+
+            window.toggleOverlay = toggleOverlay;
+            window.unlockImage = unlockImage;
+            window.handleKeyPress = handleKeyPress;
+            window.closeOverlay = closeOverlay;
+            window.handleMetaKeyPress = handleMetaKeyPress;
+            window.submitMetaKey = submitMetaKey;
+        }
+    </script>
+</body>
+</html>
