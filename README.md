@@ -15,4 +15,4 @@
 
 # Licenses
 
-该项目的文本内容采用[Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)发布。网页框架采用[MIT License](https://github.com/abyssal-puzzle-team/ap-rewind/blob/main/LICENSE)发布。
+该项目的文本内容采用[Creative Commons Attribution-NonCommercial 4.0 International](https://creativecommons.org/licenses/by-nc/4.0/)发布。网页框架采用[MIT License](https://github.com/abyssal-puzzle-team/ap-rewind/blob/main/LICENSE)发布。
