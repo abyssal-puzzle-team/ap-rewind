@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>谜题3</title>
+    <!-- Google Fonts: Cinzel for title, Lato for body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- Base & Reset --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            background-color: #0c142b;
+            color: #f0f8ff; /* AliceBlue */
+            font-family: 'Lato', 'Microsoft YaHei', sans-serif;
+        }
+
+        /* --- Loading Animation --- */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0c142b;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+        }
+
+        .snowflake-loader {
+            width: 50px;
+            height: 50px;
+            font-size: 50px;
+            color: #fff;
+            animation: spin 2s linear infinite, fall 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes fall {
+            0% { opacity: 1; transform: translateY(-20px) rotate(0deg); }
+            50% { opacity: 0.8; }
+            100% { opacity: 1; transform: translateY(20px) rotate(360deg); }
+        }
+
+        #loader-status-text {
+            margin-top: 20px;
+            color: #a6adc8;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            opacity: 0;
+            animation: fadeInStatus 1s forwards;
+        }
+        
+        @keyframes fadeInStatus {
+            to { opacity: 1; }
+        }
+
+        #loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* --- Particle Background --- */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        /* --- Puzzle Content --- */
+        .puzzle-container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            /* MODIFIED: Align to top for long content */
+            align-items: flex-start; 
+            height: 100vh;
+            /* MODIFIED: Add padding and allow scrolling for the whole container on small screens */
+            padding: 10vh 20px 5vh 20px;
+            overflow-y: auto;
+            opacity: 0;
+            animation: fadeInContent 2s 0.5s forwards;
+        }
+        @keyframes fadeInContent { to { opacity: 1; } }
+
+        .puzzle-box {
+            background: rgba(12, 20, 43, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 50px 40px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8rem;
+            margin-bottom: 25px;
+            letter-spacing: 5px;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+        }
+        .prompt-text {
+            font-size: 1.1rem; /* Slightly smaller for better density */
+            font-weight: 300;
+            line-height: 1.7;
+            margin-bottom: 30px; /* Adjusted margin */
+            color: #cdd6f4;
+            letter-spacing: 1px;
+            text-align: left; /* Better for reading paragraphs */
+            /* ADDED: Styles for long, scrollable puzzle text */
+            max-height: 35vh;
+            overflow-y: auto;
+            padding-right: 15px;
+            white-space: pre-wrap; /* Preserve line breaks */
+        }
+
+        /* ADDED: Custom Scrollbar for puzzle text */
+        .prompt-text::-webkit-scrollbar {
+            width: 8px;
+        }
+        .prompt-text::-webkit-scrollbar-track {
+            background: rgba(12, 20, 43, 0.5);
+            border-radius: 4px;
+        }
+        .prompt-text::-webkit-scrollbar-thumb {
+            background-color: rgba(137, 180, 250, 0.5);
+            border-radius: 4px;
+            border: 1px solid rgba(137, 180, 250, 0.8);
+        }
+        .prompt-text::-webkit-scrollbar-thumb:hover {
+            background-color: #89b4fa;
+        }
+
+        /* ADDED: Container and style for the puzzle image */
+        .puzzle-image-container {
+            margin: 0 auto 40px auto;
+            max-width: 90%;
+        }
+        .puzzle-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .input-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        #key-input {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-size: 1rem;
+            width: 280px;
+            transition: all 0.3s ease;
+            outline: none;
+            letter-spacing: 1px;
+        }
+        #key-input::placeholder { color: rgba(255, 255, 255, 0.4); }
+        #key-input:focus {
+            border-color: #89b4fa;
+            box-shadow: 0 0 10px rgba(137, 180, 250, 0.5);
+        }
+        #submit-btn {
+            background: rgba(137, 180, 250, 0.8);
+            border: none;
+            color: #1e1e2e;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #submit-btn:hover:not(:disabled) {
+            background: #89b4fa;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(137, 180, 250, 0.4);
+        }
+        #submit-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 600px) {
+            .puzzle-container {
+                padding: 5vh 15px;
+            }
+            h1 { font-size: 2.2rem; }
+            .prompt-text { font-size: 1rem; }
+            .puzzle-box { padding: 30px 25px; }
+            .input-group { flex-direction: column; align-items: center; }
+            #key-input { width: 100%; max-width: 280px; }
+            #submit-btn { width: 100%; max-width: 280px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="loader">
+        <div class="snowflake-loader">❄️</div>
+        <p id="loader-status-text"></p>
+    </div>
+    
+    <div id="particles-js"></div>
+
+    <div class="puzzle-container">
+        <div class="puzzle-box">
+            <h1>解谜3</h1>
+            <p class="prompt-text">
+[Normal]
+黎明到来之际
+万物皆披上曙光
+再次启程
+至那再度的永恒
+
+Sankai：你给我干哪来了这还是现实吗
+abyss:新的旅行伙伴
+Sankai:666wmc发力了
+abyss:密码彼得
+cryst:先别说这些了,先看看怎么开门吧
+Sankai注意到了旁边有东西
+Sankai:封条？
+Cryst:感觉会和某种东西有点关联，先记下来
+Sankai:还有串字符
+-16 8 9 7 18 15 19-
+Cryst:也先记下来好了
+Sankai:好像还有卷轴
+Cryst:我看看
+"IF3GCNO3DBNZNORWQNOZI="
+“将那吐露的词语删除”
+Sankai:先看看吧
+(过了段时间后)
+cryst:应该是要把这个结果输进去吧
+abyss:门开了
+sankai:结束
+cryst:也是时候要分别了
+Abyss：时间过得好快
+Sankai:那祝你们顺利
+Cryst：借你吉言，我们会成功的
+Sankai：那么，再见
+abyss&cryst:再见
+（通讯中断）
+Insight:时空裂隙吗，事情变得越来越有趣了
+”我倒要看看，你们能掀起怎样的风浪“
+（注释：本篇剧情与主线无关）
+[是一个单词]
+
+            </p>
+            
+            <!-- ADDED: Image Container -->
+            <div class="puzzle-image-container">
+                <!-- 
+                    IMPORTANT: The image source below is a placeholder based on your request.
+                    Please change "./end/node3.png" to your actual image file path,
+                    for example "./images/puzzle3.jpg" or similar.
+                -->
+                <img src="./img/node3.jpeg" alt="谜题相关图片" class="puzzle-image">
+            </div>
+
+            <div class="input-group">
+                <input type="text" id="key-input" placeholder="在此输入密钥" autocomplete="off">
+                <button type="button" id="submit-btn">验证</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.9.3/tsparticles.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const API_BASE_URL = 'https://abyssal4.asterveil.top/api';
+            let currentUsername = '';
+
+            // --- 1. 加载时身份验证与智能进度检查 ---
+            (async () => {
+                const loader = document.getElementById('loader');
+                const statusText = document.getElementById('loader-status-text');
+                const getCookie = name => { const v = `; ${document.cookie}`; const p = v.split(`; ${name}=`); if (p.length === 2) return p.pop().split(';').shift(); return null; };
+                const redirectTo = (url, message) => {
+                    console.log(message); // 使用log代替error，因为这是正常逻辑跳转
+                    window.location.href = url;
+                };
+
+                try {
+                    statusText.textContent = '正在判断账户进度...';
+                    const username = getCookie('username');
+                    const password = getCookie('password');
+
+                    if (!username || !password) {
+                        return redirectTo('../index.html', 'Auth Error: Cookies not found.');
+                    }
+                    currentUsername = username;
+
+                    const response = await fetch(`${API_BASE_URL}/acc_check_password`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username, password }) });
+                    const data = await response.json();
+
+                    if (!response.ok || !data.success) {
+                        return redirectTo('../index.html', `Auth Error: ${data.message}`);
+                    }
+                    
+                    // --- VITAL CHANGE: New conditional progress check ---
+                    const userProgress = String(data.user_data.progress);
+                    
+                    if (userProgress === '4') {
+                        // Case 1: User has already completed this puzzle. Fast-forward them.
+                        return redirectTo('../storyline/insight/node3.html', `Progress is '4'. Redirecting to next node.`);
+                    
+                    } else if (userProgress === '3') {
+                        // Case 2: User is at the correct stage for this puzzle. Continue loading this page.
+                        console.log('Authentication and progress check successful. User is at the correct node (3).');
+
+                    } else {
+                        // Case 3: User is at a different, unexpected stage. Redirect to main.
+                        return redirectTo('../main.html', `Progress Error: Expected '3' or '4', but got '${userProgress}'. Redirecting to main page.`);
+                    }
+
+                    // This code will only run if progress was '3'
+                    statusText.textContent = '验证成功，正在加载场景...';
+                    setTimeout(() => loader.classList.add('hidden'), 500);
+
+                } catch (error) {
+                    console.error('Network Error during auth:', error);
+                    statusText.textContent = '验证时发生网络错误...';
+                    // In case of network error, it's safer to send back to the main login/index page
+                    setTimeout(() => {
+                        window.location.href = '../index.html';
+                    }, 1500);
+                }
+            })();
+
+            // --- 2. 粒子效果初始化 ---
+            tsParticles.load("particles-js", {
+                fpsLimit: 60,
+                particles: {
+                    number: { value: 120, density: { enable: true, value_area: 800 } },
+                    color: { value: "#ffffff" },
+                    shape: { type: "circle" },
+                    opacity: { value: { min: 0.3, max: 0.8 }, animation: { enable: true, speed: 1, sync: false } },
+                    size: { value: { min: 1, max: 4 } },
+                    move: { enable: true, speed: 2, direction: "bottom", straight: false, out_mode: "out" }
+                },
+                interactivity: {
+                    events: { onhover: { enable: true, mode: "repulse" }, resize: true },
+                    modes: { repulse: { distance: 100, duration: 0.4 } }
+                },
+                detectRetina: true
+            });
+
+            // --- 3. 谜题提交与进度更新逻辑 ---
+            const keyInput = document.getElementById('key-input');
+            const submitBtn = document.getElementById('submit-btn');
+            const nodeId = 'node3'; 
+
+            const swalOptions = {
+                background: '#0c142b',
+                color: '#f0f8ff',
+                success: { confirmButtonColor: '#89b4fa' },
+                error: { confirmButtonColor: '#fab387' },
+                info: { confirmButtonColor: '#89b4fa' }
+            };
+
+            const handleCheckKey = async () => {
+                const key = keyInput.value.trim();
+                if (!key) {
+                    Swal.fire({ icon: 'warning', title: '提示', text: '密钥不能为空。', ...swalOptions.info });
+                    return;
+                }
+                submitBtn.disabled = true;
+                submitBtn.textContent = '验证中...';
+                try {
+                    const response = await fetch(`${API_BASE_URL}/check-key`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ nodeId, key }) });
+                    const data = await response.json();
+                    if (response.ok && data.success) {
+                        await handleApiSuccess(data);
+                    } else {
+                        handleApiError(data);
+                    }
+                } catch (error) {
+                    console.error('Fetch Error on /check-key:', error);
+                    Swal.fire({ icon: 'error', title: '网络错误', text: '无法连接到验证服务器。', ...swalOptions.error });
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '验证';
+                }
+            };
+            
+            const handleApiSuccess = async (data) => {
+                await Swal.fire({ icon: 'success', title: '验证成功!', text: data.message + '\n即将保存进度...', timer: 1500, timerProgressBar: true, ...swalOptions.success });
+                
+                // This logic correctly updates progress to '4' after solving node3
+                const progressUpdated = await updateUserProgress(currentUsername, '4');
+                
+                if (progressUpdated) {
+                    window.location.href = '../storyline/insight/node3.html';
+                } else {
+                    await Swal.fire({ icon: 'error', title: '严重错误', text: '进度保存失败！请刷新页面重试或联系管理员。', ...swalOptions.error });
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '验证';
+                }
+            };
+
+            const updateUserProgress = async (username, newProgress) => {
+                if (!username) {
+                    console.error("Cannot update progress: username is missing.");
+                    return false;
+                }
+                try {
+                    console.log(`Attempting to set progress to '${newProgress}' for user '${username}'`);
+                    const response = await fetch(`${API_BASE_URL}/set_user_data`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: username, option: 'progress', value: String(newProgress) }) });
+                    const data = await response.json();
+                    if (response.ok && data.success) {
+                        console.log('Progress update successful:', data);
+                        return true;
+                    } else {
+                        console.error('Failed to update progress:', data.message);
+                        return false;
+                    }
+                } catch (error) {
+                    console.error('Network error while updating progress:', error);
+                    return false;
+                }
+            };
+            
+            const handleApiError = (data) => {
+                Swal.fire({ icon: 'error', title: '验证失败', text: data.message, ...swalOptions.error });
+                if (data.cooldown) {
+                    startCooldown(data.cooldown);
+                } else {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '验证';
+                }
+            };
+            
+            const startCooldown = (seconds) => {
+                let remaining = Math.ceil(seconds);
+                submitBtn.disabled = true;
+                submitBtn.textContent = `冷却中 (${remaining}s)`;
+                const interval = setInterval(() => {
+                    remaining--;
+                    if (remaining > 0) {
+                        submitBtn.textContent = `冷却中 (${remaining}s)`;
+                    } else {
+                        clearInterval(interval);
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = '验证';
+                    }
+                }, 1000);
+            };
+
+            submitBtn.addEventListener('click', handleCheckKey);
+            keyInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    handleCheckKey();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

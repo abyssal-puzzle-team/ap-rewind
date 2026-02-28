@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>守门员B2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #16213e);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .puzzle-container {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00ff00;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+        }
+
+        .puzzle-title {
+            font-size: 2em;
+            font-weight: bold;
+            color: #00ff00;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
+        }
+
+        .puzzle-description {
+            background: rgba(0, 255, 0, 0.1);
+            border-left: 4px solid #00ff00;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-size: 1.1em;
+            line-height: 1.6;
+            /* 确保图片在其内部居中 */
+            text-align: center; 
+        }
+
+        /* 新增：图片适配样式 */
+        .puzzle-description img {
+            max-width: 100%; /* 图片最大宽度为其父容器的100% */
+            height: auto;     /* 高度自动调整，保持图片宽高比 */
+            display: block;   /* 使图片成为块级元素，可以设置margin: auto居中 */
+            margin: 0 auto;   /* 居中图片 */
+            border-radius: 5px; /* 添加一点圆角，与容器风格匹配 */
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.2); /* 略微发光效果 */
+        }
+
+        .sequence-display {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 1.5em;
+            color: #00ffff;
+        }
+
+        .question-section {
+            background: rgba(0, 255, 255, 0.1);
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .question-text {
+            font-size: 1.2em;
+            color: #00ffff;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .answer-input {
+            width: 200px;
+            padding: 10px;
+            font-size: 1.1em;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #00ffff;
+            border-radius: 5px;
+            color: #ffffff;
+            text-align: center;
+            margin: 10px;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: #00ff00;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #00ffff, #0080ff);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            color: #000;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+        }
+
+        .btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .back-btn {
+            background: linear-gradient(45deg, #666666, #444444);
+            color: #fff;
+        }
+
+        .back-btn:hover {
+            box-shadow: 0 5px 15px rgba(102, 102, 102, 0.3);
+        }
+
+        .cooldown-notice {
+            background: rgba(255, 0, 0, 0.2);
+            border: 1px solid #ff0000;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            color: #ff6666;
+            display: none;
+        }
+
+        .success-message {
+            background: rgba(0, 255, 0, 0.2);
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            color: #66ff66;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .puzzle-container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .puzzle-title {
+                font-size: 1.5em;
+            }
+            
+            .answer-input {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="puzzle-container">
+        <div class="puzzle-title">守门员B2</div>
+
+        <div class="puzzle-description">
+            <!-- 谜题图片和文字内容 -->
+            <img src="./img/B2.png" alt="图片不见了awa">
+            闭上眼睛，用心去倾听，你将得到答案
+            [提示:答案是一个单词]
+        </div>
+
+        <div class="question-section">
+            <input type="text" id="answerInput" class="answer-input" placeholder="请输入答案">
+            <br>
+            <button class="btn" onclick="submitAnswer()" id="submitBtn">提交答案</button>
+        </div>
+
+        <div id="cooldownNotice" class="cooldown-notice">
+            <h3>⏰ 答案错误！</h3>
+            <p>请等待 <span id="cooldownTime">0</span> 秒后重试</p>
+        </div>
+
+        <div id="successMessage" class="success-message">
+            <h3>恭喜！答案正确！</h3>
+            <p>正在返回迷宫...</p>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <button class="btn back-btn" onclick="goBack()">返回迷宫</button>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://abyssal4.asterveil.top/api';
+        let username = '';
+
+        // 获取Cookie
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return '';
+        }
+
+        // 初始化
+        function init() {
+            username = getCookie('username');
+            if (!username) {
+                alert('请先登录或注册账号以保存游戏进度！');
+                return;
+            }
+            
+            // 检查冷却状态
+            checkCooldownStatus();
+        }
+
+        // 检查冷却状态
+        async function checkCooldownStatus() {
+            try {
+                const response = await fetch(`${API_BASE}/goalkeeper_cooldown_status`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ username: username })
+                });
+                
+                const data = await response.json();
+                
+                if (data.cooldownRemaining > 0) {
+                    showCooldownNotice(data.cooldownRemaining);
+                }
+                
+                return data;
+            } catch (error) {
+                console.error('检查冷却状态失败:', error);
+                return { cooldownRemaining: 0 };
+            }
+        }
+
+        // 提交答案
+        async function submitAnswer() {
+            const answer = document.getElementById('answerInput').value.trim();
+            
+            if (!answer) {
+                alert('请输入答案！');
+                return;
+            }
+
+            // 检查冷却状态
+            const cooldownStatus = await checkCooldownStatus();
+            if (cooldownStatus && cooldownStatus.cooldownRemaining > 0) {
+                showCooldownNotice(cooldownStatus.cooldownRemaining);
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/check_goalkeeper_key`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        username: username,
+                        id: 'B2',
+                        key: answer
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // 答案正确
+                    showSuccessMessage();
+                    
+                    // 解锁陷阱格子并添加进度
+                    await unlockTrapCell('B2', 13, 4);
+                    
+                    // 保存已解决的陷阱状态 - 需要合并现有状态
+                    await updateSolvedTraps('B2');
+                    
+                    // 立即返回迷宫页面
+                    window.location.href = 'index.html';
+                } else {
+                    // 答案错误，显示冷却
+                    const cooldownStatus = await checkCooldownStatus();
+                    if (cooldownStatus) {
+                        showCooldownNotice(cooldownStatus.cooldownRemaining);
+                    }
+                }
+            } catch (error) {
+                console.error('提交答案失败:', error);
+                alert('提交失败，请重试！');
+            }
+        }
+
+        // 显示冷却提示
+        function showCooldownNotice(seconds) {
+            const notice = document.getElementById('cooldownNotice');
+            const timeSpan = document.getElementById('cooldownTime');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            timeSpan.textContent = seconds;
+            notice.style.display = 'block';
+            submitBtn.disabled = true;
+            
+            // 倒计时
+            const countdown = setInterval(() => {
+                seconds--;
+                timeSpan.textContent = seconds;
+                if (seconds <= 0) {
+                    clearInterval(countdown);
+                    notice.style.display = 'none';
+                    submitBtn.disabled = false;
+                }
+            }, 1000);
+        }
+
+        // 显示成功消息
+        function showSuccessMessage() {
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('submitBtn').disabled = true;
+        }
+
+        // 返回迷宫
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+
+        // 键盘事件
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                submitAnswer();
+            } else if (event.key === 'Escape') {
+                goBack();
+            }
+        });
+
+        // 解锁陷阱格子
+        async function unlockTrapCell(trapId, x, y) {
+            try {
+                // 添加meta进度
+                await fetch(`${API_BASE}/add_meta`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        username: username,
+                        progress: `[${x},${y}]`
+                    })
+                });
+                
+            } catch (error) {
+                console.error('解锁陷阱格子失败:', error);
+            }
+        }
+
+        // 更新已解决的陷阱状态
+        async function updateSolvedTraps(trapId) {
+            try {
+                // 先获取当前已解决的陷阱
+                const response = await fetch(`${API_BASE}/acc_check_password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        username: username,
+                        password: getCookie('password')
+                    })
+                });
+                
+                const data = await response.json();
+                let solvedTraps = [];
+                
+                if (data.success && data.user_data && data.user_data.meta_solved_traps) {
+                    try {
+                        solvedTraps = JSON.parse(data.user_data.meta_solved_traps);
+                        if (!Array.isArray(solvedTraps)) {
+                            solvedTraps = [];
+                        }
+                    } catch (e) {
+                        console.warn('解析已解决陷阱失败:', e);
+                        solvedTraps = [];
+                    }
+                } else {
+                    // 如果没有现有数据，初始化为空数组
+                    solvedTraps = [];
+                }
+                
+                // 添加当前陷阱（如果还没有的话）
+                if (!solvedTraps.includes(trapId)) {
+                    solvedTraps.push(trapId);
+                }
+                
+                // 保存更新后的状态
+                await updateUserData('meta_solved_traps', JSON.stringify(solvedTraps));
+                console.log('已更新解决的陷阱状态:', solvedTraps);
+            } catch (error) {
+                console.error('更新已解决陷阱状态失败:', error);
+            }
+        }
+
+        // 更新用户数据
+        async function updateUserData(option, value) {
+            try {
+                await fetch(`${API_BASE}/set_user_data`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        username: username,
+                        option: option,
+                        value: value
+                    })
+                });
+            } catch (error) {
+                console.error('更新用户数据失败:', error);
+            }
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

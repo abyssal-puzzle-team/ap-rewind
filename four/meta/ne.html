@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>好结局</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #16213e);
+            color: #ffffff;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .victory-container {
+            text-align: center;
+            max-width: 800px;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00ff00;
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(0, 255, 0, 0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 50px rgba(0, 255, 0, 0.3); }
+            to { box-shadow: 0 0 80px rgba(0, 255, 0, 0.6); }
+        }
+
+        .victory-title {
+            font-size: 3.5em;
+            font-weight: bold;
+            color: #00ff00;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .victory-subtitle {
+            font-size: 1.5em;
+            color: #00ffff;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .victory-message {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: #cccccc;
+        }
+
+        .victory-stats {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00ff00;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+
+        .stat-label {
+            color: #aaaaaa;
+        }
+
+        .stat-value {
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        .celebration-text {
+            font-size: 1.3em;
+            color: #ffff00;
+            margin: 20px 0;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .return-btn {
+            background: linear-gradient(45deg, #00ff00, #00cc00);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            color: #000;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .return-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 255, 0, 0.3);
+        }
+
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00ff00;
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .victory-container {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+            
+            .victory-title {
+                font-size: 2.5em;
+            }
+            
+            .victory-subtitle {
+                font-size: 1.2em;
+            }
+            
+            .victory-message {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子效果背景 -->
+    <div class="particles" id="particles"></div>
+
+    <!-- 胜利容器 -->
+    <div class="victory-container">
+        <div class="victory-title">🎉 胜利！ 🎉</div>
+        <div class="victory-subtitle"></div>
+        
+        <div class="victory-message">
+            在时间的紧迫压力下，您展现了卓越的智慧和坚韧的意志。<br>
+            通过破解三个守门员谜题，收集所有线索，解开4x4逻辑推理谜题，<br>
+            您成功激活了所有电力装置，获得了门禁卡，并在时间耗尽前完成了逃生！
+        </div>
+
+        <div class="victory-stats">
+            <div class="stat-item">
+                <span class="stat-label">任务状态:</span>
+                <span class="stat-value">完美完成</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">电力装置:</span>
+                <span class="stat-value">3/3 已激活</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">门禁卡:</span>
+                <span class="stat-value">已获得</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">4x4谜题:</span>
+                <span class="stat-value">已解决</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">时间状态:</span>
+                <span class="stat-value">在时限内完成</span>
+            </div>
+        </div>
+
+        <button class="return-btn" onclick="returnToMain()">继续</button>
+    </div>
+
+    <script>
+        // 创建粒子效果
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                
+                // 随机颜色
+                const colors = ['#00ff00', '#00ffff', '#ffff00', '#ff00ff'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // 返回主页
+        function returnToMain() {
+            window.location.href = '../storyline/insight/meta.html';
+        }
+
+        // 页面加载完成后创建粒子效果
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            
+            // 播放胜利音效（如果有的话）
+            // playVictorySound();
+        });
+
+        // 键盘事件监听
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                returnToMain();
+            }
+        });
+    </script>
+</body>
+</html>
+

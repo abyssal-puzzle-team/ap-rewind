@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>坏结局</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a0000, #330000, #4d0000);
+            color: #ffffff;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .failure-container {
+            text-align: center;
+            max-width: 800px;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #ff0000;
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.3);
+            animation: flicker 3s ease-in-out infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { box-shadow: 0 0 50px rgba(255, 0, 0, 0.3); }
+            50% { box-shadow: 0 0 80px rgba(255, 0, 0, 0.6); }
+        }
+
+        .failure-title {
+            font-size: 3.5em;
+            font-weight: bold;
+            color: #ff0000;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+            animation: shake 2s ease-in-out infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .failure-subtitle {
+            font-size: 1.5em;
+            color: #ff6666;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(255, 102, 102, 0.5);
+        }
+
+        .failure-message {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: #cccccc;
+        }
+
+        .failure-stats {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff0000;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+
+        .stat-label {
+            color: #aaaaaa;
+        }
+
+        .stat-value {
+            color: #ff6666;
+            font-weight: bold;
+        }
+
+        .stat-value.success {
+            color: #00ff00;
+        }
+
+        .consolation-text {
+            font-size: 1.3em;
+            color: #ffaa00;
+            margin: 20px 0;
+            animation: fade 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes fade {
+            from { opacity: 0.7; }
+            to { opacity: 1; }
+        }
+
+        .retry-btn {
+            background: linear-gradient(45deg, #ff6600, #ff0000);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .retry-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 102, 0, 0.3);
+        }
+
+        .home-btn {
+            background: linear-gradient(45deg, #666666, #444444);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .home-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(102, 102, 102, 0.3);
+        }
+
+        .smoke {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .smoke-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #666;
+            border-radius: 50%;
+            animation: smokeRise 8s ease-out infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes smokeRise {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+        }
+
+        .time-warning {
+            color: #ff0000;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin: 20px 0;
+            animation: blink 1s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .failure-container {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+            
+            .failure-title {
+                font-size: 2.5em;
+            }
+            
+            .failure-subtitle {
+                font-size: 1.2em;
+            }
+            
+            .failure-message {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 烟雾效果背景 -->
+    <div class="smoke" id="smoke"></div>
+
+    <!-- 失败容器 -->
+    <div class="failure-container">
+        <div class="failure-title">⏰ 时间耗尽！ ⏰</div>
+        <div class="failure-subtitle">失败...</div>
+        
+        <div class="failure-message">
+            虽然您展现了出色的解谜能力，成功破解了所有的守门员谜题，<br>
+            激活了电力装置，获得了门禁卡，甚至解开了4x4逻辑推理谜题，<br>
+            但是时间还是不够用...深渊迷宫的时间陷阱最终困住了您。
+        </div>
+
+        <div class="failure-stats">
+            <div class="stat-item">
+                <span class="stat-label">任务状态:</span>
+                <span class="stat-value">超时失败</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">电力装置:</span>
+                <span class="stat-value success">3/3 已激活</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">门禁卡:</span>
+                <span class="stat-value success">已获得</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">4x4谜题:</span>
+                <span class="stat-value success">已解决</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">时间状态:</span>
+                <span class="stat-value">已耗尽</span>
+            </div>
+        </div>
+
+        <div>
+            <button class="home-btn" onclick="returnToMain()">继续</button>
+        </div>
+    </div>
+
+    <script>
+        // 创建烟雾效果
+        function createSmoke() {
+            const smokeContainer = document.getElementById('smoke');
+            const smokeCount = 30;
+
+            for (let i = 0; i < smokeCount; i++) {
+                const smoke = document.createElement('div');
+                smoke.className = 'smoke-particle';
+                smoke.style.left = Math.random() * 100 + '%';
+                smoke.style.animationDelay = Math.random() * 8 + 's';
+                smoke.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                
+                // 随机灰色调
+                const grayValue = Math.floor(Math.random() * 100 + 50);
+                smoke.style.background = `rgb(${grayValue}, ${grayValue}, ${grayValue})`;
+                
+                smokeContainer.appendChild(smoke);
+            }
+        }
+
+        // 重新挑战
+        function retryGame() {
+            // 可以添加重置游戏状态的逻辑
+            window.location.href = 'index.html';
+        }
+
+        // 返回主页
+        function returnToMain() {
+            window.location.href = '../storyline/insight/meta.html';
+        }
+
+        // 页面加载完成后创建烟雾效果
+        document.addEventListener('DOMContentLoaded', () => {
+            createSmoke();
+            
+            // 播放失败音效（如果有的话）
+            // playFailureSound();
+        });
+
+        // 键盘事件监听
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                retryGame();
+            } else if (event.key === 'Escape') {
+                returnToMain();
+            }
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta谜题</title>
+    <style>
+        /* CSS 样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #16213e);
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .time-bar-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+            height: 30px;
+            z-index: 1000;
+        }
+
+        .time-bar {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #333, #555);
+            border: 2px solid #00ffff;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+            transform: skew(-10deg);
+        }
+
+        .time-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff0000, #ff6600, #ffff00, #00ff00);
+            transition: width 1s ease-in-out;
+            width: 100%;
+        }
+
+        .time-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) skew(10deg);
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            font-size: 14px;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            padding-top: 70px;
+        }
+
+        .maze-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            min-height: 60vh;
+        }
+
+        .maze-grid {
+            display: grid;
+            grid-template-columns: repeat(16, 40px);
+            grid-template-rows: repeat(6, 40px);
+            gap: 2px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 10px;
+            border: 2px solid #00ffff;
+        }
+
+        .maze-cell {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .maze-cell:hover {
+            transform: scale(1.1);
+            z-index: 10;
+        }
+
+        .cell-wall { background: #444; color: #666; cursor: not-allowed; }
+        .cell-empty { background: #222; color: #aaa; }
+        .cell-start { background: #00ff00; color: #000; font-weight: bold; }
+        .cell-key { background: #ffff00; color: #000; }
+        .cell-door { background: #8b4513; color: #fff; }
+        .cell-trap { background: #ff0000; color: #fff; }
+        .cell-power { background: #0080ff; color: #fff; }
+        .cell-card { background: #ff00ff; color: #fff; }
+        .cell-elevator { background: #00ffff; color: #000; }
+        .cell-player { background: #00ff00; border: 3px solid #fff; animation: pulse 1s infinite; }
+        .cell-visible { opacity: 1; }
+        .cell-hidden { opacity: 0.3; background: #111; }
+        .cell-unlocked { background: #666; }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .info-panel {
+            height: 300px;
+            display: flex;
+            background: rgba(0, 0, 0, 0.8);
+            border-top: 2px solid #00ffff;
+        }
+
+        .status-panel, .clues-panel {
+            flex: 1;
+            padding: 20px;
+            border-right: 1px solid #333;
+        }
+
+        .clues-panel {
+            border-right: none;
+        }
+
+        .panel-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #00ffff;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+
+        .status-item {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-label {
+            color: #ccc;
+        }
+
+        .status-value {
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        .clue-item {
+            margin-bottom: 8px;
+            padding: 8px;
+            background: rgba(0, 255, 255, 0.1);
+            border-left: 3px solid #00ffff;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            margin: 10% auto;
+            padding: 30px;
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            color: #fff;
+            position: relative;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            right: 15px;
+            top: 10px;
+        }
+
+        .close:hover {
+            color: #fff;
+        }
+
+        .puzzle-input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #00ffff;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .puzzle-input:focus {
+            outline: none;
+            border-color: #00ff00;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #00ffff, #0080ff);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+        }
+
+        .btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* --- MODIFICATION START --- */
+        .puzzle-4x4-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* 从4列改为1列，实现垂直排列 */
+            gap: 10px;
+            margin: 20px 0;
+        }
+        /* --- MODIFICATION END --- */
+
+        .puzzle-4x4-input {
+            padding: 10px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #00ffff;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .puzzle-4x4-input:focus {
+            outline: none;
+            border-color: #00ff00;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+            transform: scale(1.05);
+        }
+
+        .escape-btn {
+            background: linear-gradient(45deg, #ff0000, #ff6600);
+            color: #fff;
+            font-size: 18px;
+            padding: 15px 30px;
+            margin-top: 20px;
+        }
+
+        .cooldown-notice {
+            background: rgba(255, 0, 0, 0.2);
+            border: 1px solid #ff0000;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            text-align: center;
+            color: #ff6666;
+        }
+
+        @media (max-width: 768px) {
+            .maze-grid {
+                grid-template-columns: repeat(16, 25px);
+                grid-template-rows: repeat(6, 25px);
+            }
+            
+            .maze-cell {
+                width: 25px;
+                height: 25px;
+                font-size: 10px;
+            }
+            
+            .info-panel {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .time-bar-container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="time-bar-container">
+        <div class="time-bar">
+            <div class="time-bar-fill" id="timeBarFill"></div>
+            <div class="time-text" id="timeText">剩余时间: --:--</div>
+        </div>
+    </div>
+    <div class="main-container">
+        <div class="maze-container">
+            <div class="maze-grid" id="mazeGrid"></div>
+        </div>
+        <div class="info-panel">
+            <div class="status-panel" id="statusPanel">
+                <div class="panel-title">[Insight]</div>
+                <div class="status-item">
+                    <span class="status-label">当前位置:</span>
+                    <span class="status-value" id="playerPosition">[0,0]</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">钥匙数量:</span>
+                    <span class="status-value" id="keyCount">0</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">电力装置:</span>
+                    <span class="status-value" id="powerCount">0/3</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">门禁卡:</span>
+                    <span class="status-value" id="cardStatus">未获得</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">剩余时间:</span>
+                    <span class="status-value" id="timeRemaining">--:--</span>
+                </div>
+            </div>
+            <div class="clues-panel" id="cluesPanel">
+                <div class="panel-title">已获得线索</div>
+                <div id="cluesList">
+                    <div style="color: #666; font-style: italic;">暂无线索</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="puzzleModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePuzzleModal()">×</span>
+            <h2>解决谜题以继续前进</h2>
+            <div id="puzzleContent">
+                <p id="puzzleQuestion">正在加载谜题...</p>
+                <input type="text" id="puzzleAnswer" class="puzzle-input" placeholder="请输入答案">
+                <div id="cooldownNotice" class="cooldown-notice" style="display: none;">
+                    <p>答案错误！请等待 <span id="cooldownTime">0</span> 秒后重试</p>
+                </div>
+                <button class="btn" onclick="submitPuzzleAnswer()">提交答案</button>
+                <button class="btn" onclick="skipPuzzle()" style="background: linear-gradient(45deg, #ff6600, #ff0000); color: #fff;">跳过谜题 (扣除时间)</button>
+            </div>
+        </div>
+    </div>
+    <div id="goalkeeperModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeGoalkeeperModal()">×</span>
+            <h2 id="goalkeeperTitle">守门员谜题</h2>
+            <div id="goalkeeperContent">
+                <p id="goalkeeperDescription">请输入正确的密钥以通过守门员：</p>
+                <input type="text" id="goalkeeperAnswer" class="puzzle-input" placeholder="请输入密钥">
+                <div id="goalkeeperCooldown" class="cooldown-notice" style="display: none;">
+                    <p>密钥错误！请等待 <span id="goalkeeperCooldownTime">0</span> 秒后重试</p>
+                </div>
+                <button class="btn" onclick="submitGoalkeeperAnswer()">提交密钥</button>
+            </div>
+        </div>
+    </div>
+    <div id="puzzle4x4Modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="close4x4Modal()">×</span>
+            <h2>逃生谜题 - 4x4逻辑推理</h2>
+            <div id="puzzle4x4Content"></div>
+        </div>
+    </div>
+
+    <script>
+        let gameState = {
+            playerX: 0,
+            playerY: 0,
+            keys: 0,
+            powerDevices: 0,
+            hasCard: false,
+            unlockedCells: new Set(['0,0']),
+            clues: [],
+            username: '',
+            password: '',
+            metaTimeRemaining: 0,
+            puzzle4x4Solved: false,
+            elevatorCluesObtained: false
+        };
+        const mazeMap = [
+            ['start', 'empty', 'wall', 'wall', 'empty', 'empty', 'empty', 'empty', 'wall', 'card', 'wall', 'wall', 'key', 'wall', 'wall', 'power'],
+            ['empty', 'empty', 'empty', 'empty', 'empty', 'wall', 'key', 'empty', 'empty', 'empty', 'wall', 'empty', 'empty', 'door', 'empty', 'trap'],
+            ['empty', 'wall', 'empty', 'wall', 'empty', 'wall', 'wall', 'empty', 'wall', 'empty', 'door', 'empty', 'empty', 'wall', 'elevator', 'empty'],
+            ['empty', 'empty', 'empty', 'wall', 'empty', 'empty', 'wall', 'empty', 'wall', 'empty', 'wall', 'empty', 'empty', 'empty', 'wall', 'empty'],
+            ['wall', 'wall', 'empty', 'wall', 'empty', 'door', 'empty', 'empty', 'door', 'empty', 'wall', 'empty', 'wall', 'trap', 'empty', 'empty'],
+            ['wall', 'power', 'trap', 'wall', 'key', 'wall', 'empty', 'wall', 'empty', 'empty', 'empty', 'empty', 'door', 'empty', 'power', 'wall']
+        ];
+        const powerDeviceLocations = {
+            '1,5': { clues: [0, 1] },
+            '14,5': { clues: [2, 3] },
+            '15,0': { clues: [4, 5] }
+        };
+        const trapLocations = { 'A1': [2, 5], 'B2': [13, 4], 'C3': [15, 1] };
+        const allClues = [
+            "1和16在对角端点", "2在3左侧且不相邻", "4,5,6是第4行从左至右连续的三个数字",
+            "7在第1列，8在第1行，7与8不在角落", "9不在角落且正下方相邻是11", "10在11正上方",
+            "12在13相邻正上方", "14与16同列，15在14相邻正下方"
+        ];
+        const API_BASE = 'https://abyssal4.asterveil.top/api';
+        
+        async function initGame() {
+            gameState.username = getCookie('username');
+            gameState.password = getCookie('password');
+            if (!gameState.username || !gameState.password) {
+                alert('您尚未登录，即将跳转到登录页面。');
+                window.location.href = '../index.html';
+                return;
+            }
+    
+            initMaze();
+            await loadUserData();
+            initMaze();
+            const shouldContinueGame = await checkProgress();
+            if (!shouldContinueGame) {
+                return;
+            }
+            startTimeMonitoring();
+            updateDisplay();
+        }
+        
+        async function loadUserData() {
+            try {
+                const response = await fetch(`${API_BASE}/acc_check_password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ username: gameState.username, password: gameState.password })
+                });
+                const data = await response.json();
+    
+                if (data.success && data.user_data) {
+                    const userData = data.user_data;
+                    if (userData.meta_xy) {
+                         try {
+                            const coords = JSON.parse(userData.meta_xy);
+                            gameState.playerX = coords[0];
+                            gameState.playerY = coords[1];
+                         } catch (e) {
+                            console.warn("解析玩家位置失败");
+                         }
+                    }
+                    
+                    gameState.unlockedCells.clear();
+                    gameState.unlockedCells.add('0,0');
+                    if (userData.meta_progress) {
+                        const matches = userData.meta_progress.match(/\[\d+,\d+\]/g);
+                        if (matches) {
+                            matches.forEach(matchStr => {
+                                try {
+                                    const coords = JSON.parse(matchStr);
+                                    gameState.unlockedCells.add(`${coords[0]},${coords[1]}`);
+                                } catch (e) {
+                                    console.warn("解析 meta_progress 中的坐标失败");
+                                }
+                            });
+                        }
+                    }
+    
+                    gameState.powerDevices = 0;
+                    gameState.clues = [];
+                    gameState.hasCard = false;
+                    let unlockedKeysCount = 0;
+                    let unlockedDoorsCount = 0;
+    
+                    gameState.unlockedCells.forEach(cellKey => {
+                        const [x, y] = cellKey.split(',').map(Number);
+                        if (mazeMap[y] && mazeMap[y][x]) {
+                            const cellType = mazeMap[y][x];
+                            if (cellType === 'key') {
+                                unlockedKeysCount++;
+                            } else if (cellType === 'door') {
+                                unlockedDoorsCount++;
+                            } else if (powerDeviceLocations[cellKey]) {
+                                gameState.powerDevices++;
+                                powerDeviceLocations[cellKey].clues.forEach(clueIndex => {
+                                    const clue = allClues[clueIndex];
+                                    if (!gameState.clues.includes(clue)) {
+                                        gameState.clues.push(clue);
+                                    }
+                                });
+                            } else if (cellType === 'card') {
+                                gameState.hasCard = true;
+                            }
+                        }
+                    });
+                    
+                    gameState.keys = unlockedKeysCount - unlockedDoorsCount;
+    
+                    gameState.elevatorCluesObtained = userData.meta_elevator_clues_obtained === true || userData.meta_elevator_clues_obtained === 'true';
+                    if (gameState.elevatorCluesObtained || gameState.unlockedCells.has('14,2')) {
+                        if (!gameState.clues.includes(allClues[6])) gameState.clues.push(allClues[6]);
+                        if (!gameState.clues.includes(allClues[7])) gameState.clues.push(allClues[7]);
+                        gameState.elevatorCluesObtained = true;
+                    }
+    
+                    gameState.puzzle4x4Solved = userData.meta_4x4_solved === true || userData.meta_4x4_solved === 'true';
+                } else {
+                    alert('登录验证失败：' + data.message);
+                }
+            } catch (error) {
+                console.error('加载用户数据失败:', error);
+            }
+        }
+        
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) {
+                return parts.pop().split(';').shift();
+            }
+            return '';
+        }
+    
+        function initMaze() {
+            const mazeGrid = document.getElementById('mazeGrid');
+            mazeGrid.innerHTML = '';
+            for (let y = 5; y >= 0; y--) {
+                for (let x = 0; x < 16; x++) {
+                    const cell = document.createElement('div');
+                    cell.dataset.x = x;
+                    cell.dataset.y = y;
+                    const cellType = mazeMap[y][x];
+                    const isVisible = isCellVisible(x, y);
+                    const isUnlocked = gameState.unlockedCells.has(`${x},${y}`);
+                    setCellAppearance(cell, cellType, x, y, isVisible, isUnlocked);
+                    
+                    if (isVisible && cellType !== 'wall') {
+                        cell.addEventListener('click', () => moveToCell(x, y));
+                    }
+                    mazeGrid.appendChild(cell);
+                }
+            }
+        }
+        
+        function setCellAppearance(cell, cellType, x, y, isVisible, isUnlocked) {
+            cell.className = 'maze-cell';
+            if (!isVisible) {
+                cell.classList.add('cell-hidden');
+                cell.textContent = '?';
+                return;
+            }
+            if (x === gameState.playerX && y === gameState.playerY) {
+                cell.classList.add('cell-player');
+                cell.textContent = '玩家';
+                return;
+            }
+            
+            if (cellType === 'elevator') {
+                cell.classList.add('cell-elevator');
+                cell.textContent = '电梯';
+                return; 
+            }
+    
+            if (isUnlocked) {
+                cell.classList.add('cell-empty');
+                cell.textContent = '✓';
+                return;
+            }
+            
+            switch (cellType) {
+                case 'wall': cell.classList.add('cell-wall'); cell.textContent = '墙'; break;
+                case 'empty': cell.classList.add('cell-empty'); cell.textContent = '空'; break;
+                case 'start': cell.classList.add('cell-start'); cell.textContent = '起点'; break;
+                case 'key': cell.classList.add('cell-key'); cell.textContent = '钥匙'; break;
+                case 'door': cell.classList.add('cell-door'); cell.textContent = '门'; break;
+                case 'trap': cell.classList.add('cell-trap'); cell.textContent = '陷阱'; break;
+                case 'power': cell.classList.add('cell-power'); cell.textContent = '电力'; break;
+                case 'card': cell.classList.add('cell-card'); cell.textContent = '卡片'; break;
+            }
+        }
+        
+        async function handleElevatorInteraction(x, y) {
+            const cellKey = `${x},${y}`;
+            const isUnlocked = gameState.unlockedCells.has(cellKey);
+    
+            if (isUnlocked) {
+                show4x4Modal();
+            } else {
+                await unlockCell(x, y);
+                gameState.elevatorCluesObtained = true;
+                await updateUserData('meta_elevator_clues_obtained', 'true');
+    
+                let newlyAddedClues = [];
+                [allClues[6], allClues[7]].forEach(clue => {
+                    if (!gameState.clues.includes(clue)) {
+                        gameState.clues.push(clue);
+                        newlyAddedClues.push(clue);
+                    }
+                });
+    
+                if (newlyAddedClues.length > 0) {
+                     alert(`你走近电梯，发现它似乎可以被启动。你找到了关键线索！\n- ${newlyAddedClues.join('\n- ')}\n\n该格子已解锁，再次点击即可尝试解谜。`);
+                } else {
+                    alert('你已调查过电梯，该格子已解锁，再次点击即可尝试解谜。');
+                }
+                
+                updateDisplay();
+                updateSingleCell(x, y);
+            }
+        }
+        
+        async function moveToCell(x, y) {
+            if (!canMoveTo(x, y)) {
+                 return;
+            }
+    
+            const cellType = mazeMap[y][x];
+            if (cellType === 'elevator') {
+                await handleElevatorInteraction(x, y);
+                return;
+            }
+    
+            const cellKey = `${x},${y}`;
+            if (gameState.unlockedCells.has(cellKey)) {
+                await movePlayer(x, y);
+                return;
+            }
+            
+            switch (cellType) {
+                case 'empty': await handleEmptyCell(x, y); break;
+                case 'door': await handleDoorCell(x, y); break;
+                case 'key': await handleKeyCell(x, y); break;
+                case 'trap': handleTrapCell(x, y); break;
+                case 'power': await handlePowerCell(x, y); break;
+                case 'card': await handleCardCell(x, y); break;
+                case 'start': await movePlayer(x, y); break;
+                default: await movePlayer(x, y); break;
+            }
+        }
+        
+        function show4x4Modal() {
+            const elevatorCoords = '14,2';
+            if (gameState.unlockedCells.has(elevatorCoords)) {
+                if (!gameState.clues.includes(allClues[6])) gameState.clues.push(allClues[6]);
+                if (!gameState.clues.includes(allClues[7])) gameState.clues.push(allClues[7]);
+            }
+        
+            let cluesHtml = '';
+            if (gameState.clues.length > 0) {
+                const sortedClues = [...gameState.clues].sort((a, b) => allClues.indexOf(a) - allClues.indexOf(b));
+                cluesHtml = sortedClues.map(clue => `<div class="clue-item">${clue}</div>`).join('');
+            } else {
+                cluesHtml = `<div style="margin: 15px 0; color: #ff6666;"><h4>提示：</h4><p>您还没有获得任何线索！请先激活电力装置和电梯来获取线索。</p></div>`;
+            }
+            
+            const modalContent = document.getElementById('puzzle4x4Content');
+            modalContent.innerHTML = `
+                <p>请根据所有线索填入正确的数字排列：</p>
+                <div style="margin: 15px 0; max-height: 200px; overflow-y: auto;">
+                    <h4>已获得的线索：</h4>
+                    ${cluesHtml}
+                </div>
+                <p style="color: #ffff00; margin: 10px 0;">格式：每行输入4个数字，用空格分隔</p>
+                <div class="puzzle-4x4-grid">
+                    <input type="text" class="puzzle-4x4-input" id="row1" placeholder="第一行">
+                    <input type="text" class="puzzle-4x4-input" id="row2" placeholder="第二行">
+                    <input type="text" class="puzzle-4x4-input" id="row3" placeholder="第三行">
+                    <input type="text" class="puzzle-4x4-input" id="row4" placeholder="第四行">
+                </div>
+                <div id="puzzle4x4Cooldown" class="cooldown-notice" style="display: none;">
+                    <p>答案错误！请等待 <span id="puzzle4x4CooldownTime">0</span> 秒后重试</p>
+                </div>
+                <button class="btn" onclick="submit4x4Answer()">提交答案</button>
+                <button class="btn escape-btn" onclick="attemptEscape()" id="escapeBtn">逃生</button>
+            `;
+            
+            document.getElementById('puzzle4x4Modal').style.display = 'block';
+        }
+        
+        function isCellVisible(x, y) {
+            if (x === gameState.playerX && y === gameState.playerY) return true;
+            if (gameState.unlockedCells.has(`${x},${y}`)) return true;
+            const dx = Math.abs(x - gameState.playerX);
+            const dy = Math.abs(y - gameState.playerY);
+            if ((dx === 1 && dy === 0) || (dx === 0 && dy === 1)) return true;
+            if (mazeMap[y][x] === 'wall') return true;
+            return false;
+        }
+    
+        function canMoveTo(x, y) {
+            if (x < 0 || x >= 16 || y < 0 || y >= 6) return false;
+            if (mazeMap[y][x] === 'wall') return false;
+            const dx = Math.abs(x - gameState.playerX);
+            const dy = Math.abs(y - gameState.playerY);
+            return (dx === 1 && dy === 0) || (dx === 0 && dy === 1);
+        }
+    
+        // *** FIX #1: Added diminishMetaTime() back, as the backend requires it. ***
+        async function movePlayer(x, y) {
+            const oldX = gameState.playerX;
+            const oldY = gameState.playerY;
+            gameState.playerX = x;
+            gameState.playerY = y;
+            updatePlayerPosition(x, y); 
+            await diminishMetaTime(); // Explicitly call the time deduction function.
+            updateMazeDisplay(oldX, oldY, x, y);
+            updateDisplay();
+        }
+    
+        function updateMazeDisplay(oldX, oldY, newX, newY) {
+            for (let dy = -2; dy <= 2; dy++) {
+                for (let dx = -2; dx <= 2; dx++) {
+                    const checkX = newX + dx;
+                    const checkY = newY + dy;
+                    if (checkX >= 0 && checkX < 16 && checkY >= 0 && checkY < 6) {
+                        updateSingleCell(checkX, checkY);
+                    }
+                    const oldCheckX = oldX + dx;
+                    const oldCheckY = oldY + dy;
+                    if (oldCheckX >= 0 && oldCheckX < 16 && oldCheckY >= 0 && oldCheckY < 6) {
+                        updateSingleCell(oldCheckX, oldCheckY);
+                    }
+                }
+            }
+            updateSingleCell(oldX, oldY);
+            updateSingleCell(newX, newY);
+        }
+    
+        function updateSingleCell(x, y) {
+            const cell = document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
+            if (cell) {
+                const cellType = mazeMap[y][x];
+                const isVisible = isCellVisible(x, y);
+                const isUnlocked = gameState.unlockedCells.has(`${x},${y}`);
+                setCellAppearance(cell, cellType, x, y, isVisible, isUnlocked);
+            }
+        }
+        
+        async function unlockCell(x, y) {
+            const cellKey = `${x},${y}`;
+            if (!gameState.unlockedCells.has(cellKey)) {
+                gameState.unlockedCells.add(cellKey);
+                await addMetaProgress(x, y);
+            }
+        }
+    
+        async function handleEmptyCell(x, y) {
+            const cooldownStatus = await checkSimpleCooldown();
+            if (cooldownStatus.cooldownRemaining > 0) {
+                showCooldownNotice('simple', cooldownStatus.cooldownRemaining);
+                return;
+            }
+            const puzzle = await getRandomPuzzle();
+            if (puzzle && puzzle.success) {
+                showPuzzleModal(puzzle.puzzle, x, y);
+            } else {
+                alert('无法获取谜题，请检查后端服务或稍后再试。');
+            }
+        }
+    
+        async function handleDoorCell(x, y) {
+            if (gameState.keys > 0) {
+                const confirmed = confirm("您确定要消耗一把钥匙打开这扇门吗？");
+                if (confirmed) {
+                    gameState.keys--;
+                    await unlockCell(x, y);
+                    alert('门已打开！现在可以移动到这个位置了。');
+                    updateSingleCell(x, y);
+                    updateDisplay();
+                }
+            } else {
+                alert('需要钥匙才能打开这扇门！');
+            }
+        }
+    
+        async function handleKeyCell(x, y) {
+            gameState.keys++;
+            await unlockCell(x, y);
+            alert('你获得了一把钥匙！这个位置已解锁。');
+            updateSingleCell(x, y);
+            updateDisplay();
+        }
+    
+        async function handleTrapCell(x, y) {
+            let trapId = null;
+            for (const id in trapLocations) {
+                if (trapLocations[id][0] === x && trapLocations[id][1] === y) {
+                    trapId = id;
+                    break;
+                }
+            }
+            if (!trapId) return;
+            const cooldownStatus = await checkGoalkeeperCooldown();
+            if (cooldownStatus.cooldownRemaining > 0) {
+                alert(`守门员谜题处于冷却中，请等待 ${cooldownStatus.cooldownRemaining} 秒后重试。`);
+                return;
+            }
+            window.open(`${trapId}.html?x=${x}&y=${y}`, '_blank');
+        }
+    
+        async function handlePowerCell(x, y) {
+            gameState.powerDevices++;
+            await unlockCell(x, y);
+            const deviceConfig = powerDeviceLocations[`${x},${y}`];
+            if (deviceConfig) {
+                let newlyAddedClues = [];
+                deviceConfig.clues.forEach(clueIndex => {
+                    const clue = allClues[clueIndex];
+                    if (!gameState.clues.includes(clue)) {
+                        gameState.clues.push(clue);
+                        newlyAddedClues.push(clue);
+                    }
+                });
+                if (newlyAddedClues.length > 0) {
+                    alert(`激活电力装置成功！获得了新线索：\n- ${newlyAddedClues.join('\n- ')}\n\n这个位置已解锁。`);
+                } else {
+                    alert('激活电力装置成功！这个位置已解锁。');
+                }
+            }
+            updateSingleCell(x, y);
+            updateDisplay();
+        }
+    
+        async function handleCardCell(x, y) {
+            gameState.hasCard = true;
+            await unlockCell(x, y);
+            await updateUserData('meta_card', 'true');
+            alert('你获得了门禁卡！这个位置已解锁。');
+            updateSingleCell(x, y);
+            updateDisplay();
+        }
+    
+        window.addEventListener('message', async function(event) {
+            if (event.data && event.data.type === 'trapSolved') {
+                const { trapCoords } = event.data;
+                const x = trapCoords[0];
+                const y = trapCoords[1];
+                await unlockCell(x, y);
+                updateSingleCell(x, y); 
+                updateDisplay();
+                alert(`坐标 [${x},${y}] 的陷阱已被解除！`);
+            }
+        });
+    
+        async function submitPuzzleAnswer() {
+            const answer = document.getElementById('puzzleAnswer').value.trim();
+            const target = window.currentPuzzleTarget;
+            if (!target) return;
+            if (answer === target.answer) {
+                closePuzzleModal();
+                await unlockCell(target.x, target.y);
+                alert('谜题已解决！该格子已解锁，现在可以移动过去了。');
+                updateSingleCell(target.x, target.y);
+                updateDisplay();
+            } else {
+                await startSimpleCooldown();
+                const cooldownStatus = await checkSimpleCooldown();
+                showCooldownNotice('simple', cooldownStatus.cooldownRemaining);
+            }
+        }
+    
+        function showPuzzleModal(puzzleData, targetX, targetY) {
+            document.getElementById('puzzleQuestion').textContent = puzzleData.puzzle;
+            document.getElementById('puzzleAnswer').value = '';
+            document.getElementById('puzzleModal').style.display = 'block';
+            window.currentPuzzleTarget = { x: targetX, y: targetY, answer: puzzleData.key };
+        }
+    
+        function closePuzzleModal() {
+            document.getElementById('puzzleModal').style.display = 'none';
+            window.currentPuzzleTarget = null;
+        }
+    
+        async function skipPuzzle() {
+            if (!confirm('跳过谜题将扣除额外时间，确定要跳过吗？')) return;
+            const target = window.currentPuzzleTarget;
+            closePuzzleModal();
+            await diminishMetaTime();
+            await diminishMetaTime();
+            await unlockCell(target.x, target.y);
+            alert('已跳过谜题，扣除了额外时间。该格子已解锁。');
+            updateSingleCell(target.x, target.y);
+            updateDisplay();
+        }
+    
+        function close4x4Modal() {
+            document.getElementById('puzzle4x4Modal').style.display = 'none';
+        }
+    
+        async function submit4x4Answer() {
+            const cooldownStatus = await check4x4Cooldown();
+            if (cooldownStatus.cooldownRemaining > 0) {
+                show4x4CooldownNotice(cooldownStatus.cooldownRemaining);
+                return;
+            }
+            const keys = [document.getElementById('row1').value.trim(), document.getElementById('row2').value.trim(), document.getElementById('row3').value.trim(), document.getElementById('row4').value.trim()];
+            const response = await fetch(`${API_BASE}/check_4x4_key`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include', body: JSON.stringify({ username: gameState.username, keys: keys }) });
+            const data = await response.json();
+            if (data.success) {
+                gameState.puzzle4x4Solved = true;
+                await updateUserData('meta_4x4_solved', 'true');
+                alert('4x4谜题解决成功！');
+                updateDisplay();
+            } else {
+                await fetch(`${API_BASE}/start_4x4_cooldown`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include', body: JSON.stringify({ username: gameState.username }) });
+                const newCooldownStatus = await check4x4Cooldown();
+                show4x4CooldownNotice(newCooldownStatus.cooldownRemaining);
+            }
+        }
+        
+        async function checkProgress() {
+            try {
+                const response = await fetch(`${API_BASE}/acc_check_password`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include', body: JSON.stringify({ username: gameState.username, password: gameState.password }) });
+                const data = await response.json();
+                if (data.success && data.user_data && parseInt(data.user_data.progress) === 9) {
+                    const metaStatus = await getMetaStatus();
+                    if (metaStatus.remainingSeconds > 0) {
+                        window.location.href = 'ne.html';
+                    } else {
+                        window.location.href = 'be.html';
+                    }
+                    return false;
+                }
+                return true;
+            } catch (error) {
+                return true;
+            }
+        }
+    
+        async function attemptEscape() {
+            if (gameState.powerDevices < 3) { alert('逃生失败：还有电力装置未激活！'); return; }
+            if (!gameState.hasCard) { alert('逃生失败：需要门禁卡！'); return; }
+            if (!gameState.puzzle4x4Solved) { alert('逃生失败：需要先解决4x4谜题！'); return; }
+            const metaStatus = await getMetaStatus();
+            await updateUserData('progress', '9');
+            if (metaStatus.remainingSeconds > 0) {
+                window.location.href = 'ne.html';
+            } else {
+                window.location.href = 'be.html';
+            }
+        }
+    
+        function showCooldownNotice(type, seconds) {
+            if (type !== 'simple') return;
+            const notice = document.getElementById('cooldownNotice');
+            const timeSpan = document.getElementById('cooldownTime');
+            timeSpan.textContent = seconds;
+            notice.style.display = 'block';
+            const countdown = setInterval(() => {
+                seconds--;
+                timeSpan.textContent = seconds;
+                if (seconds <= 0) {
+                    clearInterval(countdown);
+                    notice.style.display = 'none';
+                }
+            }, 1000);
+        }
+    
+        function show4x4CooldownNotice(seconds) {
+            const notice = document.getElementById('puzzle4x4Cooldown');
+            const timeSpan = document.getElementById('puzzle4x4CooldownTime');
+            timeSpan.textContent = seconds;
+            notice.style.display = 'block';
+            const countdown = setInterval(() => {
+                seconds--;
+                timeSpan.textContent = seconds;
+                if (seconds <= 0) {
+                    clearInterval(countdown);
+                    notice.style.display = 'none';
+                }
+            }, 1000);
+        }
+    
+        function updateDisplay() {
+            document.getElementById('playerPosition').textContent = `[${gameState.playerX},${gameState.playerY}]`;
+            document.getElementById('keyCount').textContent = gameState.keys;
+            document.getElementById('powerCount').textContent = `${gameState.powerDevices}/3`;
+            document.getElementById('cardStatus').textContent = gameState.hasCard ? '已获得' : '未获得';
+            const cluesList = document.getElementById('cluesList');
+            if (gameState.clues.length > 0) {
+                const sortedClues = [...gameState.clues].sort((a, b) => allClues.indexOf(a) - allClues.indexOf(b));
+                cluesList.innerHTML = sortedClues.map(clue => `<div class="clue-item">${clue}</div>`).join('');
+            } else {
+                cluesList.innerHTML = '<div style="color: #666; font-style: italic;">暂无线索</div>';
+            }
+        }
+    
+        function startTimeMonitoring() {
+            setInterval(async () => {
+                const metaStatus = await getMetaStatus();
+                updateTimeDisplay(metaStatus.remainingSeconds);
+            }, 1000);
+        }
+    
+        function updateTimeDisplay(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            const timeStr = `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            document.getElementById('timeText').textContent = `剩余时间: ${timeStr}`;
+            document.getElementById('timeRemaining').textContent = timeStr;
+            
+            // *** FIX #2: Correct maxTime to 8 hours (28800 seconds). ***
+            const maxTime = 86400;
+            const percentage = Math.max(0, (seconds / maxTime) * 100);
+            document.getElementById('timeBarFill').style.width = `${percentage}%`;
+        }
+        
+        async function getRandomPuzzle() {
+            try {
+                const response = await fetch(`${API_BASE}/random`);
+                return await response.json();
+            } catch (error) {
+                console.error('获取随机谜题失败:', error);
+                return { success: false, puzzle: null };
+            }
+        }
+    
+        async function checkSimpleCooldown() {
+            try {
+                const response = await fetch(`${API_BASE}/simple_cooldown_status`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ username: gameState.username })
+                });
+                return await response.json();
+            } catch (error) {
+                console.error('检查简单冷却失败:', error);
+                return { cooldownRemaining: 0 };
+            }
+        }
+    
+        async function startSimpleCooldown() {
+            try {
+                await fetch(`${API_BASE}/start_simple_cooldown`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ username: gameState.username })
+                });
+            } catch (error) {
+                console.error('开始简单冷却失败:', error);
+            }
+        }
+    
+        async function checkGoalkeeperCooldown() {
+            try {
+                const response = await fetch(`${API_BASE}/goalkeeper_cooldown_status`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ username: gameState.username })
+                });
+                return await response.json();
+            } catch (error) {
+                console.error('检查守门员冷却失败:', error);
+                return { cooldownRemaining: 0 };
+            }
+        }
+    
+        async function check4x4Cooldown() {
+            try {
+                const response = await fetch(`${API_BASE}/4x4_cooldown_status`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ username: gameState.username })
+                });
+                return await response.json();
+            } catch (error) {
+                console.error('检查4x4冷却失败:', error);
+                return { cooldownRemaining: 0 };
+            }
+        }
+    
+        async function updateUserData(option, value) {
+            try {
+                await fetch(`${API_BASE}/set_user_data`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ username: gameState.username, option, value })
+                });
+            } catch (error) {
+                console.error('更新用户数据失败:', error);
+            }
+        }
+    
+        async function updatePlayerPosition(x, y) {
+            try {
+                await fetch(`${API_BASE}/change_meta_xy`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ username: gameState.username, new_xy: `[${x},${y}]` })
+                });
+            } catch (error) {
+                console.error('更新玩家位置失败:', error);
+            }
+        }
+    
+        async function addMetaProgress(x, y) {
+            try {
+                await fetch(`${API_BASE}/add_meta`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ username: gameState.username, progress: `[${x},${y}]` })
+                });
+            } catch (error) {
+                console.error('添加Meta进度失败:', error);
+            }
+        }
+    
+        async function diminishMetaTime() {
+            try {
+                const response = await fetch(`${API_BASE}/diminish_meta_time`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ username: gameState.username })
+                });
+    
+                const data = await response.json();
+    
+                if (!response.ok) {
+                    console.error('调用失败:', data.message);
+                } else {
+                    console.log('调用成功:', data.message);
+                }
+            } catch (error) {
+                console.error('减少Meta时间请求错误:', error);
+            }
+        }
+    
+        async function getMetaStatus() {
+            try {
+                const response = await fetch(`${API_BASE}/meta-status`);
+                return await response.json();
+            } catch (error) {
+                console.error('获取Meta状态失败:', error);
+                return { remainingSeconds: 0 };
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', initGame);
+    </script>
+</body>
+</html>

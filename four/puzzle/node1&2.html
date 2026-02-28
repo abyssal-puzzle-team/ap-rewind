@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>谜题1&2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- 变量与全局设置 --- */
+        :root {
+            --bg-color: #02040a;
+            --primary-color: #00bfff;
+            --rain-color: rgba(0, 191, 255, 0.8);
+            --text-color: #c9d1d9;
+            --border-color: #212d40;
+            --container-bg: rgba(12, 22, 39, 0.85);
+            --error-color: #ff4d6d;
+            --success-color: #00f5d4;
+            --glow-color: rgba(0, 191, 255, 0.7);
+            --success-glow-color: rgba(0, 245, 212, 0.7);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            /* MODIFIED: Align to top for long content */
+            align-items: flex-start;
+            padding: 5vh 0;
+            min-height: 100vh;
+            /* MODIFIED: Allow body to scroll if content overflows */
+            overflow: auto; 
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        /* --- 背景与加载动画 --- */
+        #rain-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* 为了让文字在动画下方 */
+            z-index: 9999;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        .loader-gate {
+            position: relative;
+            width: 150px;
+            height: 150px;
+        }
+
+        #loader-status {
+            position: absolute;
+            bottom: 20%;
+            font-size: 1rem;
+            color: var(--text-color);
+            text-align: center;
+            width: 100%;
+        }
+
+        .loader-gate div {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--primary-color);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            animation: gate-animation 2s ease-in-out infinite;
+        }
+
+        .loader-gate div:nth-child(2) { animation-delay: -0.2s; }
+        .loader-gate div:nth-child(3) { animation-delay: -0.4s; }
+
+        @keyframes gate-animation {
+            0%, 100% { transform: scale(0) rotate(0deg); opacity: 0; }
+            50% { opacity: 1; }
+            80% { transform: scale(1) rotate(60deg); opacity: 0; }
+        }
+
+        /* --- 主容器与节点 --- */
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 1s ease-out;
+        }
+
+        .container.loaded {
+            opacity: 1;
+        }
+
+        .node {
+            position: absolute;
+            width: 120px;
+            height: 138px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 5px black);
+        }
+        #node1 { top: 10%; left: 15%; }
+        #node2 { top: 60%; right: 15%; }
+
+        .node-shape {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: var(--container-bg);
+            border: 2px solid var(--border-color);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .node-shape::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 200%;
+            background: linear-gradient(to bottom, transparent 0%, transparent 45%, var(--primary-color) 50%, transparent 55%, transparent 100%);
+            animation: node-drip 3s linear infinite;
+        }
+
+        .node-text {
+            z-index: 1;
+            transition: opacity 0.3s ease, color 0.3s ease;
+        }
+
+        @keyframes node-drip {
+            from { transform: translateY(-50%); }
+            to { transform: translateY(0%); }
+        }
+
+        /* --- 节点状态 --- */
+        .node:hover:not(.unlocked) .node-shape,
+        .node.selected .node-shape {
+            border-color: var(--primary-color);
+            background-color: rgba(0, 191, 255, 0.2);
+            filter: drop-shadow(0 0 15px var(--glow-color));
+        }
+
+        .node:hover:not(.unlocked) .node-text,
+        .node.selected .node-text {
+            color: white;
+            text-shadow: 0 0 5px var(--glow-color);
+        }
+
+        .node:hover:not(.unlocked) .node-shape::before,
+        .node.selected .node-shape::before {
+            animation-duration: 1s;
+        }
+
+        .node.solved .node-shape {
+            border-color: var(--success-color);
+            background-color: rgba(0, 245, 212, 0.2);
+            filter: drop-shadow(0 0 15px var(--success-glow-color));
+        }
+
+        .node.solved .node-shape::before,
+        .node.unlocked .node-shape::before {
+            animation: none;
+            background: none;
+        }
+        
+        .node.solved .node-text {
+            opacity: 0;
+        }
+
+        .node.unlocked {
+            cursor: not-allowed;
+        }
+
+        .node.unlocked .node-shape {
+            border-color: var(--success-color);
+            box-shadow: 0 0 10px var(--success-glow-color);
+            background-color: var(--container-bg);
+        }
+
+        .node.unlocked .node-text {
+            opacity: 1;
+            color: var(--success-color);
+        }
+
+        .solved-icon {
+            position: absolute;
+            width: 50px;
+            height: 25px;
+            transform: scale(0) rotate(-45deg);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2;
+        }
+
+        .solved-icon::before,
+        .solved-icon::after {
+            content: '';
+            position: absolute;
+            background-color: var(--success-color);
+            border-radius: 2px;
+            box-shadow: 0 0 10px var(--success-glow-color);
+        }
+
+        .solved-icon::before { width: 100%; height: 5px; left: 0; bottom: 0; }
+        .solved-icon::after { width: 5px; height: 100%; left: 0; bottom: 0; }
+        .node.solved .solved-icon { transform: scale(1.2) rotate(-45deg); opacity: 1; }
+        
+        /* --- 连接线 --- */
+        #connection-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        #connection-line,
+        #final-connection-line {
+            stroke-width: 2;
+            stroke-linecap: round;
+            fill: none;
+        }
+
+        #connection-line {
+            stroke: var(--primary-color);
+            filter: drop-shadow(0 0 5px var(--glow-color));
+            transition: stroke-dashoffset 0.8s ease-out;
+        }
+
+        #final-connection-line {
+            stroke: var(--success-color);
+            filter: drop-shadow(0 0 8px var(--success-glow-color));
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+        }
+
+        /* --- 弹窗与交互界面 (Hub) --- */
+        #hub-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 8;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        #hub-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #central-hub {
+            position: relative;
+            padding: 30px;
+            background: var(--container-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            text-align: center;
+            transform: scale(0.95);
+            transition: transform 0.3s ease-out;
+        }
+
+        #hub-overlay.visible #central-hub {
+            transform: scale(1);
+        }
+
+        #central-hub h1 {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        #key-input {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1rem;
+            width: 280px;
+            padding: 12px;
+            background-color: #0d1117;
+            border: 2px solid var(--border-color);
+            color: var(--text-color);
+            border-radius: 5px;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        #key-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: #161b22;
+        }
+
+        #key-input:disabled {
+            cursor: not-allowed;
+            background-color: #21262d;
+        }
+
+        #submit-key {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1rem;
+            padding: 12px 20px;
+            width: 150px;
+            background-color: var(--primary-color);
+            color: #0d1117;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        #submit-key:hover:not(:disabled) {
+            background-color: #90caff;
+            letter-spacing: 1px;
+        }
+        
+        #submit-key:disabled {
+            background-color: #30363d;
+            color: #8b949e;
+            cursor: not-allowed;
+        }
+
+        #status-message {
+            margin-top: 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            min-height: 1.5em;
+        }
+
+        .status-success { color: var(--success-color); }
+        .status-error { color: var(--error-color); }
+        .status-info { color: var(--primary-color); }
+
+        /* --- 文本模态框 (Modal) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 4, 10, 0.8);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--container-bg);
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 700px; /* MODIFIED: Increased width slightly */
+            max-height: 85vh; /* MODIFIED: Increased height slightly */
+            overflow-y: auto;
+            position: relative;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            transform: translateY(-30px) scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        .modal-overlay.visible .modal-content {
+            transform: translateY(0) scale(1);
+        }
+        
+        /* ADDED: Custom scrollbar for modal */
+        .modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        .modal-content::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+        .modal-content::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 191, 255, 0.4);
+            border-radius: 4px;
+            border: 1px solid rgba(0, 191, 255, 0.6);
+        }
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background-color: var(--primary-color);
+        }
+        
+        /* MODIFIED: Styles for dynamically generated content */
+        .modal-content h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            min-height: 1.5em;
+        }
+        
+        .modal-content p {
+            font-size: 1rem;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            min-height: 5em;
+        }
+
+        /* ADDED: Styles for the inserted puzzle image */
+        .puzzle-image {
+            display: block;
+            max-width: 90%;
+            height: auto;
+            margin: 25px auto;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        }
+
+        #modal-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #8b949e;
+            font-size: 1.8rem;
+            cursor: pointer;
+            line-height: 1;
+            z-index: 10;
+        }
+        
+        #modal-close-btn:hover {
+            color: var(--text-color);
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            background-color: var(--text-color);
+            width: 10px;
+            height: 1.2em;
+            animation: blink 1s infinite;
+            margin-left: 2px;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="rain-canvas"></canvas>
+
+    <div id="loader">
+        <div class="loader-gate">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <p id="loader-status"></p>
+    </div>
+
+    <div class="container" id="main-container">
+        <svg id="connection-svg">
+            <line id="connection-line" x1="0" y1="0" x2="0" y2="0" />
+            <path id="final-connection-line" d="" />
+        </svg>
+
+        <div class="node" id="node1" data-node-id="node1">
+            <div class="node-shape"></div>
+            <span class="node-text">Node 1</span>
+            <span class="solved-icon"></span>
+        </div>
+
+        <div class="node" id="node2" data-node-id="node2">
+            <div class="node-shape"></div>
+            <span class="node-text">Node 2</span>
+            <span class="solved-icon"></span>
+        </div>
+    </div>
+
+    <div id="hub-overlay">
+        <div id="central-hub">
+            <h1 id="hub-title"></h1>
+            <div class="input-group">
+                <input type="text" id="key-input" placeholder="在此输入" autocomplete="off">
+                <button id="submit-key">提交</button>
+            </div>
+            <div id="status-message"></div>
+        </div>
+    </div>
+
+    <div id="modal-overlay" class="modal-overlay">
+        <div id="modal-content" class="modal-content">
+            <button id="modal-close-btn">×</button>
+            <!-- Content is now fully dynamic -->
+        </div>
+    </div>
+
+    <script>
+        // --- 数字雨背景脚本 (未修改) ---
+        const rainCanvas = document.getElementById('rain-canvas');
+        const ctx = rainCanvas.getContext('2d');
+        let width = rainCanvas.width = window.innerWidth;
+        let height = rainCanvas.height = window.innerHeight;
+        let droplets = [];
+        let splashes = [];
+
+        class Droplet {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * -height;
+                this.length = Math.random() * 20 + 10;
+                this.speed = Math.random() * 5 + 2;
+            }
+            update() {
+                this.y += this.speed;
+                if (this.y - this.length > height) {
+                    splashes.push(new Splash(this.x));
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(this.x, this.y - this.length);
+                ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--rain-color').trim();
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+            }
+        }
+        class Splash {
+            constructor(x) {
+                this.x = x;
+                this.y = height;
+                this.radius = 0;
+                this.maxRadius = Math.random() * 15 + 10;
+                this.opacity = 1;
+                this.speed = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.radius += this.speed;
+                this.opacity -= 0.02;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                ctx.strokeStyle = `rgba(0, 191, 255, ${this.opacity})`;
+                ctx.stroke();
+            }
+        }
+
+        function initRain() {
+            for (let i = 0; i < Math.floor(width / 20); i++) {
+                droplets.push(new Droplet());
+            }
+        }
+        function animateRain() {
+            ctx.fillStyle = 'rgba(2, 4, 10, 0.2)';
+            ctx.fillRect(0, 0, width, height);
+            droplets.forEach(d => { d.update(); d.draw(); });
+            splashes = splashes.filter(s => s.opacity > 0);
+            splashes.forEach(s => { s.update(); s.draw(); });
+            requestAnimationFrame(animateRain);
+        }
+        window.addEventListener('resize', () => {
+            width = rainCanvas.width = window.innerWidth;
+            height = rainCanvas.height = window.innerHeight;
+            droplets = [];
+            initRain();
+        });
+        initRain();
+        animateRain();
+
+        // --- 主应用脚本 ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // 配置与状态
+            const API_BASE_URL = 'https://abyssal4.asterveil.top/api';
+            const nodeTexts = {
+                'node1': {
+                    hubTitle: '解谜 1',
+                    modalTitle: '节点 1 数据流截取',
+                    content: `
+[Hard]
+Abyss看到一些被打乱顺序的数据,准备将它们归类到旁边的存储器中,书架上有字:要重视开头,迈好第一步.
+4. 来自Maya所在区域的一份书评:主题为《 楞伽经 》中介绍的三识:第一識"Reality" ; 第二識"Causality" ; 第三識 "Pluriversality" 对于个人哲学有启发性与影响力…
+2.一张破损的专业植发的推销广告,旁边还有一些被锁链捆住的石头
+5.一段游戏的系统提示文:已开启BOSS任务:(来自"异世界"的火力支援)
+3.Paradigm预言:蓝色的数据被染成鲜红的色彩,镜面破碎,世界迎来末日…
+1.一张报纸,记载有不完整的内容:近期像素塔,永夜城,第三太阳三国与xxx(墨水覆盖)签署资源共同占有公约,互助合作推动发展…
+6.(前面的数据模糊)1s  N uT    zvE  Fu 查看简介∨
+—————
+7.一份关于电影《速度与激情》的影评:
+速度与激情令你热血沸腾：
+燃烧吧！点燃你生命中的每一秒，仿佛这已是
+ㅤㅤ最
+ㅤㅤㅤ后
+ㅤㅤㅤㅤ一
+ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ刻。
+8.生物学前沿研究:发现名字为T-Virus的病毒,T碱基从之前的第一位改为排列在第四位,暂无特效药,一段时间前传染入记忆世界,群众应注意防范…
+9..
+
+Abyss还看到电脑绘图软件里有一张图片,旁边的设置停留在了调RGB值的界面.看来要把这个图片的相关信息和上面的数据结合起来才能得到答案.
+[是一个单词（首字母大写）]`,
+                    // ADDED: Image URL for node 1
+                    // IMPORTANT: You requested './img/node1.html', which is not a valid image.
+                    // I am using a placeholder './img/node1.png'. Please change this to your actual image file.
+                    imageUrl: './img/node1.jpeg'
+                },
+                'node2': {
+                    hubTitle: '解谜 2',
+                    modalTitle: '节点 2 访问日志',
+                    content: `
+[Abyss]
+2021.1.25 0:0:5_
+A：“诶，你看的什么视频啊？”
+B：“写在上面呢，是一个音游视频，还是昨天刚出的。”
+A：“这首歌叫什么？”
+B：“叫******（一个不清楚长度的字符串），有个外号‘██’（█代表一个缺失的非英文字符）。”
+A：“这个外号让我想起来了几年前那次██，编号是1724，名字是H?i???（?代表一个缺失的英文字符）。
+我当时在地球上的███，它就从我旁边经过。”
+B听到后，在他的笔记本右边那一页写下一行字：“1724 ᜤ H?i??? I”
+A虽然没弄懂符号“ᜤ”的含义，但他认为这个符号与这行开头记录的编号有关联。
+A看向B的笔记本，发现页面上方还有几行记录：
+---3 倓 --t-- ?
+5--2 嘒 -----?- ?
+---2 昂 --?- ?
+---6 爦 ?---l- ?
+-5-1 甑 ----e E
+---3 舃 -d-?-- ?
+-4-2 В -----t- ?
+其中“-”所在的字符被划掉了，但是已知一个“-”代表一个字符。
+在每行的第三个字符串上，还都有一个长长的“⬅”️。
+每一行末尾标注的字母连起来正好就是那首歌名的前八个字母。
+A再看到笔记本的左页，那里只有一行字：“䤂匇朤=====^===ခᐔ”。
+B：“有一次，我本子的一行字中的一部分……变成了一条衔尾蛇跑走了，现在那地方只剩下几个等号了。
+哦对，衔尾蛇有一个透明的地方，在本子中那个地方长出了一个凸起。
+从一个地方切开那条衔尾蛇，你能看到它的正中间就是那个透明的地方。
+从那个地方处，再切一刀，这时候整条蛇分成了两个大小一样的部分，其中一部分就是你要找的东西了。”
+A没有说话，他在思考着。“衔尾蛇……字符串……环……”
+但是这时候，A脑海里冒出了另一个东西，是一块石碑，旁边写着B笔记本右页指向的东西在这块石碑所指向的东西之中。
+石碑的内容是：f(1)=2,f(2)=3,f(3)=5,f(6)=13,f(8)=19,S??e?t Answer=Bili[f(2)*f(4)*f(5)*f(11)*f(5721)].
+
+2024.8.4 21-_-00
+B：“我还记得三年半之前你和我说的那次编号是1724的██，今天我看到了一个和它相关的东西——一座岛。”
+A：“为什么和那次编号是1724的██相关？”
+B：“因为这是一座经常会有█的小岛。”
+A：“那它有什么特别的吗？”
+B：“今天，有人在P??g???踏上了它，而且方式很特别。
+登上这座岛，他的????r?s████之旅就到██了，但这不是整段旅途的██。”
+
+最后两个“██”的内容是相同的。
+最后两个缺失的中文字符的意思是??d，它也是在编号中每次都会用到的、很重要的东西；A要找的东西，是????；把他们连起来，便是最终的答案。
+答案的第一个字母为大写，其他均为小写。
+[是一个单词（首字母大写）]`
+                }
+            };
+            let selectedNodeId = null;
+            let cooldownInterval = null;
+            let isSubmitting = false;
+            let typingTimeout = null;
+            let solvedStatus = { node1: false, node2: false };
+            let currentUser = null; // 用于存储已验证的用户名
+
+            // DOM 元素获取
+            const hubOverlay = document.getElementById('hub-overlay');
+            const hubTitle = document.getElementById('hub-title');
+            const keyInput = document.getElementById('key-input');
+            const submitButton = document.getElementById('submit-key');
+            const statusMessage = document.getElementById('status-message');
+            const modalOverlay = document.getElementById('modal-overlay');
+            const modalContent = document.getElementById('modal-content');
+
+            // --- 功能函数 ---
+            const getCookie = (name) => {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(';').shift();
+                return null;
+            };
+
+            const updateProgress = async (username, progressValue) => {
+                if (!username) {
+                    console.error("无法更新进度：用户名未知。");
+                    return;
+                }
+                try {
+                    const response = await fetch(`${API_BASE_URL}/set_user_data`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            username: username,
+                            option: "progress",
+                            value: String(progressValue)
+                        })
+                    });
+                    const data = await response.json();
+                    if (data.success) {
+                        console.log(`用户 ${username} 的进度已成功更新为 ${progressValue}。`);
+                    } else {
+                        console.error(`更新进度失败: ${data.message}`);
+                    }
+                } catch (error) {
+                    console.error('调用 /set_user_data 接口时发生网络错误:', error);
+                }
+            };
+
+            const performKeyCheck = async (key) => {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/check-key`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ nodeId: selectedNodeId, key: key })
+                    });
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        const justSolvedNodeId = selectedNodeId;
+                        hideHub();
+                        showTemporaryMessage(data.message, 'success');
+                        keyInput.value = '';
+                        const solvedNode = document.getElementById(justSolvedNodeId);
+                        
+                        if (solvedNode && !solvedStatus[justSolvedNodeId]) {
+                            solvedStatus[justSolvedNodeId] = true;
+                            solvedNode.classList.add('solved');
+                            setTimeout(() => {
+                                solvedNode.classList.remove('solved');
+                                solvedNode.classList.add('unlocked');
+                            }, 2000);
+                            await checkWinCondition();
+                        }
+                    } else {
+                        showTemporaryMessage(data.message, 'error');
+                        if (data.cooldown) startCooldownTimer(data.cooldown);
+                    }
+                } catch (error) {
+                    console.error('密钥验证失败:', error);
+                    showTemporaryMessage('错误: 密钥验证请求失败', 'error');
+                }
+            };
+            
+            const checkWinCondition = async () => {
+                if (Object.values(solvedStatus).every(status => status === true)) {
+                    document.querySelectorAll('.node').forEach(n => n.style.pointerEvents = 'none');
+                    await updateProgress(currentUser, '3');
+                    await animateFinalConnection();
+                    showTemporaryMessage('所有节点已解密！正在跳转至下一阶段...', 'success', null);
+                    setTimeout(() => { 
+                        window.location.href = '../storyline/insight/node1.html';
+                    }, 2000);
+                }
+            };
+            
+            const handleSubmit = async () => {
+                if (isSubmitting || !selectedNodeId) return;
+                const key = keyInput.value.trim();
+                if (!key) {
+                    showTemporaryMessage('错误: 密钥不能为空', 'error');
+                    return;
+                }
+                isSubmitting = true;
+                setInputsDisabled(true);
+                showTemporaryMessage('正在验证...', 'info', null);
+                try {
+                    const cooldownStatus = await checkCooldownStatus();
+                    if (cooldownStatus > 0) {
+                        startCooldownTimer(cooldownStatus);
+                    } else {
+                        await performKeyCheck(key);
+                    }
+                } catch (error) {
+                    console.error('发生意外错误:', error);
+                    showTemporaryMessage('发生未知错误，请检查控制台', 'error');
+                } finally {
+                    isSubmitting = false;
+                    if (!cooldownInterval && hubOverlay.classList.contains('visible')) {
+                        setInputsDisabled(false);
+                    }
+                }
+            };
+
+            const checkCooldownStatus = async () => {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/cooldown-status`);
+                    if (!response.ok) throw new Error(`HTTP 错误! 状态: ${response.status}`);
+                    const data = await response.json();
+                    return data.cooldownRemaining || 0;
+                } catch (error) {
+                    console.error('无法检查冷却状态:', error);
+                    showTemporaryMessage('警告: 无法连接状态服务器', 'error');
+                    return 0;
+                }
+            };
+
+            const handleNodeClick = (nodeId, event) => {
+                const nodeElement = event.currentTarget;
+                if (nodeElement.classList.contains('unlocked') || isSubmitting) return;
+
+                if (selectedNodeId && selectedNodeId !== nodeId) {
+                    document.getElementById(selectedNodeId)?.classList.remove('selected');
+                }
+                selectedNodeId = nodeId;
+                nodeElement.classList.add('selected');
+                
+                drawConnectionLine(nodeId);
+                const nodeInfo = nodeTexts[nodeId];
+                if (nodeInfo) {
+                    // MODIFIED: Pass the entire nodeInfo object
+                    openTextModal(nodeInfo);
+                }
+            };
+
+            const showHub = () => {
+                if (!selectedNodeId) return;
+                hubTitle.textContent = nodeTexts[selectedNodeId].hubTitle;
+                hubOverlay.classList.add('visible');
+                setInputsDisabled(false);
+                keyInput.focus();
+            };
+
+            const hideHub = () => {
+                hubOverlay.classList.remove('visible');
+                hideConnectionLine();
+                setInputsDisabled(true);
+                if (selectedNodeId) {
+                    document.getElementById(selectedNodeId)?.classList.remove('selected');
+                    selectedNodeId = null;
+                }
+            };
+
+            // MODIFIED: This function now builds the modal content dynamically
+            const openTextModal = (nodeInfo) => {
+                // Clear previous content, keeping the close button
+                while (modalContent.children.length > 1) {
+                    modalContent.removeChild(modalContent.lastChild);
+                }
+
+                modalOverlay.classList.add('visible');
+                document.body.classList.add('modal-open');
+
+                // Create and append title
+                const titleEl = document.createElement('h2');
+                modalContent.appendChild(titleEl);
+                
+                // Create and append text
+                const textEl = document.createElement('p');
+                modalContent.appendChild(textEl);
+                
+                // Type out title, then text
+                typewriterEffect(titleEl, nodeInfo.modalTitle, 30, () => {
+                    typewriterEffect(textEl, nodeInfo.content, 5, () => {
+                        // After text is typed, check for and append image
+                        if (nodeInfo.imageUrl) {
+                            const imgEl = document.createElement('img');
+                            imgEl.src = nodeInfo.imageUrl;
+                            imgEl.alt = '谜题相关图片';
+                            imgEl.className = 'puzzle-image';
+                            modalContent.appendChild(imgEl);
+                        }
+                    });
+                });
+            };
+
+            const closeTextModal = () => {
+                modalOverlay.classList.remove('visible');
+                document.body.classList.remove('modal-open');
+                if (typingTimeout) clearTimeout(typingTimeout);
+                showHub();
+            };
+
+            const typewriterEffect = (element, text, speed, callback) => {
+                if (typingTimeout) clearTimeout(typingTimeout);
+                let i = 0;
+                element.innerHTML = '';
+                const cursor = document.createElement('span');
+                cursor.className = 'typing-cursor';
+                element.appendChild(cursor);
+
+                function type() {
+                    if (i < text.length) {
+                        cursor.insertAdjacentText('beforebegin', text.charAt(i));
+                        i++;
+                        typingTimeout = setTimeout(type, speed);
+                    } else {
+                        cursor.remove();
+                        if (callback) callback();
+                    }
+                }
+                type();
+            };
+
+            const startCooldownTimer = (duration) => {
+                if (cooldownInterval) clearInterval(cooldownInterval);
+                let remaining = duration;
+                setInputsDisabled(true);
+                statusMessage.className = 'status-error';
+                statusMessage.textContent = `系统冷却中... 剩余 ${remaining} 秒`;
+
+                cooldownInterval = setInterval(() => {
+                    remaining--;
+                    if (remaining > 0) {
+                        statusMessage.textContent = `系统冷却中... 剩余 ${remaining} 秒`;
+                    } else {
+                        clearInterval(cooldownInterval);
+                        cooldownInterval = null;
+                        statusMessage.className = 'status-success';
+                        statusMessage.textContent = '冷却结束，可以再次尝试。';
+                        setInputsDisabled(false);
+                        setTimeout(() => {
+                            if (statusMessage.textContent === '冷却结束，可以再次尝试。') {
+                                statusMessage.textContent = '';
+                            }
+                        }, 3000);
+                    }
+                }, 1000);
+            };
+
+            const setInputsDisabled = (disabled) => {
+                keyInput.disabled = disabled;
+                submitButton.disabled = disabled;
+            };
+
+            const showTemporaryMessage = (message, type, duration = 4000) => {
+                statusMessage.textContent = message;
+                statusMessage.className = `status-${type}`;
+                if (duration !== null) {
+                    setTimeout(() => {
+                        if (statusMessage.textContent === message) {
+                            statusMessage.textContent = '';
+                            statusMessage.className = '';
+                        }
+                    }, duration);
+                }
+            };
+            
+            // --- 动画与验证逻辑 (未修改核心部分) ---
+            const drawConnectionLine = (nodeId) => {
+                const nodeEl = document.getElementById(nodeId);
+                const containerRect = document.getElementById('main-container').getBoundingClientRect();
+                const startX = nodeEl.offsetLeft + nodeEl.offsetWidth / 2;
+                const startY = nodeEl.offsetTop + nodeEl.offsetHeight / 2;
+                const endX = containerRect.width / 2;
+                const endY = containerRect.height / 2;
+                const connectionLine = document.getElementById('connection-line');
+                connectionLine.setAttribute('x1', startX);
+                connectionLine.setAttribute('y1', startY);
+                connectionLine.setAttribute('x2', startX);
+                connectionLine.setAttribute('y2', startY);
+                setTimeout(() => {
+                    connectionLine.setAttribute('x2', endX);
+                    connectionLine.setAttribute('y2', endY);
+                    const length = Math.hypot(endX - startX, endY - startY);
+                    connectionLine.style.strokeDasharray = length;
+                    connectionLine.style.strokeDashoffset = length;
+                    requestAnimationFrame(() => { connectionLine.style.strokeDashoffset = 0; });
+                }, 10);
+            };
+            const hideConnectionLine = () => {
+                const connectionLine = document.getElementById('connection-line');
+                const length = connectionLine.style.strokeDasharray;
+                connectionLine.style.strokeDashoffset = length;
+            };
+            const animateFinalConnection = () => {
+                return new Promise(resolve => {
+                    const node1El = document.getElementById('node1');
+                    const node2El = document.getElementById('node2');
+                    const path = document.getElementById('final-connection-line');
+                    const startX = node1El.offsetLeft + node1El.offsetWidth / 2;
+                    const startY = node1El.offsetTop + node1El.offsetHeight / 2;
+                    const endX = node2El.offsetLeft + node2El.offsetWidth / 2;
+                    const endY = node2El.offsetTop + node2El.offsetHeight / 2;
+                    path.setAttribute('d', `M ${startX} ${startY} L ${endX} ${endY}`);
+                    const length = path.getTotalLength();
+                    path.style.strokeDasharray = length;
+                    path.style.strokeDashoffset = length;
+                    requestAnimationFrame(() => { path.style.strokeDashoffset = 0; });
+                    setTimeout(resolve, 1500);
+                });
+            };
+            const verifyAccountAndProgress = async () => {
+                const loaderStatus = document.getElementById('loader-status');
+                if (loaderStatus) { loaderStatus.textContent = '正在判断账户进度...'; }
+                const username = getCookie('username');
+                const password = getCookie('password');
+                if (!username || !password) {
+                    window.location.href = '../index.html';
+                    return Promise.reject('未找到凭据'); 
+                }
+                currentUser = username; 
+                try {
+                    const response = await fetch(`${API_BASE_URL}/acc_check_password`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username, password })
+                    });
+                    if (!response.ok) {
+                        window.location.href = '../index.html';
+                        return Promise.reject('凭据无效'); 
+                    }
+                    const data = await response.json();
+                    if (data.success) {
+                        const userProgress = String(data.user_data.progress);
+                        if (userProgress === '1') {
+                            return Promise.resolve(); 
+                        } else if (userProgress === '3') {
+                            window.location.href = '../storyline/insight/node1.html';
+                            return Promise.reject('进度已完成，跳转至下一阶段');
+                        } else {
+                            window.location.href = '../main.html';
+                            return Promise.reject('进度不符，跳转至主页');
+                        }
+                    } else {
+                        window.location.href = '../index.html';
+                        return Promise.reject('API报告失败');
+                    }
+                } catch (error) {
+                    console.error('账户验证期间发生错误:', error);
+                    if (loaderStatus) { loaderStatus.textContent = '验证失败，请检查网络并刷新。'; }
+                    return Promise.reject('网络或其它错误');
+                }
+            };
+
+            // 事件监听器
+            document.querySelectorAll('.node').forEach(node => {
+                node.addEventListener('click', (event) => handleNodeClick(node.dataset.nodeId, event));
+            });
+            submitButton.addEventListener('click', handleSubmit);
+            keyInput.addEventListener('keyup', (event) => {
+                if (event.key === 'Enter') handleSubmit();
+            });
+            document.getElementById('modal-close-btn').addEventListener('click', closeTextModal);
+            modalOverlay.addEventListener('click', (event) => {
+                if (event.target === modalOverlay) closeTextModal();
+            });
+            hubOverlay.addEventListener('click', (event) => {
+                if (event.target === hubOverlay) hideHub();
+            });
+
+            // 初始化
+            window.addEventListener('load', async () => {
+                try {
+                    await verifyAccountAndProgress();
+                    const loader = document.getElementById('loader');
+                    const mainContainer = document.getElementById('main-container');
+                    loader.style.opacity = '0';
+                    loader.addEventListener('transitionend', () => {
+                        if(loader) { loader.style.display = 'none'; }
+                    });
+                    mainContainer.classList.add('loaded');
+                    checkCooldownStatus().then(cooldown => {
+                        if (cooldown > 0) { startCooldownTimer(cooldown); }
+                    });
+                } catch (error) {
+                    console.log('页面加载因验证失败而中止:', error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

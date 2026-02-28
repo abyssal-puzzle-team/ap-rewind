@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>谜题5</title>
+    <!-- 引入字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Roboto:wght@300&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #00ddff;
+            --glow-color: rgba(0, 221, 255, 0.7);
+            --secondary-color: #e0e0e0;
+            --error-color: #ff4747;
+            --success-color: #5eff8d;
+            --dark-bg: #01020a;
+            --font-main: 'Chakra Petch', sans-serif;
+            --font-body: 'Roboto', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--dark-bg);
+            color: var(--secondary-color);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            /* align-items: center;  MODIFIED: Removed for long content */
+            height: 100vh;
+        }
+
+        /* --- 加载动画 (已添加状态文本) --- */
+        #loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease-out, visibility 0.5s;
+        }
+        .loader-text {
+            font-family: var(--font-main);
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 8px var(--glow-color);
+        }
+        #loader-status-text {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            opacity: 0.8;
+            margin-bottom: 30px;
+            min-height: 1.2em; /* 预留空间防止跳动 */
+            transition: opacity 0.3s;
+        }
+        .loader-ring { display: inline-block; position: relative; width: 80px; height: 80px; }
+        .loader-ring div { box-sizing: border-box; display: block; position: absolute; width: 64px; height: 64px; margin: 8px; border: 4px solid var(--primary-color); border-radius: 50%; animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite; border-color: var(--primary-color) transparent transparent transparent; }
+        .loader-ring div:nth-child(1) { animation-delay: -0.45s; }
+        .loader-ring div:nth-child(2) { animation-delay: -0.3s; }
+        .loader-ring div:nth-child(3) { animation-delay: -0.15s; }
+        @keyframes lds-ring { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* --- 3D 背景 --- */
+        #globe-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+
+        /* --- 主内容 (HUD) --- */
+        #main-content {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            /* MODIFIED: Align to top for long content */
+            align-items: flex-start;
+            padding-top: 10vh;
+            padding-bottom: 5vh;
+            padding-left: 5vw;
+            visibility: hidden;
+            overflow-y: auto; /* ADDED: Allow main content to scroll if needed on small heights */
+        }
+        .puzzle-container {
+            width: 90%;
+            /* MODIFIED: Increased max-width for better readability */
+            max-width: 550px;
+            background: linear-gradient(rgba(10, 25, 40, 0.1), rgba(10, 25, 40, 0.1)), repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0, 221, 255, 0.05) 1px, rgba(0, 221, 255, 0.05) 2px);
+            padding: 30px 40px;
+            border: 1px solid rgba(0, 221, 255, 0.2);
+            position: relative;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        #main-content.visible .puzzle-container { animation: fadeInSlide 0.7s 0.2s ease-out forwards; }
+        .puzzle-container::before, .puzzle-container::after { content: ''; position: absolute; width: 30px; height: 30px; border-color: var(--primary-color); border-style: solid; animation: draw-corners 0.7s ease-out forwards; }
+        .puzzle-container::before { top: -6px; left: -6px; border-width: 2px 0 0 2px; }
+        .puzzle-container::after { bottom: -6px; right: -6px; border-width: 0 2px 2px 0; }
+        @keyframes draw-corners { 0% { width: 0; height: 0; } 100% { width: 30px; height: 30px; } }
+        @keyframes fadeInSlide { to { opacity: 1; transform: translateX(0); } }
+
+        header { margin-bottom: 35px; opacity: 0; }
+        #main-content.visible header { animation: fadeInSlide 0.7s 0.4s ease-out forwards; }
+        header h1 { font-family: var(--font-main); font-size: 2.2rem; color: var(--primary-color); text-shadow: 0 0 10px var(--glow-color); position: relative; margin-bottom: 10px; }
+        header h1::after, header h1::before { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; background: var(--dark-bg); clip: rect(0, 0, 0, 0); }
+        header h1::before { left: 2px; text-shadow: -2px 0 var(--error-color); animation: glitch-anim-1 2.5s infinite linear alternate-reverse; }
+        header h1::after { left: -2px; text-shadow: -2px 0 var(--glow-color), 2px 2px var(--error-color); animation: glitch-anim-2 3s infinite linear alternate-reverse; }
+        @keyframes glitch-anim-1 { 0% { clip: rect(42px, 9999px, 44px, 0); } 100% { clip: rect(2px, 9999px, 92px, 0); } }
+        @keyframes glitch-anim-2 { 0% { clip: rect(15px, 9999px, 99px, 0); } 100% { clip: rect(85px, 9999px, 50px, 0); } }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--secondary-color);
+            opacity: 0.8;
+            height: auto; /* MODIFIED: Allow flexible height */
+            /* ADDED: Styles for long, scrollable puzzle text */
+            max-height: 45vh; /* Control max height before scrolling */
+            overflow-y: auto; /* Enable vertical scrollbar when needed */
+            padding-right: 15px; /* Space for the scrollbar */
+            white-space: pre-wrap; /* Preserve line breaks from the string */
+            line-height: 1.6;
+        }
+        .subtitle::after { content: '▋'; animation: blink-caret 0.75s step-end infinite; color: var(--primary-color); margin-left: 0.2em; }
+        @keyframes blink-caret { from, to { opacity: 0 } 50% { opacity: 1 } }
+        
+        /* ADDED: Custom scrollbar styling */
+        .subtitle::-webkit-scrollbar {
+            width: 8px;
+        }
+        .subtitle::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+        .subtitle::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 221, 255, 0.3);
+            border-radius: 4px;
+            border: 1px solid rgba(0, 221, 255, 0.5);
+        }
+        .subtitle::-webkit-scrollbar-thumb:hover {
+            background-color: var(--primary-color);
+        }
+
+        #key-form { opacity: 0; }
+        #main-content.visible #key-form { animation: fadeInSlide 0.7s 0.6s ease-out forwards; }
+        .input-group { position: relative; margin-bottom: 25px; }
+        #key-input { width: 100%; background: rgba(0, 221, 255, 0.05); border: 1px solid rgba(0, 221, 255, 0.3); color: var(--secondary-color); font-size: 1.1rem; font-family: var(--font-body); padding: 12px 15px; outline: none; transition: all 0.3s ease; border-radius: 4px; }
+        #key-input::placeholder { color: rgba(224, 224, 224, 0.5); }
+        #key-input:focus { border-color: var(--primary-color); box-shadow: 0 0 15px var(--glow-color); background: rgba(0, 221, 255, 0.1); }
+        
+        #submit-btn { font-family: var(--font-main); background: transparent; border: 2px solid var(--primary-color); color: var(--primary-color); padding: 12px 20px; font-size: 1.1rem; cursor: pointer; border-radius: 4px; transition: all 0.3s ease; position: relative; overflow: hidden; width: 100%; text-transform: uppercase; }
+        #submit-btn:hover:not(:disabled) { color: var(--dark-bg); box-shadow: 0 0 20px var(--glow-color); }
+        #submit-btn::before { content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; background: var(--primary-color); border-radius: 50%; transform: translate(-50%, -50%); transition: width 0.4s ease, height 0.4s ease; z-index: -1; }
+        #submit-btn:hover:not(:disabled)::before { width: 225%; height: 500%; }
+        
+        #submit-btn:disabled { cursor: not-allowed; border-color: #555; color: #555; background: transparent; box-shadow: none; }
+        .spinner { border: 2px solid rgba(255, 255, 255, 0.3); border-left-color: var(--secondary-color); border-radius: 50%; width: 18px; height: 18px; animation: spin 1s linear infinite; display: inline-block; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .hidden { display: none !important; }
+
+        #message-container { margin-top: 20px; min-height: 24px; font-size: 0.9rem; font-weight: 600; transition: all 0.3s; font-family: var(--font-main); text-align: center; }
+        #message-container.error { color: var(--error-color); text-shadow: 0 0 5px var(--error-color); }
+        #message-container.success { color: var(--success-color); text-shadow: 0 0 5px var(--success-color); }
+
+        @media (max-width: 768px) {
+            #main-content {
+                justify-content: flex-start; /* MODIFIED: Match desktop alignment */
+                padding-left: 0;
+                padding-right: 0;
+                align-items: center; /* Center horizontally */
+                flex-direction: column;
+            }
+            .puzzle-container {
+                padding: 25px;
+            }
+            header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader-wrapper">
+        <div class="loader-text">ESTABLISHING GEO-LINK...</div>
+        <div id="loader-status-text"></div>
+        <div class="loader-ring"><div></div><div></div><div></div><div></div></div>
+    </div>
+
+    <div id="globe-container"></div>
+
+    <main id="main-content">
+        <div class="puzzle-container">
+            <header>
+                <h1 data-text="NODE_05: TERRA">谜题5</h1>
+                <p class="subtitle" id="subtitle-text"></p>
+            </header>
+            <form id="key-form" novalidate>
+                <div class="input-group">
+                    <input type="text" id="key-input" name="key" placeholder="在此输入" autocomplete="off" required>
+                </div>
+                <button type="submit" id="submit-btn">
+                    <span class="btn-text">提交</span>
+                    <div class="spinner hidden"></div>
+                </button>
+            </form>
+            <div id="message-container"></div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // --- 全局变量 ---
+            const nodeId = 'node5';
+            const apiBaseUrl = 'https://abyssal4.asterveil.top/api';
+            const loaderWrapper = document.getElementById('loader-wrapper');
+            const loaderStatusText = document.getElementById('loader-status-text');
+            const mainContent = document.getElementById('main-content');
+            const subtitleEl = document.getElementById('subtitle-text');
+            const form = document.getElementById('key-form');
+            const keyInput = document.getElementById('key-input');
+            const submitBtn = document.getElementById('submit-btn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const btnSpinner = submitBtn.querySelector('.spinner');
+            const messageContainer = document.getElementById('message-container');
+            let cooldownInterval;
+            let currentUsername = ''; // 用于存储已验证的用户名
+
+            // --- 辅助函数：获取Cookie ---
+            function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(';').shift();
+                return null;
+            }
+
+            // --- 页面初始化和账户验证 ---
+            async function initializePage() {
+                const username = getCookie('username');
+                const password = getCookie('password');
+
+                if (!username || !password) {
+                    window.location.href = '../index.html';
+                    return; // 立即停止执行
+                }
+                currentUsername = username; // 保存用户名
+                loaderStatusText.textContent = '正在验证账户信息...';
+
+                try {
+                    const response = await fetch(`${apiBaseUrl}/acc_check_password`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username, password })
+                    });
+
+                    if (!response.ok) {
+                        // 密码错误或账号不存在，都视为验证失败
+                        window.location.href = '../index.html';
+                        return;
+                    }
+
+                    const data = await response.json();
+                    if (!data.success) {
+                        window.location.href = '../index.html';
+                        return;
+                    }
+                    
+                    // 验证成功，检查进度
+                    loaderStatusText.textContent = '正在判断账户进度...';
+                    const progress = data.user_data.progress;
+
+                    if (progress === '6') {
+                        // 已完成此节点，直接跳转到剧情页
+                        window.location.href = '../storyline/insight/node5.html';
+                    } else if (progress === '5') {
+                        // 进度正确，可以开始解谜，结束加载动画
+                        finishLoading();
+                    } else {
+                        // 进度不符，返回主界面
+                        window.location.href = '../main.html';
+                    }
+
+                } catch (error) {
+                    console.error('Account verification failed:', error);
+                    loaderStatusText.textContent = '账户验证失败，请检查网络并刷新。';
+                    // 停止加载动画，让用户看到错误
+                    document.querySelector('.loader-ring').style.display = 'none';
+                }
+            }
+
+            function finishLoading() {
+                if (loaderWrapper) {
+                    loaderWrapper.style.opacity = '0';
+                    loaderWrapper.style.visibility = 'hidden';
+                    mainContent.style.visibility = 'visible';
+                    mainContent.classList.add('visible');
+                    
+                    const subtitleText = `
+[Beyond+]
+今日新闻速览:
+•第X(被黑笔涂抹)届电子音乐马拉松今日正式开赛!比赛地点为"World of Memories"
+•三天后小镇扫墓踏青活动将举办
+•各镇镇长共同出席马拉松并致词——"音游健儿展风采,甲辰之年启新篇"
+———马拉松决赛专栏———
+来自地球各地的选手经过角逐剩余五位选手进行决赛,名单如下:
+第X(被黑笔涂抹)届音乐电子马拉松决赛参赛名单
+序号 留言 加成◀️▶️ ACC🔼🔽
+•? 片側だけの正義,橫切る影に立ち,不自由選び続けてた.
+-1.83% -78.18%
+•? Under pressure I've been going off the deep end. -3.47% -62.22%
+•? Hey yo one for the blood two for the life. 64.2% -149.49%
+•? 她并没有留言,她结束后全曲结束. -9.19% -75.02%
+•? 全て壊して. 56.13% -106.35%
+———观众留言———
+"第X(被黑笔涂抹)届连结成的主题元素是什么呢?应该会从选手们的表现中体现吧..."
+"先把前三个连起来,再把后面两个连起来,这个字符好像是…"
+———现场活动A———
+神秘评委即将登场!通过主题元素搜寻寻找评委身份活动现在开始!
+评委今日所在时空与所其在区域提示:①??.1+1-1+1-1…:/②55.6/③2.4
+比赛检查点全经过时的计算公式:
+...(模糊不清)
+cout<<"请输入各个评委的检查点数量";
+cin>>①>>②>>③;
+…(模糊不清)
+int P = 4 * floor(sqrt(①)) + 4 * floor(sqrt(②)) + 2 * floor(sqrt(③)) ;
+P--;
+...(模糊不清)
+———现场活动B———
+决赛隐藏大奖"P"谱面创作者藏匿在观众中,第一个找到其"笔名"的观众将会获得神秘礼品! 
+`;
+                    // MODIFIED: Increased typewriter speed by setting the last argument to 1
+                    setTimeout(() => typewriter(subtitleEl, subtitleText, 1), 800);
+                    loaderWrapper.addEventListener('transitionend', () => loaderWrapper.remove());
+                }
+            }
+            
+            // --- 启动页面初始化流程 ---
+            await initializePage();
+            
+            // --- Three.js 3D 地球 (代码已折叠，未改动) ---
+            const scene = new THREE.Scene(); const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000); const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); const container = document.getElementById('globe-container'); renderer.setSize(window.innerWidth, window.innerHeight); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); container.appendChild(renderer.domElement); const starGeometry = new THREE.BufferGeometry(); const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.7, transparent: true, opacity: 0.5 }); const starVertices = Array.from({ length: 15000 }, () => (Math.random() - 0.5) * 2000); starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3)); const stars = new THREE.Points(starGeometry, starMaterial); scene.add(stars); const textureLoader = new THREE.TextureLoader(); const earthGeometry = new THREE.SphereGeometry(15, 64, 64); const earthMaterial = new THREE.MeshStandardMaterial({ map: textureLoader.load('https://raw.githubusercontent.com/joshuabradley/dat-globe/master/src/images/world.jpg'), metalness: 0.2, roughness: 0.8 }); const earth = new THREE.Mesh(earthGeometry, earthMaterial); scene.add(earth); const atmosphereGeometry = new THREE.SphereGeometry(15.5, 64, 64); const atmosphereMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color(0x00ddff), transparent: true, opacity: 0.1, side: THREE.BackSide }); const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial); scene.add(atmosphere); const cloudGeometry = new THREE.SphereGeometry(15.15, 64, 64); const cloudMaterial = new THREE.MeshStandardMaterial({ map: textureLoader.load('https://raw.githubusercontent.com/joshuabradley/dat-globe/master/src/images/clouds.png'), transparent: true, opacity: 0.25 }); const clouds = new THREE.Mesh(cloudGeometry, cloudMaterial); scene.add(clouds); const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); scene.add(ambientLight); const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5); directionalLight.position.set(40, 5, 20); scene.add(directionalLight); camera.position.set(5, 5, 35); camera.lookAt(scene.position); function animate() { requestAnimationFrame(animate); earth.rotation.y += 0.0005; clouds.rotation.y += 0.0006; stars.rotation.y += 0.0001; renderer.render(scene, camera); } animate(); window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); });
+            
+            // MODIFIED: Typewriter function parameter for speed
+            function typewriter(element, text, speed = 5) {
+                let i = 0;
+                element.innerHTML = "";
+                const initialText = text.trimStart(); // Trim leading whitespace from the puzzle
+                function type() {
+                    if (i < initialText.length) {
+                        element.innerHTML += initialText.charAt(i);
+                        i++;
+                        // Scroll to the bottom as text is added
+                        element.scrollTop = element.scrollHeight;
+                        setTimeout(type, speed);
+                    }
+                }
+                type();
+            }
+
+            // --- 表单提交逻辑 ---
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const key = keyInput.value.trim();
+                if (!key || submitBtn.disabled) return;
+                
+                setLoading(true);
+                displayMessage('', '');
+
+                try {
+                    const response = await fetch(`${apiBaseUrl}/check-key`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ nodeId: nodeId, key: key })
+                    });
+                    
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        await handleSuccess(data);
+                    } else {
+                        handleError(data);
+                    }
+
+                } catch (error) {
+                    console.error('Key check failed:', error);
+                    displayMessage('通讯链路中断...无法连接至验证服务器。', 'error');
+                    setLoading(false);
+                }
+            });
+
+            // --- 辅助函数：处理流程 ---
+            async function handleSuccess(data) {
+                if (data.success) {
+                    displayMessage(data.message, 'success');
+                    setFormDisabled(true);
+                    keyInput.style.borderColor = "var(--success-color)";
+                    keyInput.style.boxShadow = "0 0 15px var(--success-color)";
+
+                    // 成功解谜后，更新用户进度
+                    displayMessage('密钥正确！正在更新您的进度...', 'success');
+                    try {
+                        const updateResponse = await fetch(`${apiBaseUrl}/set_user_data`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ username: currentUsername, option: 'progress', value: '6' })
+                        });
+                        const updateData = await updateResponse.json();
+
+                        if (!updateResponse.ok || !updateData.success) {
+                            throw new Error(updateData.message || '进度更新失败');
+                        }
+                        
+                        // 进度更新成功后，跳转到剧情页
+                        displayMessage('进度更新成功！即将进入下一阶段...', 'success');
+                        setTimeout(() => {
+                            window.location.href = '../storyline/insight/node5.html';
+                        }, 2000);
+
+                    } catch(updateError) {
+                        console.error('Progress update failed:', updateError);
+                        displayMessage(`错误: ${updateError.message}。请联系管理员解决。`, 'error');
+                        // 此时不解锁UI，防止用户重复尝试导致数据错乱
+                    }
+
+                } else {
+                    displayMessage(data.message || '未知错误', 'error');
+                    setLoading(false);
+                }
+            }
+
+            function handleError(data) {
+                displayMessage(data.message, 'error');
+                keyInput.value = '';
+                if (data.cooldown) {
+                    startCooldown(data.cooldown);
+                } else {
+                    setLoading(false);
+                }
+            }
+
+            function startCooldown(seconds) {
+                setFormDisabled(true);
+                let remaining = seconds;
+                const updateMessage = () => { displayMessage(`系统冷却中... ${remaining}s 后重置`, 'error'); };
+                updateMessage();
+                clearInterval(cooldownInterval);
+                cooldownInterval = setInterval(() => {
+                    remaining--;
+                    if (remaining > 0) {
+                        updateMessage();
+                    } else {
+                        clearInterval(cooldownInterval);
+                        setFormDisabled(false);
+                        setLoading(false);
+                        displayMessage('系统已重置，可以再次尝试。', 'success');
+                    }
+                }, 1000);
+            }
+            
+            function setFormDisabled(isDisabled) { keyInput.disabled = isDisabled; submitBtn.disabled = isDisabled; }
+            function setLoading(isLoading) {
+                if (isLoading) {
+                    submitBtn.disabled = true;
+                    btnText.classList.add('hidden');
+                    btnSpinner.classList.remove('hidden');
+                } else {
+                    if (!keyInput.disabled) { submitBtn.disabled = false; }
+                    btnText.classList.remove('hidden');
+                    btnSpinner.classList.add('hidden');
+                }
+            }
+            function displayMessage(text, type) { messageContainer.textContent = text; messageContainer.className = type; }
+        });
+    </script>
+</body>
+</html>
