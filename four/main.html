@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,7 +42,7 @@
             height: auto;
             visibility: hidden;
         }
-        
+
         .node-name {
             font-size: 16px;
             fill: #aaa;
@@ -55,7 +56,7 @@
             fill: url(#unlocked-grad);
             transition: fill 0.3s ease, stroke 0.3s ease;
         }
-        
+
         .path {
             stroke-width: 4px;
             stroke: #333;
@@ -63,19 +64,24 @@
         }
 
         /* --- 动态状态样式 (颜色更新) --- */
-        
+
         .clickable {
             cursor: pointer;
         }
-        
+
         /* 已完成的节点和路径 (宁静淡蓝色) */
-        .completed .node, .completed-instant .node {
-            fill: url(#completed-grad-blue); /* 使用新的蓝色渐变 */
-            stroke: #4DD0E1; /* 描边颜色 */
+        .completed .node,
+        .completed-instant .node {
+            fill: url(#completed-grad-blue);
+            /* 使用新的蓝色渐变 */
+            stroke: #4DD0E1;
+            /* 描边颜色 */
             filter: url(#glow);
         }
+
         .completed-instant-path {
-            stroke: #4DD0E1; /* 路径颜色 */
+            stroke: #4DD0E1;
+            /* 路径颜色 */
         }
 
         /* Meta解锁的节点 (保持原样以作区分) */
@@ -85,20 +91,42 @@
             filter: url(#glow);
         }
     </style>
+    <script src="/four/common.js"></script>
 </head>
+
 <body>
+    <a href="/index.html"
+        style="position: absolute; top: 15px; left: 15px; color: var(--primary-color, #00bfff); text-decoration: none; font-size: 1rem; font-weight: bold; z-index: 9999; cursor: pointer;">&lt;
+        返回</a>
+    <a href="/four/parse/index.html" target="_blank"
+        style="position: absolute; top: 15px; right: 15px; color: var(--primary-color, #00bfff); text-decoration: none; font-size: 1rem; font-weight: bold; z-index: 9999; cursor: pointer;">解析
+        &gt;</a>
 
     <h1 id="welcome-message"></h1>
+    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+        <button onclick="resetProgress()"
+            style="padding: 8px 16px; background-color: #ff4444; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1rem; transition: background 0.3s;">重置进度</button>
+    </div>
     <div id="loading-message">正在加载进度...</div>
-    
+    <script>
+        function resetProgress() {
+            if (confirm('确定要重置所有进度并重新开始吗？')) {
+                localStorage.removeItem('abyssal4_mock_db');
+                document.cookie = 'username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                document.cookie = 'password=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+
     <svg id="progress-map" viewBox="0 0 900 450">
         <!-- 定义可复用的SVG效果和渐变 (颜色已更新) -->
         <defs>
             <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+                <feGaussianBlur stdDeviation="5" result="coloredBlur" />
                 <feMerge>
-                    <feMergeNode in="coloredBlur"/>
-                    <feMergeNode in="SourceGraphic"/>
+                    <feMergeNode in="coloredBlur" />
+                    <feMergeNode in="SourceGraphic" />
                 </feMerge>
             </filter>
 
@@ -118,7 +146,7 @@
         </defs>
 
         <!-- SVG 布局与上一版相同 -->
-        <path id="start-arc" d="M 50 175 A 50 50 0 0 1 50 275" stroke="#aaa" stroke-width="2" fill="none"/>
+        <path id="start-arc" d="M 50 175 A 50 50 0 0 1 50 275" stroke="#aaa" stroke-width="2" fill="none" />
         <g id="node-abyss" class="node-group">
             <rect class="node" x="80" y="105" width="40" height="40" transform="rotate(45 100 125)" />
             <text class="node-name" x="100" y="165">Abyss</text>
@@ -238,7 +266,7 @@
                 window.location.href = 'index.html';
             }
         }
-        
+
         // --- 5. 动画和显示逻辑 (已移除节点跳动动画) ---
         function displayProgress(userData) {
             const userProgress = parseInt(userData.progress, 10);
@@ -258,7 +286,7 @@
                                 paths.forEach(id => document.getElementById(id)?.classList.add('completed-instant-path'));
                                 nodes.forEach(id => {
                                     const nodeEl = document.getElementById(id);
-                                    if(nodeEl) {
+                                    if (nodeEl) {
                                         nodeEl.classList.add('completed');
                                         activateNode(id);
                                         // 【修改】此处的节点跳动/缩放动画已被移除
@@ -270,10 +298,10 @@
                 }
             }
             timeline.finished.then(() => {
-                if(userData.meta_progress) { applyMetaProgress(userData.meta_progress); }
+                if (userData.meta_progress) { applyMetaProgress(userData.meta_progress); }
             });
         }
-        
+
         function applyMetaProgress(metaProgressString) {
             try {
                 const metaKeys = metaProgressString.replace(/\[|\]/g, '').split(',').reduce((acc, val, i, arr) => {
@@ -291,8 +319,9 @@
                         }
                     }
                 });
-            } catch(e) { console.error("解析 meta_progress 失败:", e); }
+            } catch (e) { console.error("解析 meta_progress 失败:", e); }
         }
     </script>
 </body>
+
 </html>

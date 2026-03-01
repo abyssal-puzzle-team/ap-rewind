@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,7 +56,7 @@
             transform: translate(-50%, -50%) skew(10deg);
             font-weight: bold;
             color: #ffffff;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
             font-size: 14px;
         }
 
@@ -104,23 +105,82 @@
             z-index: 10;
         }
 
-        .cell-wall { background: #444; color: #666; cursor: not-allowed; }
-        .cell-empty { background: #222; color: #aaa; }
-        .cell-start { background: #00ff00; color: #000; font-weight: bold; }
-        .cell-key { background: #ffff00; color: #000; }
-        .cell-door { background: #8b4513; color: #fff; }
-        .cell-trap { background: #ff0000; color: #fff; }
-        .cell-power { background: #0080ff; color: #fff; }
-        .cell-card { background: #ff00ff; color: #fff; }
-        .cell-elevator { background: #00ffff; color: #000; }
-        .cell-player { background: #00ff00; border: 3px solid #fff; animation: pulse 1s infinite; }
-        .cell-visible { opacity: 1; }
-        .cell-hidden { opacity: 0.3; background: #111; }
-        .cell-unlocked { background: #666; }
+        .cell-wall {
+            background: #444;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        .cell-empty {
+            background: #222;
+            color: #aaa;
+        }
+
+        .cell-start {
+            background: #00ff00;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .cell-key {
+            background: #ffff00;
+            color: #000;
+        }
+
+        .cell-door {
+            background: #8b4513;
+            color: #fff;
+        }
+
+        .cell-trap {
+            background: #ff0000;
+            color: #fff;
+        }
+
+        .cell-power {
+            background: #0080ff;
+            color: #fff;
+        }
+
+        .cell-card {
+            background: #ff00ff;
+            color: #fff;
+        }
+
+        .cell-elevator {
+            background: #00ffff;
+            color: #000;
+        }
+
+        .cell-player {
+            background: #00ff00;
+            border: 3px solid #fff;
+            animation: pulse 1s infinite;
+        }
+
+        .cell-visible {
+            opacity: 1;
+        }
+
+        .cell-hidden {
+            opacity: 0.3;
+            background: #111;
+        }
+
+        .cell-unlocked {
+            background: #666;
+        }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
         }
 
         .info-panel {
@@ -130,7 +190,8 @@
             border-top: 2px solid #00ffff;
         }
 
-        .status-panel, .clues-panel {
+        .status-panel,
+        .clues-panel {
             flex: 1;
             padding: 20px;
             border-right: 1px solid #333;
@@ -256,10 +317,12 @@
         /* --- MODIFICATION START --- */
         .puzzle-4x4-grid {
             display: grid;
-            grid-template-columns: 1fr; /* 从4列改为1列，实现垂直排列 */
+            grid-template-columns: 1fr;
+            /* 从4列改为1列，实现垂直排列 */
             gap: 10px;
             margin: 20px 0;
         }
+
         /* --- MODIFICATION END --- */
 
         .puzzle-4x4-input {
@@ -272,6 +335,7 @@
             font-size: 16px;
             transition: all 0.3s ease;
         }
+
         .puzzle-4x4-input:focus {
             outline: none;
             border-color: #00ff00;
@@ -302,25 +366,33 @@
                 grid-template-columns: repeat(16, 25px);
                 grid-template-rows: repeat(6, 25px);
             }
-            
+
             .maze-cell {
                 width: 25px;
                 height: 25px;
                 font-size: 10px;
             }
-            
+
             .info-panel {
                 flex-direction: column;
                 height: auto;
             }
-            
+
             .time-bar-container {
                 width: 90%;
             }
         }
     </style>
+    <script src="/four/common.js"></script>
 </head>
+
 <body>
+    <a href="/index.html"
+        style="position: absolute; top: 15px; left: 15px; color: var(--primary-color, #00bfff); text-decoration: none; font-size: 1rem; font-weight: bold; z-index: 9999; cursor: pointer;">&lt;
+        返回</a>
+    <a href="/four/parse/index.html" target="_blank"
+        style="position: absolute; top: 15px; right: 15px; color: var(--primary-color, #00bfff); text-decoration: none; font-size: 1rem; font-weight: bold; z-index: 9999; cursor: pointer;">解析
+        &gt;</a>
     <div class="time-bar-container">
         <div class="time-bar">
             <div class="time-bar-fill" id="timeBarFill"></div>
@@ -374,7 +446,8 @@
                     <p>答案错误！请等待 <span id="cooldownTime">0</span> 秒后重试</p>
                 </div>
                 <button class="btn" onclick="submitPuzzleAnswer()">提交答案</button>
-                <button class="btn" onclick="skipPuzzle()" style="background: linear-gradient(45deg, #ff6600, #ff0000); color: #fff;">跳过谜题 (扣除时间)</button>
+                <button class="btn" onclick="skipPuzzle()"
+                    style="background: linear-gradient(45deg, #ff6600, #ff0000); color: #fff;">跳过谜题 (扣除时间)</button>
             </div>
         </div>
     </div>
@@ -435,7 +508,7 @@
             "12在13相邻正上方", "14与16同列，15在14相邻正下方"
         ];
         const API_BASE = 'https://abyssal4.asterveil.top/api';
-        
+
         async function initGame() {
             gameState.username = getCookie('username');
             gameState.password = getCookie('password');
@@ -444,7 +517,7 @@
                 window.location.href = '../index.html';
                 return;
             }
-    
+
             initMaze();
             await loadUserData();
             initMaze();
@@ -455,7 +528,7 @@
             startTimeMonitoring();
             updateDisplay();
         }
-        
+
         async function loadUserData() {
             try {
                 const response = await fetch(`${API_BASE}/acc_check_password`, {
@@ -465,23 +538,23 @@
                     body: JSON.stringify({ username: gameState.username, password: gameState.password })
                 });
                 const data = await response.json();
-    
+
                 if (data.success && data.user_data) {
                     const userData = data.user_data;
                     if (userData.meta_xy) {
-                         try {
+                        try {
                             const coords = JSON.parse(userData.meta_xy);
                             gameState.playerX = coords[0];
                             gameState.playerY = coords[1];
-                         } catch (e) {
+                        } catch (e) {
                             console.warn("解析玩家位置失败");
-                         }
+                        }
                     }
-                    
+
                     gameState.unlockedCells.clear();
                     gameState.unlockedCells.add('0,0');
                     if (userData.meta_progress) {
-                        const matches = userData.meta_progress.match(/\[\d+,\d+\]/g);
+                        const matches = userData.meta_progress.match(/\[\d+\s*,\s*\d+\]/g);
                         if (matches) {
                             matches.forEach(matchStr => {
                                 try {
@@ -493,13 +566,13 @@
                             });
                         }
                     }
-    
+
                     gameState.powerDevices = 0;
                     gameState.clues = [];
                     gameState.hasCard = false;
                     let unlockedKeysCount = 0;
                     let unlockedDoorsCount = 0;
-    
+
                     gameState.unlockedCells.forEach(cellKey => {
                         const [x, y] = cellKey.split(',').map(Number);
                         if (mazeMap[y] && mazeMap[y][x]) {
@@ -521,16 +594,16 @@
                             }
                         }
                     });
-                    
+
                     gameState.keys = unlockedKeysCount - unlockedDoorsCount;
-    
+
                     gameState.elevatorCluesObtained = userData.meta_elevator_clues_obtained === true || userData.meta_elevator_clues_obtained === 'true';
                     if (gameState.elevatorCluesObtained || gameState.unlockedCells.has('14,2')) {
                         if (!gameState.clues.includes(allClues[6])) gameState.clues.push(allClues[6]);
                         if (!gameState.clues.includes(allClues[7])) gameState.clues.push(allClues[7]);
                         gameState.elevatorCluesObtained = true;
                     }
-    
+
                     gameState.puzzle4x4Solved = userData.meta_4x4_solved === true || userData.meta_4x4_solved === 'true';
                 } else {
                     alert('登录验证失败：' + data.message);
@@ -539,7 +612,7 @@
                 console.error('加载用户数据失败:', error);
             }
         }
-        
+
         function getCookie(name) {
             const value = `; ${document.cookie}`;
             const parts = value.split(`; ${name}=`);
@@ -548,7 +621,7 @@
             }
             return '';
         }
-    
+
         function initMaze() {
             const mazeGrid = document.getElementById('mazeGrid');
             mazeGrid.innerHTML = '';
@@ -561,15 +634,15 @@
                     const isVisible = isCellVisible(x, y);
                     const isUnlocked = gameState.unlockedCells.has(`${x},${y}`);
                     setCellAppearance(cell, cellType, x, y, isVisible, isUnlocked);
-                    
-                    if (isVisible && cellType !== 'wall') {
+
+                    if (cellType !== 'wall') {
                         cell.addEventListener('click', () => moveToCell(x, y));
                     }
                     mazeGrid.appendChild(cell);
                 }
             }
         }
-        
+
         function setCellAppearance(cell, cellType, x, y, isVisible, isUnlocked) {
             cell.className = 'maze-cell';
             if (!isVisible) {
@@ -582,19 +655,19 @@
                 cell.textContent = '玩家';
                 return;
             }
-            
+
             if (cellType === 'elevator') {
                 cell.classList.add('cell-elevator');
                 cell.textContent = '电梯';
-                return; 
+                return;
             }
-    
+
             if (isUnlocked) {
                 cell.classList.add('cell-empty');
                 cell.textContent = '✓';
                 return;
             }
-            
+
             switch (cellType) {
                 case 'wall': cell.classList.add('cell-wall'); cell.textContent = '墙'; break;
                 case 'empty': cell.classList.add('cell-empty'); cell.textContent = '空'; break;
@@ -606,18 +679,18 @@
                 case 'card': cell.classList.add('cell-card'); cell.textContent = '卡片'; break;
             }
         }
-        
+
         async function handleElevatorInteraction(x, y) {
             const cellKey = `${x},${y}`;
             const isUnlocked = gameState.unlockedCells.has(cellKey);
-    
+
             if (isUnlocked) {
                 show4x4Modal();
             } else {
                 await unlockCell(x, y);
                 gameState.elevatorCluesObtained = true;
                 await updateUserData('meta_elevator_clues_obtained', 'true');
-    
+
                 let newlyAddedClues = [];
                 [allClues[6], allClues[7]].forEach(clue => {
                     if (!gameState.clues.includes(clue)) {
@@ -625,35 +698,35 @@
                         newlyAddedClues.push(clue);
                     }
                 });
-    
+
                 if (newlyAddedClues.length > 0) {
-                     alert(`你走近电梯，发现它似乎可以被启动。你找到了关键线索！\n- ${newlyAddedClues.join('\n- ')}\n\n该格子已解锁，再次点击即可尝试解谜。`);
+                    alert(`你走近电梯，发现它似乎可以被启动。你找到了关键线索！\n- ${newlyAddedClues.join('\n- ')}\n\n该格子已解锁，再次点击即可尝试解谜。`);
                 } else {
                     alert('你已调查过电梯，该格子已解锁，再次点击即可尝试解谜。');
                 }
-                
+
                 updateDisplay();
                 updateSingleCell(x, y);
             }
         }
-        
+
         async function moveToCell(x, y) {
             if (!canMoveTo(x, y)) {
-                 return;
+                return;
             }
-    
+
             const cellType = mazeMap[y][x];
             if (cellType === 'elevator') {
                 await handleElevatorInteraction(x, y);
                 return;
             }
-    
+
             const cellKey = `${x},${y}`;
             if (gameState.unlockedCells.has(cellKey)) {
                 await movePlayer(x, y);
                 return;
             }
-            
+
             switch (cellType) {
                 case 'empty': await handleEmptyCell(x, y); break;
                 case 'door': await handleDoorCell(x, y); break;
@@ -665,14 +738,18 @@
                 default: await movePlayer(x, y); break;
             }
         }
-        
+
         function show4x4Modal() {
+            if (gameState.powerDevices < 3 || !gameState.hasCard) {
+                alert('电梯控制面板受到加密保护，需要激活至少3个电力装置并插入门禁卡才能操作键盘！\n\n(若未获得前置线索字条，你现在已经获得了它们，请去寻找电力和门禁卡吧。)');
+                return;
+            }
             const elevatorCoords = '14,2';
             if (gameState.unlockedCells.has(elevatorCoords)) {
                 if (!gameState.clues.includes(allClues[6])) gameState.clues.push(allClues[6]);
                 if (!gameState.clues.includes(allClues[7])) gameState.clues.push(allClues[7]);
             }
-        
+
             let cluesHtml = '';
             if (gameState.clues.length > 0) {
                 const sortedClues = [...gameState.clues].sort((a, b) => allClues.indexOf(a) - allClues.indexOf(b));
@@ -680,7 +757,7 @@
             } else {
                 cluesHtml = `<div style="margin: 15px 0; color: #ff6666;"><h4>提示：</h4><p>您还没有获得任何线索！请先激活电力装置和电梯来获取线索。</p></div>`;
             }
-            
+
             const modalContent = document.getElementById('puzzle4x4Content');
             modalContent.innerHTML = `
                 <p>请根据所有线索填入正确的数字排列：</p>
@@ -701,10 +778,10 @@
                 <button class="btn" onclick="submit4x4Answer()">提交答案</button>
                 <button class="btn escape-btn" onclick="attemptEscape()" id="escapeBtn">逃生</button>
             `;
-            
+
             document.getElementById('puzzle4x4Modal').style.display = 'block';
         }
-        
+
         function isCellVisible(x, y) {
             if (x === gameState.playerX && y === gameState.playerY) return true;
             if (gameState.unlockedCells.has(`${x},${y}`)) return true;
@@ -714,7 +791,7 @@
             if (mazeMap[y][x] === 'wall') return true;
             return false;
         }
-    
+
         function canMoveTo(x, y) {
             if (x < 0 || x >= 16 || y < 0 || y >= 6) return false;
             if (mazeMap[y][x] === 'wall') return false;
@@ -722,19 +799,19 @@
             const dy = Math.abs(y - gameState.playerY);
             return (dx === 1 && dy === 0) || (dx === 0 && dy === 1);
         }
-    
+
         // *** FIX #1: Added diminishMetaTime() back, as the backend requires it. ***
         async function movePlayer(x, y) {
             const oldX = gameState.playerX;
             const oldY = gameState.playerY;
             gameState.playerX = x;
             gameState.playerY = y;
-            updatePlayerPosition(x, y); 
+            updatePlayerPosition(x, y);
             await diminishMetaTime(); // Explicitly call the time deduction function.
             updateMazeDisplay(oldX, oldY, x, y);
             updateDisplay();
         }
-    
+
         function updateMazeDisplay(oldX, oldY, newX, newY) {
             for (let dy = -2; dy <= 2; dy++) {
                 for (let dx = -2; dx <= 2; dx++) {
@@ -753,7 +830,7 @@
             updateSingleCell(oldX, oldY);
             updateSingleCell(newX, newY);
         }
-    
+
         function updateSingleCell(x, y) {
             const cell = document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
             if (cell) {
@@ -763,7 +840,7 @@
                 setCellAppearance(cell, cellType, x, y, isVisible, isUnlocked);
             }
         }
-        
+
         async function unlockCell(x, y) {
             const cellKey = `${x},${y}`;
             if (!gameState.unlockedCells.has(cellKey)) {
@@ -771,7 +848,7 @@
                 await addMetaProgress(x, y);
             }
         }
-    
+
         async function handleEmptyCell(x, y) {
             const cooldownStatus = await checkSimpleCooldown();
             if (cooldownStatus.cooldownRemaining > 0) {
@@ -785,7 +862,7 @@
                 alert('无法获取谜题，请检查后端服务或稍后再试。');
             }
         }
-    
+
         async function handleDoorCell(x, y) {
             if (gameState.keys > 0) {
                 const confirmed = confirm("您确定要消耗一把钥匙打开这扇门吗？");
@@ -800,7 +877,7 @@
                 alert('需要钥匙才能打开这扇门！');
             }
         }
-    
+
         async function handleKeyCell(x, y) {
             gameState.keys++;
             await unlockCell(x, y);
@@ -808,7 +885,7 @@
             updateSingleCell(x, y);
             updateDisplay();
         }
-    
+
         async function handleTrapCell(x, y) {
             let trapId = null;
             for (const id in trapLocations) {
@@ -825,7 +902,7 @@
             }
             window.open(`${trapId}.html?x=${x}&y=${y}`, '_blank');
         }
-    
+
         async function handlePowerCell(x, y) {
             gameState.powerDevices++;
             await unlockCell(x, y);
@@ -848,7 +925,7 @@
             updateSingleCell(x, y);
             updateDisplay();
         }
-    
+
         async function handleCardCell(x, y) {
             gameState.hasCard = true;
             await unlockCell(x, y);
@@ -857,19 +934,19 @@
             updateSingleCell(x, y);
             updateDisplay();
         }
-    
-        window.addEventListener('message', async function(event) {
+
+        window.addEventListener('message', async function (event) {
             if (event.data && event.data.type === 'trapSolved') {
                 const { trapCoords } = event.data;
                 const x = trapCoords[0];
                 const y = trapCoords[1];
                 await unlockCell(x, y);
-                updateSingleCell(x, y); 
+                updateSingleCell(x, y);
                 updateDisplay();
                 alert(`坐标 [${x},${y}] 的陷阱已被解除！`);
             }
         });
-    
+
         async function submitPuzzleAnswer() {
             const answer = document.getElementById('puzzleAnswer').value.trim();
             const target = window.currentPuzzleTarget;
@@ -886,19 +963,19 @@
                 showCooldownNotice('simple', cooldownStatus.cooldownRemaining);
             }
         }
-    
+
         function showPuzzleModal(puzzleData, targetX, targetY) {
             document.getElementById('puzzleQuestion').textContent = puzzleData.puzzle;
             document.getElementById('puzzleAnswer').value = '';
             document.getElementById('puzzleModal').style.display = 'block';
             window.currentPuzzleTarget = { x: targetX, y: targetY, answer: puzzleData.key };
         }
-    
+
         function closePuzzleModal() {
             document.getElementById('puzzleModal').style.display = 'none';
             window.currentPuzzleTarget = null;
         }
-    
+
         async function skipPuzzle() {
             if (!confirm('跳过谜题将扣除额外时间，确定要跳过吗？')) return;
             const target = window.currentPuzzleTarget;
@@ -910,11 +987,11 @@
             updateSingleCell(target.x, target.y);
             updateDisplay();
         }
-    
+
         function close4x4Modal() {
             document.getElementById('puzzle4x4Modal').style.display = 'none';
         }
-    
+
         async function submit4x4Answer() {
             const cooldownStatus = await check4x4Cooldown();
             if (cooldownStatus.cooldownRemaining > 0) {
@@ -935,7 +1012,7 @@
                 show4x4CooldownNotice(newCooldownStatus.cooldownRemaining);
             }
         }
-        
+
         async function checkProgress() {
             try {
                 const response = await fetch(`${API_BASE}/acc_check_password`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include', body: JSON.stringify({ username: gameState.username, password: gameState.password }) });
@@ -954,10 +1031,8 @@
                 return true;
             }
         }
-    
+
         async function attemptEscape() {
-            if (gameState.powerDevices < 3) { alert('逃生失败：还有电力装置未激活！'); return; }
-            if (!gameState.hasCard) { alert('逃生失败：需要门禁卡！'); return; }
             if (!gameState.puzzle4x4Solved) { alert('逃生失败：需要先解决4x4谜题！'); return; }
             const metaStatus = await getMetaStatus();
             await updateUserData('progress', '9');
@@ -967,7 +1042,7 @@
                 window.location.href = 'be.html';
             }
         }
-    
+
         function showCooldownNotice(type, seconds) {
             if (type !== 'simple') return;
             const notice = document.getElementById('cooldownNotice');
@@ -983,7 +1058,7 @@
                 }
             }, 1000);
         }
-    
+
         function show4x4CooldownNotice(seconds) {
             const notice = document.getElementById('puzzle4x4Cooldown');
             const timeSpan = document.getElementById('puzzle4x4CooldownTime');
@@ -998,7 +1073,7 @@
                 }
             }, 1000);
         }
-    
+
         function updateDisplay() {
             document.getElementById('playerPosition').textContent = `[${gameState.playerX},${gameState.playerY}]`;
             document.getElementById('keyCount').textContent = gameState.keys;
@@ -1012,27 +1087,28 @@
                 cluesList.innerHTML = '<div style="color: #666; font-style: italic;">暂无线索</div>';
             }
         }
-    
+
         function startTimeMonitoring() {
             setInterval(async () => {
                 const metaStatus = await getMetaStatus();
                 updateTimeDisplay(metaStatus.remainingSeconds);
             }, 1000);
         }
-    
+
         function updateTimeDisplay(seconds) {
-            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
             const secs = seconds % 60;
-            const timeStr = `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            const timeStr = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
             document.getElementById('timeText').textContent = `剩余时间: ${timeStr}`;
             document.getElementById('timeRemaining').textContent = timeStr;
-            
+
             // *** FIX #2: Correct maxTime to 8 hours (28800 seconds). ***
             const maxTime = 86400;
             const percentage = Math.max(0, (seconds / maxTime) * 100);
             document.getElementById('timeBarFill').style.width = `${percentage}%`;
         }
-        
+
         async function getRandomPuzzle() {
             try {
                 const response = await fetch(`${API_BASE}/random`);
@@ -1042,7 +1118,7 @@
                 return { success: false, puzzle: null };
             }
         }
-    
+
         async function checkSimpleCooldown() {
             try {
                 const response = await fetch(`${API_BASE}/simple_cooldown_status`, {
@@ -1057,7 +1133,7 @@
                 return { cooldownRemaining: 0 };
             }
         }
-    
+
         async function startSimpleCooldown() {
             try {
                 await fetch(`${API_BASE}/start_simple_cooldown`, {
@@ -1070,7 +1146,7 @@
                 console.error('开始简单冷却失败:', error);
             }
         }
-    
+
         async function checkGoalkeeperCooldown() {
             try {
                 const response = await fetch(`${API_BASE}/goalkeeper_cooldown_status`, {
@@ -1085,7 +1161,7 @@
                 return { cooldownRemaining: 0 };
             }
         }
-    
+
         async function check4x4Cooldown() {
             try {
                 const response = await fetch(`${API_BASE}/4x4_cooldown_status`, {
@@ -1100,7 +1176,7 @@
                 return { cooldownRemaining: 0 };
             }
         }
-    
+
         async function updateUserData(option, value) {
             try {
                 await fetch(`${API_BASE}/set_user_data`, {
@@ -1113,7 +1189,7 @@
                 console.error('更新用户数据失败:', error);
             }
         }
-    
+
         async function updatePlayerPosition(x, y) {
             try {
                 await fetch(`${API_BASE}/change_meta_xy`, {
@@ -1126,7 +1202,7 @@
                 console.error('更新玩家位置失败:', error);
             }
         }
-    
+
         async function addMetaProgress(x, y) {
             try {
                 await fetch(`${API_BASE}/add_meta`, {
@@ -1139,7 +1215,7 @@
                 console.error('添加Meta进度失败:', error);
             }
         }
-    
+
         async function diminishMetaTime() {
             try {
                 const response = await fetch(`${API_BASE}/diminish_meta_time`, {
@@ -1148,9 +1224,9 @@
                     credentials: 'include',
                     body: JSON.stringify({ username: gameState.username })
                 });
-    
+
                 const data = await response.json();
-    
+
                 if (!response.ok) {
                     console.error('调用失败:', data.message);
                 } else {
@@ -1160,7 +1236,7 @@
                 console.error('减少Meta时间请求错误:', error);
             }
         }
-    
+
         async function getMetaStatus() {
             try {
                 const response = await fetch(`${API_BASE}/meta-status`);
@@ -1170,8 +1246,9 @@
                 return { remainingSeconds: 0 };
             }
         }
-        
+
         document.addEventListener('DOMContentLoaded', initGame);
     </script>
 </body>
+
 </html>

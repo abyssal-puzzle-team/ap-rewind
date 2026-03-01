@@ -1,0 +1,22 @@
+{
+    "node1_pass": "Eternal",
+    "node2_pass": "Endless",
+    "node3_pass": "Avalanche",
+    "node4_pass": "群星",
+    "node5_pass": "∅",
+    "front_meta_pass": "Tide",
+    "false_meta_pass": "GALACTIC WARZONE",
+    "cool_time": "180",
+    "meta_time": "86400",
+    "SIMPLE_PUZZLE_COOLDOWN": "120",
+    "FOUR_BY_FOUR_KEY_1": "1 8 10 14",
+    "FOUR_BY_FOUR_KEY_2": "7 12 9 15",
+    "FOUR_BY_FOUR_KEY_3": "2 13 11 3",
+    "FOUR_BY_FOUR_KEY_4": "4 5 6 16",
+    "FOUR_BY_FOUR_COOLDOWN": "300",
+    "GOALKEEPER_KEY_A1": "cyt",
+    "GOALKEEPER_KEY_B2": "Phigros",
+    "GOALKEEPER_KEY_C3": "BLACKBOX",
+    "GOALKEEPER_COOLDOWN": "180",
+    "SIMPLE_PUZZLE_TIME_REDUCTION": "120"
+}

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>解析指南 | Abyssal Puzzle</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #0d1117;
+            --secondary-bg: #161b22;
+            --border-color: #30363d;
+            --text-color: #c9d1d9;
+            --accent-color: #00bfff;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            margin: 0;
+            padding: 40px 20px;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--accent-color);
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+
+        .section {
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* 锚点目标高亮动画 */
+        .section:target {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 15px rgba(0, 191, 255, 0.3);
+            animation: highlight 2s ease-out;
+        }
+
+        @keyframes highlight {
+            0% {
+                background-color: rgba(0, 191, 255, 0.2);
+            }
+
+            100% {
+                background-color: var(--secondary-bg);
+            }
+        }
+
+        .section h2 {
+            color: var(--accent-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>第四重深渊 解析指南</h1>
+
+        <div id="node1" class="section">
+            <h2>Node 1: 数据流截取</h2>
+            <p><strong>思路分析：</strong></p>
+            <p>页面提及“要重视开头,迈好第一步.”以及一段 RGB 设置的图片提示。你需要从给出的各项混乱数据中，提取它们隐藏的关键首字母（或相关词汇），重新排列后形成最终的答案。</p>
+            <p><strong>答案参考：</strong> 填写在 `answers.json` 中的 `node1_pass` 即可通关。</p>
+        </div>
+
+        <div id="node2" class="section">
+            <h2>Node 2: 访问日志</h2>
+            <p><strong>思路分析：</strong></p>
+            <p>这是一个文字密度的解谜节点，需要分析二人日志关于衔尾蛇（Ouroboros）、字符串截取（取环正中间透明部分再切分），以及石碑上的斐波那契或质数数列 `f(n)` 的映射规律。最后找出名为 BiliXXX
+                的关键词。</p>
+            <p><strong>答案参考：</strong> 填写在 `answers.json` 中的 `node2_pass`。</p>
+        </div>
+
+        <div id="node3" class="section">
+            <h2>Node 3: 日蚀记录</h2>
+            <p><strong>思路分析：</strong></p>
+            <p>题目提到"Overture"，即代码中的 WIFI 密码，需要结合六种颜色排序取第四种的机制。</p>
+            <p><strong>答案参考：</strong> 填写在 `answers.json` 中的 `node3_pass`。</p>
+        </div>
+
+        <div id="node4" class="section">
+            <h2>Node 4: 迷失蝴蝶</h2>
+            <p><strong>思路分析：</strong></p>
+            <p>密码给出了 ZrfZaylla，需要去解开这个位移/替换密码，进而推导出 July 等线索的真意。</p>
+            <p><strong>答案参考：</strong> 填写在 `answers.json` 中的 `node4_pass`。</p>
+        </div>
+
+        <div id="node5" class="section">
+            <h2>Node 5: 历史规律</h2>
+            <p><strong>思路分析：</strong></p>
+            <p>需要根据地图上下左右居中的数字箭头规则 (14 19 23 5)，找到这几个数字在某种特定发展历史（如年代历法或特定历史事件集合）中所对应的拼音首字母/英文大写。</p>
+            <p><strong>答案参考：</strong> 填写在 `answers.json` 中的 `node5_pass`。</p>
+        </div>
+
+        <div id="front_meta" class="section">
+            <h2>Front Meta</h2>
+            <p><strong>思路分析：</strong></p>
+            <p>前置 Meta：收集前序各题的残片，拼合出的 DANCE 模型、青い、月相双子等线索对应的曲师名义提取。这是一道需要结合全服视角的题目。</p>
+            <p><strong>答案参考：</strong> 填写在 `answers.json` 中的 `meta_front_pass`。</p>
+        </div>
+
+        <div id="false_meta" class="section">
+            <h2>False Meta: 定时挑战</h2>
+            <p><strong>思路分析：</strong></p>
+            <p>一旦输入正确的假 Meta，将激活全服的 Meta 倒计时（300秒），时间十分紧迫，期间任何提示都可能成为扭转局面的关键。</p>
+            <p><strong>答案参考：</strong> 填写在 `answers.json` 中的 `false_meta_pass`。</p>
+        </div>
+
+        <div id="true_meta" class="section">
+            <h2>True Meta: 最终答案</h2>
+            <p><strong>思路分析：</strong></p>
+            <p>在倒计时结束前，利用前置线索的综合，得出真正的最终 Meta！突破第四重深渊！</p>
+            <p><strong>答案参考：</strong> 填写在 `answers.json` 中的 `true_meta_pass`。</p>
+        </div>
+
+    </div>
+
+    <script>
+        // 处理形如 ?id=node1 的 URL 参数跳转至锚点
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            if (id) {
+                const element = document.getElementById(id);
+                if (element) {
+                    setTimeout(() => {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                    }, 500); // 稍微延迟以确保页面和样式加载完成
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

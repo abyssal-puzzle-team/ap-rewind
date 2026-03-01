@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie 与进度调试器</title>
+    <style>
+        body {
+            background-color: #121212;
+            font-family: Arial, sans-serif;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #f39c12;
+            margin-top: 0;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background: #2a2a2a;
+            color: #fff;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            background-color: #00bfff;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            width: 100%;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0099cc;
+        }
+
+        .btn-danger {
+            background-color: #ff4444;
+            color: white;
+            margin-top: 20px;
+        }
+
+        .btn-danger:hover {
+            background-color: #cc0000;
+        }
+
+        .status {
+            margin-top: 15px;
+            padding: 10px;
+            background: #2a2a2a;
+            border-radius: 5px;
+            word-break: break-all;
+            font-family: monospace;
+            color: #aaa;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="/four/main.html"
+        style="position: absolute; top: 15px; left: 15px; color: #00bfff; text-decoration: none; font-weight: bold;">&lt;
+        返回进度地图</a>
+
+    <div class="container">
+        <h1>🛠️ 进度调试器</h1>
+
+        <div class="form-group">
+            <label>当前 Cookie Username</label>
+            <input type="text" id="cookieUser" placeholder="获取中...">
+        </div>
+
+        <div class="form-group">
+            <label>主线进度 (1 ~ 9)</label>
+            <input type="number" id="progressVal" min="1" max="9" placeholder="例如: 1">
+        </div>
+
+        <div class="form-group">
+            <label>Meta 坐标 (meta_xy)</label>
+            <input type="text" id="metaXY" placeholder="例如: [0,0]">
+        </div>
+
+        <div class="form-group">
+            <label>Meta 解锁格子录像 (meta_progress)</label>
+            <input type="text" id="metaProgress" placeholder="例如: A1,B2,C3">
+        </div>
+
+        <div class="form-group">
+            <label>Meta 钥匙数量 (meta_key_number)</label>
+            <input type="number" id="metaKeyNum" min="0" placeholder="例如: 0">
+        </div>
+
+        <div class="form-group">
+            <label>Meta 能源设备数量 (meta_power_number)</label>
+            <input type="number" id="metaPowerNum" min="0" placeholder="例如: 0">
+        </div>
+
+        <button class="btn" onclick="saveData()">保存修改</button>
+        <button class="btn" style="background-color: #8e44ad;" onclick="clearCooldowns()">清空当前所有冷却惩罚</button>
+        <button class="btn btn-danger" onclick="clearData()">清空所有存档并初始化</button>
+
+        <div class="status" id="statusBox">准备就绪...</div>
+    </div>
+
+    <script>
+        const MOCK_DB_KEY = 'abyssal4_mock_db';
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return '';
+        }
+
+        function getDB() {
+            const dbString = localStorage.getItem(MOCK_DB_KEY);
+            return dbString ? JSON.parse(dbString) : { accounts: {}, ipCooldowns: {}, simpleCooldowns: {}, fourByFourCooldowns: {}, goalkeeperCooldowns: {} };
+        }
+
+        function saveDB(db) {
+            localStorage.setItem(MOCK_DB_KEY, JSON.stringify(db));
+        }
+
+        function loadData() {
+            const currentUser = getCookie('username') || 'guest';
+            document.getElementById('cookieUser').value = currentUser;
+
+            const db = getDB();
+            if (db.accounts[currentUser]) {
+                const acc = db.accounts[currentUser];
+                document.getElementById('progressVal').value = acc.progress || '1';
+                document.getElementById('metaXY').value = acc.meta_xy || '[0,0]';
+                document.getElementById('metaProgress').value = acc.meta_progress || '';
+                document.getElementById('metaKeyNum').value = acc.meta_key_number || '0';
+                document.getElementById('metaPowerNum').value = acc.meta_power_number || '0';
+                document.getElementById('statusBox').textContent = `成功读取用户 ${currentUser} 的数据。`;
+            } else {
+                document.getElementById('progressVal').value = '1';
+                document.getElementById('metaXY').value = '[0,0]';
+                document.getElementById('metaProgress').value = '';
+                document.getElementById('metaKeyNum').value = '0';
+                document.getElementById('metaPowerNum').value = '0';
+                document.getElementById('statusBox').textContent = `未找到用户 ${currentUser} 的数据，保存时将自动创建。`;
+            }
+        }
+
+        function saveData() {
+            const user = document.getElementById('cookieUser').value.trim();
+            const prog = document.getElementById('progressVal').value.trim();
+            const mXY = document.getElementById('metaXY').value.trim();
+            const mProg = document.getElementById('metaProgress').value.trim();
+            const mKey = document.getElementById('metaKeyNum').value.trim();
+            const mPower = document.getElementById('metaPowerNum').value.trim();
+
+            if (!user) {
+                alert('用户名不能为空！');
+                return;
+            }
+
+            // 更新 Cookie
+            document.cookie = `username=${user}; path=/`;
+
+            // 更新 LocalStorage DB
+            const db = getDB();
+            if (!db.accounts[user]) {
+                db.accounts[user] = {
+                    password: "123",
+                    cool_down: "0",
+                    progress: prog || "1",
+                    meta_xy: mXY || "[0,0]",
+                    meta_progress: mProg || "",
+                    meta_key_number: mKey || "0",
+                    meta_power_number: mPower || "0",
+                    meta_card: false
+                };
+            } else {
+                db.accounts[user].progress = prog || "1";
+                db.accounts[user].meta_xy = mXY || "[0,0]";
+                db.accounts[user].meta_progress = mProg || "";
+                db.accounts[user].meta_key_number = mKey || "0";
+                db.accounts[user].meta_power_number = mPower || "0";
+            }
+            saveDB(db);
+
+            document.getElementById('statusBox').textContent = `[${new Date().toLocaleTimeString()}] ✅ 保存成功！当前用户: ${user} | 进度: ${prog}`;
+        }
+
+        function clearCooldowns() {
+            const db = getDB();
+            db.ipCooldowns = {};
+            db.simpleCooldowns = {};
+            db.fourByFourCooldowns = {};
+            db.goalkeeperCooldowns = {};
+            saveDB(db);
+            document.getElementById('statusBox').textContent = `[${new Date().toLocaleTimeString()}] ⏱️ 所有冷却记录已被清空。`;
+        }
+
+        function clearData() {
+            if (confirm('警告！这将清空所有本地数据、冷却记录和 Cookie！确定吗？')) {
+                localStorage.removeItem(MOCK_DB_KEY);
+                localStorage.removeItem('abyssal4_meta_timer');
+                document.cookie = 'username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                document.cookie = 'password=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+
+                document.getElementById('cookieUser').value = 'guest';
+                document.getElementById('progressVal').value = '1';
+                document.getElementById('statusBox').textContent = `[${new Date().toLocaleTimeString()}] 🗑️ 所有本地数据均已清空。`;
+            }
+        }
+
+        window.onload = loadData;
+    </script>
+</body>
+
+</html>
