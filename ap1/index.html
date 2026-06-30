@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abyssal Puzzle - 存档版</title>
+    <style>
+        :root {
+            --bg: #f8f5f0;
+            --text: #2c2825;
+            --accent: #8b4513;
+            --accent-hover: #5a2e0c;
+            --card-bg: #fff;
+            --border: #e8e0d5;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            --gold: #b38204;
+            --gold-hover: #d29700;
+            --radius: 12px;
+            --transition: 0.3s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Microsoft Yahei", "SimHei", "PingFang SC", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* 固定左上角返回按钮（新增） */
+        .back-buttons {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+        }
+        .back-btn-mini {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            background: transparent;
+            color: var(--accent);
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 20px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            border: 1.5px solid var(--accent);
+            transition: all var(--transition);
+            white-space: nowrap;
+        }
+        .back-btn-mini:hover {
+            background: var(--accent);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .header-container {
+            position: relative;
+            width: 100%;
+            height: 55vh;
+            border-bottom-left-radius: 90%;
+            border-bottom-right-radius: 90%;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            background: #3a2f28;
+        }
+        .header-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7);
+        }
+        .mask {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.75));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        .mask-title {
+            font-size: clamp(2.2rem, 7vw, 4.5rem);
+            color: #fff;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-align: center;
+        }
+        .mask-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            color: rgba(255,255,255,0.8);
+            letter-spacing: 2px;
+            font-weight: 300;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+        .chapters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 28px;
+            margin-top: -20px;
+        }
+        .chapter-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: all var(--transition);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .chapter-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.14);
+            border-color: var(--accent);
+        }
+        .chapter-card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #e8e0d5;
+        }
+        .chapter-card-body {
+            padding: 22px 24px;
+        }
+        .chapter-card-body h2 {
+            font-size: 1.4rem;
+            color: var(--accent);
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+        .chapter-id {
+            font-size: 0.85rem;
+            color: #999;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .badge {
+            display: inline-block;
+            background: #f0e8df;
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            margin-top: 6px;
+        }
+        .toast {
+            position: fixed;
+            top: 20px; left: 50%;
+            transform: translateX(-50%);
+            padding: 14px 28px;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: 500;
+            letter-spacing: 1px;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.4s, top 0.4s;
+            pointer-events: none;
+            font-size: 15px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        .toast.show { opacity: 1; top: 32px; }
+        .toast.success-toast { background: #2e7d32; }
+        .toast.error-toast { background: #c62828; }
+        .toast.info-toast { background: #1565c0; }
+        @media (max-width: 768px) {
+            .header-container { height: 40vh; border-bottom-left-radius: 70%; border-bottom-right-radius: 70%; }
+            .container { padding: 24px 14px; }
+            .chapters-grid { grid-template-columns: 1fr; gap: 18px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 左上角返回按钮（链接至主站） -->
+    <div class="back-buttons">
+        <a href="https://rewind.abyssal-puzzle.top/" class="back-btn-mini">← 返回主站</a>
+    </div>
+
+    <div class="toast" id="toast"></div>
+    <div class="header-container" id="headerContainer">
+        <img src="" alt="背景图" class="header-img" id="headerImg">
+        <div class="mask">
+            <h1 class="mask-title">Abyssal Puzzle</h1>
+            <p class="mask-subtitle">存档版</p>
+        </div>
+    </div>
+    <div class="container" id="mainContent">
+        <p style="text-align:center;padding:60px;color:#999;">加载中...</p>
+    </div>
+    <script>
+        (function() {
+            const toast = document.getElementById('toast');
+            function showToast(msg, type='info') {
+                toast.textContent = msg;
+                toast.className = 'toast ' + type + '-toast';
+                void toast.offsetWidth;
+                toast.classList.add('show');
+                clearTimeout(toast._timeout);
+                toast._timeout = setTimeout(() => toast.classList.remove('show'), 2200);
+            }
+            async function loadData() {
+                try {
+                    const res = await fetch('puzzle_info.json');
+                    if (!res.ok) throw new Error('加载失败');
+                    return await res.json();
+                } catch (e) {
+                    showToast('无法加载 puzzle_info.json', 'error');
+                    return null;
+                }
+            }
+            async function init() {
+                const data = await loadData();
+                if (!data) {
+                    document.getElementById('mainContent').innerHTML = '<p style="text-align:center;color:#c62828;padding:60px;">数据加载失败，请确认 puzzle_info.json 存在。</p>';
+                    return;
+                }
+                const headerImg = document.getElementById('headerImg');
+                headerImg.src = 'img/archive_bg.jpg';
+                headerImg.onerror = function() {
+                    if (data.chapters && data.chapters[0]) {
+                        headerImg.src = 'img/' + data.chapters[0].image;
+                    } else {
+                        headerImg.style.display = 'none';
+                        document.getElementById('headerContainer').style.background = 'linear-gradient(135deg, #3a2f28, #5a3e2b)';
+                    }
+                };
+                let html = '<div class="chapters-grid">';
+                data.chapters.forEach(ch => {
+                    html += `
+                    <a class="chapter-card" href="chapter.html?id=${ch.id}">
+                        <img src="img/${ch.image || 'placeholder.png'}" alt="${ch.name}" class="chapter-card-img" 
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div style="display:none;width:100%;height:200px;align-items:center;justify-content:center;background:#e8e0d5;color:#999;">📷 ${ch.name}</div>
+                        <div class="chapter-card-body">
+                            <div class="chapter-id">#${ch.id}</div>
+                            <h2>${ch.name}</h2>
+                            <span class="badge">${ch.puzzle_count}道谜题</span>
+                        </div>
+                    </a>`;
+                });
+                html += '</div>';
+                document.getElementById('mainContent').innerHTML = html;
+            }
+            init();
+        })();
+    </script>
+</body>
+</html>

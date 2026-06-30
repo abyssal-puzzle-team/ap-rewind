@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abyssal Puzzle 2 | Front Meta</title>
+    <link rel="icon" href="/favicon.ico">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        input[type="text"] {
+            background-color: #222;
+            color: white;
+            border: 2px solid #444;
+            padding: 12px;
+            margin-top: 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            outline: none;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+        input[type="text"]:focus {
+            border-color: #666;
+        }
+        button {
+            padding: 12px 30px;
+            margin: 10px 0;
+            font-size: 16px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #666;
+        }
+        #final-message {
+            visibility: hidden;
+            text-align: center;
+            margin-top: 20px;
+        }
+        #final-message p {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <a href="./finalpage" target="_blank" style="position: absolute; top: 10px; right: 10px; color: #888; text-decoration: underline; font-size: 14px; z-index: 10;">Abyssal Puzzle Rewind</a>
+    <h1>Front Meta</h1>
+
+    <div style="max-width: 600px; margin: 0 20px 30px 20px; color: #ccc; line-height: 1.6; text-align: center; font-size: 14px;">
+        <p style="margin: 0;">(1)[adj.].asterveil.(2)</p>
+        <p style="margin: 15px 0;">(1) Find the same point.</p>
+        <p style="margin: 10px 0; text-align: left;">A.<br>•cop2024决赛终于要开始了 新饼要出现了！ 好炫的PV Xi VS 削除? wc太豪华了 Msv17? wc我一辈子 范式你是我叠😭😭😭<br>B.<br>•又到了吃饼(划掉)初见时间了 看看版本号 2.4.3? (2分钟后) 终于更新完了 phi,启动!<br>C.<br>•"v20170309"</p>
+        <p style="margin: 15px 0;">(2)<br>hold/hold*3/tap hold hold tap</p>
+    </div>
+
+    <input type="text" placeholder="输入密钥" id="front-password">
+    <button onclick="checkFrontPassword()">验证密钥</button>
+    <div id="final-message">
+        <p>恭喜你，密钥正确！</p>
+        <p>前往主谜题...</p>
+    </div>
+
+    <script src="/two/newpage/newpage.js"></script>
+    <script>
+        const FRONT_PASSWORD = 'abyssal.asterveil.top';
+
+        function checkFrontPassword() {
+            const input = document.getElementById('front-password');
+            const enteredKey = input.value;
+
+            if (enteredKey === FRONT_PASSWORD) {
+                input.style.borderColor = '#4CAF50';
+                input.style.backgroundColor = '#1a5f20';
+                input.value = '密钥正确';
+                input.disabled = true;
+                setTimeout(() => {
+                    window.location.href = '/two/main';
+                }, 1000);
+            } else {
+                input.style.borderColor = '#f44336';
+                input.style.backgroundColor = '#5f1a1a';
+                input.value = '密钥错误';
+                setTimeout(() => {
+                    input.value = '';
+                    input.style.borderColor = '#444';
+                    input.style.backgroundColor = '#222';
+                }, 1000);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('front-password');
+            input.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    checkFrontPassword();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
