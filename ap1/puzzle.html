@@ -397,14 +397,7 @@
 
             // 主初始化
             async function init() {
-                let data;
-                try {
-                    const data = puzzleData;
-                    data = await res.json();
-                } catch(e) {
-                    document.getElementById('mainContent').innerHTML = '<p style="text-align:center;color:#c62828;">数据加载失败，请确认 puzzle_info.json 存在。</p>';
-                    return;
-                }
+                const data = puzzleData;
 
                 const chapter = data.chapters.find(c => c.id === chapterId);
                 if (!chapter) {

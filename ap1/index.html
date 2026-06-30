@@ -201,61 +201,48 @@
 
     <script src="puzzle_data.js"></script>
     <script>
-        (function() {
-            const toast = document.getElementById('toast');
-            function showToast(msg, type='info') {
-                toast.textContent = msg;
-                toast.className = 'toast ' + type + '-toast';
-                void toast.offsetWidth;
-                toast.classList.add('show');
-                clearTimeout(toast._timeout);
-                toast._timeout = setTimeout(() => toast.classList.remove('show'), 2200);
+    (function() {
+        const toast = document.getElementById('toast');
+        function showToast(msg, type='info') { /* 保持原样 */ }
+
+        async function init() {
+            const data = puzzleData;
+            if (!data || !data.chapters) {
+                document.getElementById('mainContent').innerHTML = '<p style="text-align:center;color:#c62828;padding:60px;">数据加载失败。</p>';
+                return;
             }
-            async function loadData() {
-                try {
-                    const data = puzzleData;
-                    if (!res.ok) throw new Error('加载失败');
-                    return await res.json();
-                } catch (e) {
-                    showToast('无法加载 puzzle_info.json', 'error');
-                    return null;
+
+            const headerImg = document.getElementById('headerImg');
+            headerImg.src = 'img/archive_bg.jpg';
+            headerImg.onerror = function() {
+                if (data.chapters && data.chapters[0]) {
+                    headerImg.src = 'img/' + data.chapters[0].image;
+                } else {
+                    headerImg.style.display = 'none';
+                    document.getElementById('headerContainer').style.background = 'linear-gradient(135deg, #3a2f28, #5a3e2b)';
                 }
-            }
-            async function init() {
-                const data = await loadData();
-                if (!data) {
-                    document.getElementById('mainContent').innerHTML = '<p style="text-align:center;color:#c62828;padding:60px;">数据加载失败，请确认 puzzle_info.json 存在。</p>';
-                    return;
-                }
-                const headerImg = document.getElementById('headerImg');
-                headerImg.src = 'img/archive_bg.jpg';
-                headerImg.onerror = function() {
-                    if (data.chapters && data.chapters[0]) {
-                        headerImg.src = 'img/' + data.chapters[0].image;
-                    } else {
-                        headerImg.style.display = 'none';
-                        document.getElementById('headerContainer').style.background = 'linear-gradient(135deg, #3a2f28, #5a3e2b)';
-                    }
-                };
-                let html = '<div class="chapters-grid">';
-                data.chapters.forEach(ch => {
-                    html += `
-                    <a class="chapter-card" href="chapter.html?id=${ch.id}">
-                        <img src="img/${ch.image || 'placeholder.png'}" alt="${ch.name}" class="chapter-card-img" 
-                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                        <div style="display:none;width:100%;height:200px;align-items:center;justify-content:center;background:#e8e0d5;color:#999;">📷 ${ch.name}</div>
-                        <div class="chapter-card-body">
-                            <div class="chapter-id">#${ch.id}</div>
-                            <h2>${ch.name}</h2>
-                            <span class="badge">${ch.puzzle_count}道谜题</span>
-                        </div>
-                    </a>`;
-                });
-                html += '</div>';
-                document.getElementById('mainContent').innerHTML = html;
-            }
-            init();
-        })();
-    </script>
+            };
+
+            let html = '<div class="chapters-grid">';
+            data.chapters.forEach(ch => {
+                html += `
+                <a class="chapter-card" href="chapter.html?id=${ch.id}">
+                    <img src="img/${ch.image || 'placeholder.png'}" alt="${ch.name}" class="chapter-card-img" 
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                    <div style="display:none;width:100%;height:200px;align-items:center;justify-content:center;background:#e8e0d5;color:#999;">📷 ${ch.name}</div>
+                    <div class="chapter-card-body">
+                        <div class="chapter-id">#${ch.id}</div>
+                        <h2>${ch.name}</h2>
+                        <span class="badge">${ch.puzzle_count}道谜题</span>
+                    </div>
+                </a>`;
+            });
+            html += '</div>';
+            document.getElementById('mainContent').innerHTML = html;
+        }
+
+        init();
+    })();
+</script>
 </body>
 </html>
