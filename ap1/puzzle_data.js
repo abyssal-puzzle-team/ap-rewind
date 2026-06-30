@@ -1,0 +1,1091 @@
+const puzzleData = {
+    "chapters":
+    [
+        {
+        "id": 1,
+        "name": "钟楼",
+        "image": "1.jpg",
+        "news_description": " ",
+        "news_img" : "https://mmbiz.qpic.cn/mmbiz_jpg/x0lwngPKUjhMkafUHVrsOPDlJJB0DnCrnClD2ZRVMk7fArPaw6g4UjG8Nemr1toia21r0jGiaOsUk3G5rZBjLbCA/640?wx_fmt=jpeg&from=appmsg",
+        "news_url" : "https://mp.weixin.qq.com/s/FSRUGnkPtm73xadIATbF4Q",
+        "puzzle_count": 5,
+        "count_demand": 4,
+        "story": "双脚再一次踩在了城市底路上，可二人的心却依然悬在高处。<br><br>手机、文件夹、串着咬了一口的关东煮的竹签，都各自散落在地上，这实在是让人放不下心来。<br><br>Abyss与Cryst沿着宽阔而凌乱的大路小跑，很快就到了离她们最近的发光建筑。Abyss正欲拐进去，却被Cryst一把拉回。<br><br>Cryst闭着眼都知道没提出疑问就迈开腿的Abyss此时是什么表情，于是她指了指前面那栋发光建筑的最顶端——一个巨大的表盘——20:50。<br><br>“呼……哈——直觉告诉我，我们应该先去这里。呼……哈——”<br><br>Abyss笑着叹了一口气，慢慢追了上去。<br><br>街边小吃摊悬挂着的夜灯周围，只剩下滋滋啦啦和咕噜咕噜的声响；<br><br>车辆闪烁着的大灯前方，只有滴嘟滴嘟的报警声；<br><br>包裹着整个城市的月光底下，只余两人的喘气和脚步声。<br><br>“我们到了。”Abyss说完便立马扶住侧躺在她肩上的Cryst，“又不是有Insight在后面追着，这么火急火燎做什么？”<br><br>“哈——”Cryst深吸了一口气，“现在的情形也不容小觑吧，虽然要是Insight在后面追也很恐怖就是了……”<br><br>“嗯……”Abyss把Cryst的发丝向后拨去，“走吧，又要上电梯了。”<br><br>“嗯，我休息好了，上去吧！”<br><br>“这电梯的构造还真有意思哈……”面对眼前一圈又一圈运行着的齿轮，Cryst站在这透明电梯里轻哼起来。<br><br>“明明见不到任何电动的痕迹，就如同懵懂孩童画下来的一张不负责任的设计图，”Abyss靠在边上，沉闷地敲打着一个透明物体，盯着梯门上方指针不断转动的时钟说着，“30秒前我还挺认同你的，但也只能看见这些了……这同质化这么严重的情形让我也觉得无聊了。”<br><br>“那我也一直在Aby身边啊，也没见你哪次玩我的时候不笑啊！”Cryst蹦跶过来后贴着的小脸蛋强行占据了Abyss的整个视野，随后前者的脸蛋就被后者随意揉搓起来。<br><br>“毕竟世上像你这样有灵性的人可不多啊！无论欣赏几遍都不够吧？”<br><br>@o@<br><br>“咔哒！”目之所及的齿轮全部停转，这把两位都吓了一跳，好在只是电梯门开了。<br><br>“呼——还以为会突然掉下去……”<br><br>“别说！”Abyss捂住了Cryst的嘴，迎来一副嫌弃脸。<br><br>（==）<br><br>“呃……这个我真怕……”<br><br>钟楼顶端倒是没有那么同质化了，就是有些刻板化——一些纹路、一些元件、一口被围在中心的大钟、一副在外面才能看见的显示钟就是全部了。<br><br>“所以你的直觉把我们引到这里来敲钟吗？”简单逛了一圈无果后的Abyss将目光投向看不到的钟心，“我相信你的直觉可是胜过我自己的学识的，Cryst。”<br><br>Abyss靠在围着大钟的护栏边上，又猛地撤回来。<br><br>“这围栏内部居然能转动，Cryst来帮下忙！”<br><br>经过测试，Abyss和Cryst发现边上这一圈可转动的部分可以让电梯上下运行，可能是这里的人们担心出故障而特意设计的吧。<br><br>“Aby！你快看这些时钟，是不是有些猫腻？”Cryst趴在地上，扑腾着腿观察着电梯齿轮墙的一块区域，若有所思。<br><br>“我明白了……说白了还是解谜找东西嘛……你负责推扶手，我下去会会这些。”<br><br>“哼哼，体力活就交给我吧！”<br><br>“你别把我吊在半空中就行了……”Abyss望着Cryst活力四射的表情，心里想着，吐出一声苦笑。<br>",
+        "puzzle":[
+                {
+                    "id": 1,
+                    "name": "钟表",
+                    "description": "几块显示着各地时间的钟表，但是最后一块似乎停了。<br><b style=\"color: red\">(5)</b><br><img src=\"./img/puzzle/1/1.png\" style=\"padding: 0 160px\">",
+                    "hints": [
+                        {
+                            "id": 1,
+                            "title" :  "我毫无头绪。", 
+                            "content": "观察每个指针所指向的方向。",
+                            "cost": 100
+                        },
+                        {
+                            "id": 2,
+                            "title" : "本题使用的加密方式是什么？", 
+                            "content": "旗语。",
+                            "cost": 200
+                        },
+                        {
+                            "id": 3,
+                            "title" : "我确定我已经明白了一切，但我还是不知道答案的(5)是什么。",
+                            "content": "请尝试寻找更完整的数据库，你会找到符合(5)的答案。",
+                            "cost": 500
+                        }
+                    ],
+                    "milestone": [
+                    ] ,
+                    "answer": "SPACE",
+                    "analysis": "前三个表盘按照旗语依次提取出ANS<br>最后一个表盘为旗语中的空格（<b style=\"color: red\">SPACE</b>）"
+                },
+
+                {
+                    "id": 2,
+                    "name": "彩色地砖",
+                    "description": "感觉要得<b style=\"color: red\">色</b><b style=\"color:green\">盲</b>了！<br><br><img src=\"./img/puzzle/1/2.png\">",
+                    "hints": [
+                        {
+                            "id": 1,
+                            "title" : "我毫无头绪。", 
+                            "content": "把红色和绿色的色块看成同一种颜色。",
+                            "cost": 250
+                        }
+                    ],
+                    "milestone": [] ,
+                    "answer": "RED AND GREEN",
+                    "analysis": "把红色和绿色看成同一种颜色：<br><img src=\"./img/puzzle/1/2a.jpg\"><br>象形得到答案<b style=\"color: red\">RED AND GREEN</b>。"
+                },
+
+                {
+                    "id": 3,
+                    "name": "未闻花名",
+                    "description": "<img src=\"./img/puzzle/1/3.jpeg\" style=\"padding: 0 120px\">",
+                    "hints": [
+                        {
+                            "id": 1,
+                            "title" : "我毫无头绪。", 
+                            "content": "尝试辨认图中的花卉。",
+                            "cost": 100
+                        },
+                        {
+                            "id": 2,
+                            "title" : "我到底要做什么？", 
+                            "content": "把图中花卉的名称翻译成英文。",
+                            "cost": 200
+                        },
+                        {
+                            "id": 3,
+                            "title" : "该如何提取？", 
+                            "content": "利用每个图片中花卉的数量。",
+                            "cost": 300
+                        },
+                        {
+                            "id": 4,
+                            "title" : "该如何排序？", 
+                            "content": "利用中央一图中的箭头。",
+                            "cost": 50
+                        }
+                    ],
+                    "milestone": [] ,
+                    "answer": "DOCUMENT",
+                    "analysis": "<table><tr><td colspan=\"3\">识图得图上花卉分别为：</td></tr><tr><td>雏菊（<span style=\"color:red\">d</span>aisy）</td><td>兰花（<span style=\"color:red\">o</span>rchid）</td><td>山茶花（<span style=\"color:red\">c</span>amellia）</td></tr><tr><td>荷花（lo<span style=\"color:red\">t</span>us）</td><td></td><td>郁金香（t<span style=\"color:red\">u</span>lip）</td></tr><tr><td>向日葵（su<span style=\"color:red\">n</span>flower）</td><td>牡丹（p<span style=\"color:red\">e</span>ony）</td><td>玉兰（<span style=\"color:red\">m</span>agnolia）</td></tr><tr><td colspan=\"3\">按照图中花卉的数量对花卉的英文名称进行提取，并且按照箭头方向顺时针读取得</td></tr><tr><td colspan=\"3\"><span style=\"color:red; font-weight:bold\">DOCUMENT</span></td></tr></table>"
+                },
+
+                {
+                    "id": 4,
+                    "name": "Crush Expert",
+                    "description": "crush叫毫无头绪我该叫什么？ ——该如何提取<br><img src=\"./img/puzzle/1/4.png\">",
+                    "hints": [
+                        {
+                            "id": 1,
+                            "title" : "我毫无头绪。", 
+                            "content": "每条clue描述的东西都有一个与其成对或配套的东西。",
+                            "cost": 500
+                        },
+                        {
+                            "id": 2,
+                            "title" : "该如何排序？", 
+                            "content": "按照纸片的叠放顺序从上到下。",
+                            "cost": 300
+                        }
+                    ],
+                    "milestone": [] ,
+                    "answer": "SISTER CITIES",
+                    "analysis": "每条clue描述的东西都有一个与其成对或配套的东西。提取字母后按照纸片叠放顺序排序可以得到答案<b style=\"color: red\">SISTER CITIES</b>。<br><table style='border-collapse:collapse;width:100%;text-align:center;'><tr><th style='border:1px solid #000;'>Crush</th><th style='border:1px solid #000;'>我</th><th style='border:1px solid #000;'>英文</th><th style='border:1px solid #000;'>位置</th><th style='border:1px solid #000;'>提取</th></tr><tr><td style='border:1px solid #000;'>长矛</td><td style='border:1px solid #000;'>盾牌</td><td style='border:1px solid #000;'>shield</td><td style='border:1px solid #000;'>1</td><td style='border:1px solid #000;color:red;'>s</td></tr><tr><td style='border:1px solid #000;'>锤子</td><td style='border:1px solid #000;'>钉子</td><td style='border:1px solid #000;'>nail</td><td style='border:1px solid #000;'>3</td><td style='border:1px solid #000;color:red;'>i</td></tr><tr><td style='border:1px solid #000;'>妻子</td><td style='border:1px solid #000;'>丈夫</td><td style='border:1px solid #000;'>husband</td><td style='border:1px solid #000;'>3</td><td style='border:1px solid #000;color:red;'>s</td></tr><tr><td style='border:1px solid #000;'>螺栓</td><td style='border:1px solid #000;'>螺母</td><td style='border:1px solid #000;'>nut</td><td style='border:1px solid #000;'>3</td><td style='border:1px solid #000;color:red;'>t</td></tr><tr><td style='border:1px solid #000;'>折射</td><td style='border:1px solid #000;'>反射</td><td style='border:1px solid #000;'>reflection</td><td style='border:1px solid #000;'>5</td><td style='border:1px solid #000;color:red;'>e</td></tr><tr><td style='border:1px solid #000;'>磁场</td><td style='border:1px solid #000;'>电场</td><td style='border:1px solid #000;'>electric field</td><td style='border:1px solid #000;'>6</td><td style='border:1px solid #000;color:red;'>r</td></tr><tr><td style='border:1px solid #000;'>薯条</td><td style='border:1px solid #000;'>番茄酱</td><td style='border:1px solid #000;'>ketchup</td><td style='border:1px solid #000;'>4</td><td style='border:1px solid #000;color:red;'>c</td></tr><tr><td style='border:1px solid #000;'>钢笔</td><td style='border:1px solid #000;'>墨水</td><td style='border:1px solid #000;'>ink</td><td style='border:1px solid #000;'>1</td><td style='border:1px solid #000;color:red;'>i</td></tr><tr><td style='border:1px solid #000;'>枪</td><td style='border:1px solid #000;'>子弹</td><td style='border:1px solid #000;'>bullet</td><td style='border:1px solid #000;'>6</td><td style='border:1px solid #000;color:red;'>t</td></tr><tr><td style='border:1px solid #000;'>叉子</td><td style='border:1px solid #000;'>刀</td><td style='border:1px solid #000;'>knife</td><td style='border:1px solid #000;'>3</td><td style='border:1px solid #000;color:red;'>i</td></tr><tr><td style='border:1px solid #000;'>锁</td><td style='border:1px solid #000;'>钥匙</td><td style='border:1px solid #000;'>key</td><td style='border:1px solid #000;'>2</td><td style='border:1px solid #000;color:red;'>e</td></tr><tr><td style='border:1px solid #000;'>牙刷</td><td style='border:1px solid #000;'>牙膏</td><td style='border:1px solid #000;'>toothpaste</td><td style='border:1px solid #000;'>8</td><td style='border:1px solid #000;color:red;'>s</td></tr></table>"
+                },
+
+                {
+                    "id": 5,
+                    "name": "有点长了？",
+                    "description": "<i>本题有 1 个里程碑。</i><br><img src=\"./img/puzzle/1/5.png\" style=\"padding: 0 80px\">",
+                    "hints": [
+                        {
+                            "id": 1,
+                            "title" : "我毫无头绪。", 
+                            "content": "写出图中事物所对应的英文表述，并提取对应位置的字母。",
+                            "cost": 100
+                        },
+                        {
+                            "id": 2,
+                            "title" : "我得到了一个里程碑，但它是什么意思？", 
+                            "content": "字面意思，把这些单词用中文表述出来，然后寻找它们之间的关系。",
+                            "cost": 300
+                        },
+                        {
+                            "id": 3,
+                            "title" : "本题使用的加密方式是什么？", 
+                            "content": "摩斯。",
+                            "cost": 500
+                        }
+                    ],
+                    "milestone": [{"id": 1, "content" : "translateintochinese", "response" : "这是一个里程碑！"}] ,
+                    "answer": "CHORDS",
+                    "analysis": "写出所有事物的英文并提取字母，得到里程碑：<b>Translate into Chinese</b>。因此再把所有事物翻译为中文。<br>观察可以发现，这些中文都含有“点”或者“长”，这说明每一个词都对应一个摩斯密码中的点和杠。<br>因此按照摩斯密码提取即可得到答案<b style=\"color: red\">CHORDS</b>。<br><table style='border-collapse:collapse;width:100%;text-align:center;'><tr><th style='border:1px solid #000;'>英文</th><th style='border:1px solid #000;'>中文</th><th style='border:1px solid #000;'>对应摩斯</th><th style='border:1px solid #000;'>提取</th></tr><tr><td style='border:1px solid #000;'>trousers</td><td style='border:1px solid #000;'><b style=\"color: red\">长</b>裤</td><td style='border:1px solid #000;'>-</td><td rowspan='4' style='border:1px solid #000;color:red;'>C</td></tr><tr><td style='border:1px solid #000;'>raindrop</td><td style='border:1px solid #000;'>雨<b style=\"color: red\">点</b></td><td style='border:1px solid #000;'>.</td></tr><tr><td style='border:1px solid #000;'>gallery</td><td style='border:1px solid #000;'><b style=\"color: red\">长</b>廊</td><td style='border:1px solid #000;'>-</td></tr><tr><td style='border:1px solid #000;'>nod</td><td style='border:1px solid #000;'><b style=\"color: red\">点</b>头</td><td style='border:1px solid #000;'>.</td></tr><tr><td style='border:1px solid #000;'>website</td><td style='border:1px solid #000;'>网络站<b style=\"color: red\">点</b></td><td style='border:1px solid #000;'>.</td><td rowspan='4' style='border:1px solid #000;color:red;'>H</td></tr><tr><td style='border:1px solid #000;'>decimal point</td><td style='border:1px solid #000;'>小数<b style=\"color: red\">点</b></td><td style='border:1px solid #000;'>.</td></tr><tr><td style='border:1px solid #000;'>idea</td><td style='border:1px solid #000;'><b style=\"color: red\">点</b>子</td><td style='border:1px solid #000;'>.</td></tr><tr><td style='border:1px solid #000;'>punctuation</td><td style='border:1px solid #000;'>标<b style=\"color: red\">点</b></td><td style='border:1px solid #000;'>.</td></tr><tr><td style='border:1px solid #000;'>flute</td><td style='border:1px solid #000;'><b style=\"color: red\">长</b>笛</td><td style='border:1px solid #000;'>-</td><td rowspan='3' style='border:1px solid #000;color:red;'>O</td></tr><tr><td style='border:1px solid #000;'>giraffe</td><td style='border:1px solid #000;'><b style=\"color: red\">长</b>颈鹿</td><td style='border:1px solid #000;'>-</td></tr><tr><td style='border:1px solid #000;'>length</td><td style='border:1px solid #000;'><b style=\"color: red\">长</b>度</td><td style='border:1px solid #000;'>-</td></tr><tr><td style='border:1px solid #000;'>dessert</td><td style='border:1px solid #000;'>甜<b style=\"color: red\">点</b></td><td style='border:1px solid #000;'>.</td><td rowspan='3' style='border:1px solid #000;color:red;'>R</td></tr><tr><td style='border:1px solid #000;'>cuboid</td><td style='border:1px solid #000;'><b style=\"color: red\">长</b>方体</td><td style='border:1px solid #000;'>-</td></tr><tr><td style='border:1px solid #000;'>focus</td><td style='border:1px solid #000;'>焦<b style=\"color: red\">点</b></td><td style='border:1px solid #000;'>.</td></tr><tr><td style='border:1px solid #000;'>the great wall</td><td style='border:1px solid #000;'><b style=\"color: red\">长</b>城</td><td style='border:1px solid #000;'>-</td><td rowspan='3' style='border:1px solid #000;color:red;'>D</td></tr><tr><td style='border:1px solid #000;'>ink spot(dots)</td><td style='border:1px solid #000;'>墨<b style=\"color: red\">点</b></td><td style='border:1px solid #000;'>.</td></tr><tr><td style='border:1px solid #000;'>seven o'clock</td><td style='border:1px solid #000;'>七<b style=\"color: red\">点</b>钟</td><td style='border:1px solid #000;'>.</td></tr><tr><td style='border:1px solid #000;'>penalty kick</td><td style='border:1px solid #000;'><b style=\"color: red\">点</b>球</td><td style='border:1px solid #000;'>.</td><td rowspan='3' style='border:1px solid #000;color:red;'>S</td></tr><tr><td style='border:1px solid #000;'>dim sum</td><td style='border:1px solid #000;'><b style=\"color: red\">点</b>心</td><td style='border:1px solid #000;'>.</td></tr><tr><td style='border:1px solid #000;'>finish line</td><td style='border:1px solid #000;'>终<b style=\"color: red\">点</b>线</td><td style='border:1px solid #000;'>.</td></tr></table>"
+                }
+            ]
+        },
+
+        {
+        "id": 2,
+        "name": "图书馆",
+        "image": "2.jpg",
+        "news_description": " ",
+        "news_img" : "https://mmbiz.qpic.cn/mmbiz_jpg/x0lwngPKUjhMkafUHVrsOPDlJJB0DnCrtQyExpT8U909ticjTt1zIReHNiaBhgKbsJ3Rre8jZar3oNORK9PCiacWA/640?wx_fmt=jpeg&from=appmsg",
+        "news_url" : "https://mp.weixin.qq.com/s/FKngJ1vKQiS7b7kxb7w12A",
+        "puzzle_count": 5,
+        "count_demand": 4,
+        "story":"随着最后一块元件的组装，中间这口笨重的大钟可算是能正常驱动了。<br><br>“尽管如此，要敲响它还是得耗费很大的力气吧……”Cryst一屁股瘫坐在地上，下意识想喘两口气，却又“腾”的一下起身，“诶？怎么好像……完全没有觉得累呀？”<br><br>刚刚重新回到顶端的Abyss提出了另一个疑问:“我们来到这里多久了，Cryst？”<br><br>“嗯？呃——半个小时？”<br><br>“你看外面那块表。”Abyss似乎已经知道了什么，抬起头用下巴指了一下。<br><br>“怎么了吗？等等，怎么一点没走啊？！”<br><br>“看来受某种力量的影响，这里的时间停滞了，不知道是钟楼本身的特性还是什么……”Abyss一边小声嘀咕着一边摆弄起大钟，“所 以 还 不 快 来 推 ！！！”<br><br>大钟的倾斜角度越来越大，但当两人做好心理准备松手的一刹那，却依然停滞在原处。<br><br>“啧，这种随时会发生意外的不确定性最烦人了！”Abyss提高了音调，跺了下脚，但还不至于失态。<br><br>Cryst也惊慌地四处看了看，很快就发现了端倪：“Aby！看那里面！”<br><br>Abyss转身抬起头，发现大钟被抬起来的那一侧上面有一行字：“回到升降梯，静候。”<br><br>“怎么和什么旅游景点似的……”两人都有些无语，但还是一声不吭的踏了上去。<br><br>“所以只是等到没人的时候再响吗？那我们现在只需要等它降落——！——！——！”<br><br>落！！！！ ↑<br><br>落！！！ ↑<br><br>落！！ ↑<br><br>落！ ↑<br><br>“呜啊啊啊啊啊啊啊——↑”<br><br>“咣当~~~咣当~~~咣当~~~”<br><br>21:00。<br><br>夜空被钟声和尖叫声惊醒，时间恢复了流逝。<br><br>在Abyss和Cryst紧紧抱在一起，丝毫不在乎对方的耳膜和自己的嗓子时，<b>一块符文板</b>悄无声息地出现在了二人脚边，一道模糊的声音响起:“出门直走右拐再直走，很抱歉我只能用这种方式了……”<br><br><img src=\"./img/board1.png\" style=\"padding: 0 180px\"/><br><br>当然，现在她们根本无暇顾及了。<br><br>“啊哈……哈哈……啊……终于停、停下来了……不要再有下一次了。”“嗯嗯嗯（颤音）……别再！”<br><br>Abyss和Cryst平稳落地，毫发无伤——心理伤害另说。<br><br>“呼——不过这下我终于知道有什么是我和Aby都害怕的呃咳咳咳！”Cryst刚强行振作起来就开始打趣，叉着腰指着Abyss鼻子正说着，又被那明显还没平静下来的嗓子强行打回了原型。<br><br>Abyss扶稳了Cryst，拍拍她的后背，一言不发。待Cryst恢复常态时，Abyss深吸一口气，将脸贴在了她脸前几厘米处……<br><br>“我喜欢研究知识可并不代表我想被知识玩弄啊还有Cryst你没休息好就别强行开玩笑啊可把我给吓死了你知道吗？！”<br><br>“诶？”（•▽•）<br><br>Abyss和Cryst的脸都涨得通红。<br><br>“咳，好了。”Abyss捡起符文板，起身理了下二人的衣着和发型，“该动身了，要不然那个神秘人可能就生气了。”<br><br>在一番小打小闹后，两人平安抵达了脑海中那个声音所指示的地点——大老远就看到外面的招牌——图书馆。<br><br>“我可以在这里泡上一整天！”Abyss发表重要讲话，“可惜啊，时间紧迫。”<br><br>“那就赶紧找有什么异常吧！”<br><br>事实上，两人一眼就发现了异常——荒无人烟，地板上散落着各式各样的书，掉落的姿态要不就合拢且书名朝下，要不就展开且朝上，并且展开的是极少数。<br><br>“你看这本书，”Abyss随便捡起一本，“这角度都弯成一个‘M’了，这些展开的书肯定有信息在里面。”说着便就着展开的那一页读了起来。<br><br>“该不会又是谜题吧？”<br><br>“……下次有什么麻烦的直觉时请不要说出来，这会让我以为这是你设的局。”Abyss再次发表重要讲话。<br><br>“嘿嘿……我去帮你找书啦！”Cryst尴尬地笑着，一溜烟跑了。<br><br>“跑慢点啊，小心摔着。”Abyss抬起手小声自言自语，“那好吧，希望我不会栽在这些题身上一整天。”<br>",
+        "puzzle":[
+                {
+                    "id": 1,
+                    "name": "抢座",
+                    "description": "根本<b>看不到</b>哪里有空座啊！！<br><img src=\"./img/puzzle/2/1.png\" style=\"padding: 0 180px\"><br>题目文本：</br><table style=\"border-collapse:collapse;width:100%;text-align:center;\"><tr></tr><tr><th colspan=\"3\" style=\"border:1px solid #000;\">座位使用记录</th></tr><tr><th style=\"border:1px solid #000;\">座位</th><th style=\"border:1px solid #000;\">状态</th><th style=\"border:1px solid #000;\">时间</th></tr><tr><td style=\"border:1px solid #000;\">A桌3座</td><td style=\"border:1px solid #000;\">已占用</td><td style=\"border:1px solid #000;\">08:00</td></tr><tr><td style=\"border:1px solid #000;\">B桌1座</td><td style=\"border:1px solid #000;\">已释放</td><td style=\"border:1px solid #000;\">08:23</td></tr><tr><td style=\"border:1px solid #000;\">C桌3座</td><td style=\"border:1px solid #000;\">已占用</td><td style=\"border:1px solid #000;\">08:38</td></tr><tr><td style=\"border:1px solid #000;\">D桌3座</td><td style=\"border:1px solid #000;\">已占用</td><td style=\"border:1px solid #000;\">09:01</td></tr><tr><td style=\"border:1px solid #000;\">E桌3座</td><td style=\"border:1px solid #000;\">已占用</td><td style=\"border:1px solid #000;\">09:20</td></tr><tr><td style=\"border:1px solid #000;\">F桌4座</td><td style=\"border:1px solid #000;\">已释放</td><td style=\"border:1px solid #000;\">09:41</td></tr><tr><td style=\"border:1px solid #000;\">K桌2座</td><td style=\"border:1px solid #000;\">已占用</td><td style=\"border:1px solid #000;\">09:59</td></tr><tr><td style=\"border:1px solid #000;\">O桌6座</td><td style=\"border:1px solid #000;\">已占用</td><td style=\"border:1px solid #000;\">10:15</td></tr><tr><td style=\"border:1px solid #000;\">B桌5座</td><td style=\"border:1px solid #000;\">已占用</td><td style=\"border:1px solid #000;\">10:33</td></tr><tr><td style=\"border:1px solid #000;\">M桌2座</td><td style=\"border:1px solid #000;\">已占用</td><td style=\"border:1px solid #000;\">10:42</td></tr><tr><td style=\"border:1px solid #000;\">,桌5座</td><td style=\"border:1px solid #000;\">已占用</td><td style=\"border:1px solid #000;\">11:01</td></tr><tr><td style=\"border:1px solid #000;\">L桌3座</td><td style=\"border:1px solid #000;\">已释放</td><td style=\"border:1px solid #000;\">11:06</td></tr><tr><td style=\"border:1px solid #000;\">P桌3座</td><td style=\"border:1px solid #000;\">已释放</td><td style=\"border:1px solid #000;\">11:26</td></tr><tr><td style=\"border:1px solid #000;\">F桌5座</td><td style=\"border:1px solid #000;\">已占用</td><td style=\"border:1px solid #000;\">11:34</td></tr><tr><td style=\"border:1px solid #000;\">Z桌5座</td><td style=\"border:1px solid #000;\">已释放</td><td style=\"border:1px solid #000;\">11:43</td></tr><tr><td style=\"border:1px solid #000;\">U桌4座</td><td style=\"border:1px solid #000;\">已占用</td><td style=\"border:1px solid #000;\">12:02</td></tr><tr><td style=\"border:1px solid #000;\">H桌2座</td><td style=\"border:1px solid #000;\">已释放</td><td style=\"border:1px solid #000;\">12:11</td></tr><tr><td style=\"border:1px solid #000;\">G桌2座</td><td style=\"border:1px solid #000;\">已释放</td><td style=\"border:1px solid #000;\">12:30</td></tr><tr><td style=\"border:1px solid #000;\">X桌6座</td><td style=\"border:1px solid #000;\">已释放</td><td style=\"border:1px solid #000;\">12:31</td></tr><tr><td style=\"border:1px solid #000;\">N桌4座</td><td style=\"border:1px solid #000;\">已释放</td><td style=\"border:1px solid #000;\">12:49</td></tr><tr><td style=\"border:1px solid #000;\">M桌2座</td><td style=\"border:1px solid #000;\">已占用</td><td style=\"border:1px solid #000;\">12:54</td></tr><tr><td style=\"border:1px solid #000;\">:桌1座</td><td style=\"border:1px solid #000;\">已占用</td><td style=\"border:1px solid #000;\">12:58</td></tr><tr><td style=\"border:1px solid #000;\">P桌4座</td><td style=\"border:1px solid #000;\">已释放</td><td style=\"border:1px solid #000;\">13:06</td></tr><tr><td style=\"border:1px solid #000;\">D桌5座</td><td style=\"border:1px solid #000;\">已释放</td><td style=\"border:1px solid #000;\">13:11</td></tr><tr><td style=\"border:1px solid #000;\">E桌4座</td><td style=\"border:1px solid #000;\">已占用</td><td style=\"border:1px solid #000;\">13:29</td></tr><tr><td style=\"border:1px solid #000;\">L桌5座</td><td style=\"border:1px solid #000;\">已占用</td><td style=\"border:1px solid #000;\">13:47</td></tr><tr><td style=\"border:1px solid #000;\">B桌3座</td><td style=\"border:1px solid #000;\">已占用</td><td style=\"border:1px solid #000;\">13:56</td></tr><tr><td style=\"border:1px solid #000;\">H桌2座</td><td style=\"border:1px solid #000;\">已释放</td><td style=\"border:1px solid #000;\">14:10</td></tr><tr><td style=\"border:1px solid #000;\">L桌5座</td><td style=\"border:1px solid #000;\">已占用</td><td style=\"border:1px solid #000;\">14:17</td></tr></table>",
+                    "hints": [
+                        {
+                            "id": 1,
+                            "title" :  "我毫无头绪。", 
+                            "content": "你可以尝试根据ft中某些描述来推断出座位的占用状态该如何表示！",
+                            "cost": 500
+                        },
+                        {
+                            "id": 2,
+                            "title" : "为什么座位使用记录看起来这么奇怪？", 
+                            "content": "图书馆事实上并没有这么多桌子。桌子的编号与它当前的座位占用状态有关。",
+                            "cost": 1500
+                        },
+                        {
+                            "id": 3,
+                            "title" : "我需要使用什么来进行操作？", 
+                            "content": "盲文表。",
+                            "cost": 500
+                        },
+                        {
+                            "id": 4,
+                            "title" : "我只能得到一串无意义的内容，是哪里没有理解？", 
+                            "content": "你可以观察开头几条记录和后面记录的关系。例如，你们已经知道了A会变成K，那么这个桌子的编号现在就是K。",
+                            "cost": 2000
+                        }
+                    ],
+                    "milestone": [{"id": 1,
+                                "content" : "wowsurprisethisisaredherring",
+                                "response" : "啊呀！你遇到了红鲱鱼(red herring)！"}
+
+                    ] ,
+                    "answer": "RECORD",
+                    "analysis": "每个桌子的编号对应它的盲文，黑色代表占用，白色代表未占用。<br>把开头A到F六张桌子按照时间顺序操作盲文即可。<br>（按照盲文编号顺序，左侧三个点为123，右侧三个点为456）<br><img src=\"./img/puzzle/2/1a.png\" style=\"padding: 0 120px\"><br>提取操作最后A到F桌子的编号，得到答案<b style=\"color: red\">RECORD</b>。"
+                },
+
+                {
+                    "id": 2,
+                    "name": "霓虹灯牌",
+                    "description": "<b>从哪个方向看</b>都是四四方方的。<br><img src=\"./img/puzzle/2/2.png\">",
+                    "hints": [
+                        {
+                            "id": 1,
+                            "title" :  "这是什么？", 
+                            "content": "一个常见物体的若干组三视图的拼图。",
+                            "cost": 1000
+                        },
+                        {
+                            "id": 2,
+                            "title" : "我该怎么做？", 
+                            "content": "按照公式复原。",
+                            "cost": 2000
+                        },
+                        {
+                            "id": 3,
+                            "title" : "最后一张图是什么意思？", 
+                            "content": "尝试“换个角度”思考，你会发现它似曾相识。",
+                            "cost": 500
+                        }   
+                    ],
+                    "milestone": [
+
+                    ] ,
+                    "answer": "BURN",
+                    "analysis": "图中的前3组6×6方格分别为3个标准三阶魔方的三视图。<br>由常规的三视图绘制方式，可以得知本题采用红顶蓝前视角。<br>每个状态距离复原只需要一步操作，转动记号分别为B U R；<br>图4实际上是图2（u）旋转180°后的结果，即n。<br>答案即为<b style=\"color: red\">BURN</b>。<br><img src=\"./img/puzzle/2/2a_1.png\"><br><img src=\"./img/puzzle/2/2a_2.png\"><br><img src=\"./img/puzzle/2/2a_3.png\">"
+                },
+
+                {
+                    "id": 3,
+                    "name": "Insight",
+                    "description": "<video controls style=\"width: 100%\"><source src=\"./img/puzzle/2/3.mp4\" type=\"video/mp4\">",
+                    "hints": [
+                        {
+                            "id": 1,
+                            "title" :  "我毫无头绪。", 
+                            "content": "每段文字都指向了与本题主题相关的一种生物。",
+                            "cost": 500
+                        },
+                        {
+                            "id": 2,
+                            "title" : "第1段文字描述的是什么？", 
+                            "content": "末影人。",
+                            "cost": 500
+                        },
+                        {
+                            "id": 3,
+                            "title" : "第2段文字描述的是什么？", 
+                            "content": "山羊。",
+                            "cost": 500
+                        },
+                        {
+                            "id": 4,
+                            "title" : "第3段文字描述的是什么？", 
+                            "content": "女巫。",
+                            "cost": 500
+                        },
+                        {
+                            "id": 5,
+                            "title" : "第4段文字描述的是什么？", 
+                            "content": "监守者。",
+                            "cost": 500
+                        },
+                        {
+                            "id": 6,
+                            "title" : "第5段文字描述的是什么？", 
+                            "content": "蜜蜂。",
+                            "cost": 500
+                        },
+                        {
+                            "id": 7,
+                            "title" : "第6段文字描述的是什么？", 
+                            "content": "发光鱿鱼。",
+                            "cost": 500
+                        },
+                        {
+                            "id": 8,
+                            "title" : "第7段文字描述的是什么？", 
+                            "content": "哞菇。",
+                            "cost": 500
+                        },
+                        {
+                            "id": 9,
+                            "title" : "第8段文字描述的是什么？", 
+                            "content": "苦力怕。",
+                            "cost": 500
+                        },
+                        {
+                            "id": 10,
+                            "title" : "第9段文字描述的是什么？", 
+                            "content": "鸡。",
+                            "cost": 500
+                        },
+                        {
+                            "id": 11,
+                            "title" : "该如何提取？", 
+                            "content": "每段文字中都有一个数字。",
+                            "cost": 1500
+                        } 
+                    ],
+                    "milestone": [
+
+                    ] ,
+                    "answer": "NOTE BLOCK",
+                    "analysis": "每段文字描述的都是一个Minecraft生物，用每段文字出现的数字进行提取得到答案<b style=\"color: red\">NOTEBLOCK</b>。<table style=\"border-collapse:collapse;width:100%;text-align:center;\"><tr><th style=\"border:1px solid #000;background:#8fd3ee;\">生物</th><th style=\"border:1px solid #000;background:#8fd3ee;\">位置</th><th style=\"border:1px solid #000;background:#8fd3ee;\">提取</th></tr><tr><td style=\"border:1px solid #000;\">enderman</td><td style=\"border:1px solid #000;\">2</td><td style=\"border:1px solid #000;color:red;\">n</td></tr><tr><td style=\"border:1px solid #000;\">goat</td><td style=\"border:1px solid #000;\">2</td><td style=\"border:1px solid #000;color:red;\">o</td></tr><tr><td style=\"border:1px solid #000;\">witch</td><td style=\"border:1px solid #000;\">3</td><td style=\"border:1px solid #000;color:red;\">t</td></tr><tr><td style=\"border:1px solid #000;\">warden</td><td style=\"border:1px solid #000;\">5</td><td style=\"border:1px solid #000;color:red;\">e</td></tr><tr><td style=\"border:1px solid #000;\">bee</td><td style=\"border:1px solid #000;\">1</td><td style=\"border:1px solid #000;color:red;\">b</td></tr><tr><td style=\"border:1px solid #000;\">glow squid</td><td style=\"border:1px solid #000;\">2</td><td style=\"border:1px solid #000;color:red;\">l</td></tr><tr><td style=\"border:1px solid #000;\">mooshroom</td><td style=\"border:1px solid #000;\">2</td><td style=\"border:1px solid #000;color:red;\">o</td></tr><tr><td style=\"border:1px solid #000;\">creeper</td><td style=\"border:1px solid #000;\">1</td><td style=\"border:1px solid #000;color:red;\">c</td></tr><tr><td style=\"border:1px solid #000;\">chicken</td><td style=\"border:1px solid #000;\">5</td><td style=\"border:1px solid #000;color:red;\">k</td></tr></table>"
+                },
+
+                {
+                    "id": 4,
+                    "name": "地震",
+                    "description": "<i>本题有 1 个里程碑。</i><br><img src=\"./img/puzzle/2/4.png\">",
+                    "hints": [
+                        {
+                            "id": 1,
+                            "title" :  "我该做什么？", 
+                            "content": "拼图。",
+                            "cost": 500
+                        },
+                        {
+                            "id": 2,
+                            "title" : "我得到了一个里程碑，但它是什么意思？", 
+                            "content": "它有两个含义，一个与拼好的图一起提示你下一步的操作，一个指向最终提取。",
+                            "cost": 1500
+                        },
+                        {
+                            "id": 3,
+                            "title" : "我得到了一个里程碑，该使用什么工具进行下一步？", 
+                            "content": "世界地图。",
+                            "cost": 2000
+                        },
+                        {
+                            "id": 4,
+                            "title" : "该如何提取？", 
+                            "content": "首字母。",
+                            "cost": 1000
+                        }   
+                    ],
+                    "milestone": [
+                            {"id": 1, "content" : "capital", "response" : "这是一个里程碑！"}
+                    ] ,
+                    "answer": "ROAD TRANSPORT",
+                    "analysis": "拼图得到：<br><img src=\"./img/puzzle/2/4a_1.png\"><br>得到里程碑<b>capital</b>。注意到拼好的形状很像等差分纬线多圆锥投影的世界地图，结合capital的指示（首都/大写字母）提取折线上每一个国家首都的开头大写字母得到：<br><img src=\"./img/puzzle/2/4a_2.png\"><br><table style=\"border-collapse:collapse;width:100%;text-align:center;\"><tr><th style=\"border:1px solid #000;font-weight:bold;\">国家</th><th style=\"border:1px solid #000;font-weight:bold;\">首都</th><th style=\"border:1px solid #000;font-weight:bold;\">提取</th></tr><tr><td style=\"border:1px solid #000;\">冰岛</td><td style=\"border:1px solid #000;\">Reykjavík</td><td style=\"border:1px solid #000;color:red;font-weight:bold;\">R</td></tr><tr><td style=\"border:1px solid #000;\">挪威</td><td style=\"border:1px solid #000;\">Oslo</td><td style=\"border:1px solid #000;color:red;font-weight:bold;\">O</td></tr><tr><td style=\"border:1px solid #000;\">阿尔及利亚</td><td style=\"border:1px solid #000;\">Algiers</td><td style=\"border:1px solid #000;color:red;font-weight:bold;\">A</td></tr><tr><td style=\"border:1px solid #000;\">坦桑尼亚</td><td style=\"border:1px solid #000;\">Dodoma</td><td style=\"border:1px solid #000;color:red;font-weight:bold;\">D</td></tr><tr><td style=\"border:1px solid #000;\">利比亚</td><td style=\"border:1px solid #000;\">Tripoli</td><td style=\"border:1px solid #000;color:red;font-weight:bold;\">T</td></tr><tr><td style=\"border:1px solid #000;\">沙特阿拉伯</td><td style=\"border:1px solid #000;\">Riyadh</td><td style=\"border:1px solid #000;color:red;font-weight:bold;\">R</td></tr><tr><td style=\"border:1px solid #000;\">马达加斯加</td><td style=\"border:1px solid #000;\">Antananarivo</td><td style=\"border:1px solid #000;color:red;font-weight:bold;\">A</td></tr><tr><td style=\"border:1px solid #000;\">缅甸</td><td style=\"border:1px solid #000;\">Naypyidaw</td><td style=\"border:1px solid #000;color:red;font-weight:bold;\">N</td></tr><tr><td style=\"border:1px solid #000;\">韩国</td><td style=\"border:1px solid #000;\">Seoul</td><td style=\"border:1px solid #000;color:red;font-weight:bold;\">S</td></tr><tr><td style=\"border:1px solid #000;\">朝鲜</td><td style=\"border:1px solid #000;\">Pyongyang</td><td style=\"border:1px solid #000;color:red;font-weight:bold;\">P</td></tr><tr><td style=\"border:1px solid #000;\">加拿大</td><td style=\"border:1px solid #000;\">Ottawa</td><td style=\"border:1px solid #000;color:red;font-weight:bold;\">O</td></tr><tr><td style=\"border:1px solid #000;\">意大利</td><td style=\"border:1px solid #000;\">Rome</td><td style=\"border:1px solid #000;color:red;font-weight:bold;\">R</td></tr><tr><td style=\"border:1px solid #000;\">伊朗</td><td style=\"border:1px solid #000;\">Tehran</td><td style=\"border:1px solid #000;color:red;font-weight:bold;\">T</td></tr></table>答案为<b style=\"color: red\">ROAD TRANSPORT</b>。"
+                },
+
+                {
+                    "id": 5,
+                    "name": "LETTER SQUARE",
+                    "description": "HELP ME OUT OF THE <b>ALL-AROUND</b> LETTERS!!<br><i>本题有 6 个里程碑。</i><br><img src=\"./img/puzzle/2/5.png\" style=\"padding: 0 40px\"><br><a href=\"https://docs.qq.com/sheet/DVktkZGhLaHZZZUZF?tab=r5xz3b\" target=\"_blank\">腾讯文档</a>",
+                    "hints": [
+                        {
+                            "id": 1,
+                            "title" :  "我该从哪里开始？", 
+                            "content": "观察方阵的周围。",
+                            "cost": 2000
+                        },
+                        {
+                            "id": 2,
+                            "title" : "[C7]要做什么？", 
+                            "content": "寻找方阵中的“NSWE”对。",
+                            "cost": 500
+                        },
+                        {
+                            "id": 3,
+                            "title" : "[P8]要做什么？", 
+                            "content": "方阵中有一些含密钥的[P8]。",
+                            "cost": 500
+                        }, 
+                        {
+                            "id": 4,
+                            "title" :  "[A7]要做什么？", 
+                            "content": "方阵中有一组相邻的[A7]。",
+                            "cost": 500
+                        },
+                        {
+                            "id": 5,
+                            "title" : "[C9]要做什么？", 
+                            "content": "方阵中存在一个井字形的[C9]。",
+                            "cost": 500
+                        },
+                        {
+                            "id": 6,
+                            "title" : "[M6]要做什么？", 
+                            "content": "方阵中有一些[M6]的缩写。",
+                            "cost": 500
+                        },
+                        {
+                            "id": 7,
+                            "title" : "[R13]要做什么？", 
+                            "content": "方阵中有一些明显的[R13]。",
+                            "cost": 500
+                        }, 
+                        {
+                            "id": 8,
+                            "title" : "该如何提取？", 
+                            "content": "将以上几步的结果按顺序连接成一句话。",
+                            "cost": 1000
+                        }   
+
+                    ],
+                    "milestone": [
+                            {"id": 1, "content" : "extract", "response" : "这是一个里程碑！"},
+                            {"id": 2, "content" : "remaining", "response" : "这是一个里程碑！"},
+                            {"id": 3, "content" : "letters", "response" : "这是一个里程碑！"},
+                            {"id": 4, "content" : "sort", "response" : "这是一个里程碑！"},
+                            {"id": 5, "content" : "by", "response" : "这是一个里程碑！"},
+                            {"id": 6, "content" : "columns", "response" : "这是一个里程碑！"}
+                    ] ,
+                    "answer": "CRYPTOLOGY",
+                    "analysis": "根据ft的ALL-AROUND提取周围一圈的字母，得到六道小题：<br><img src=\"./img/puzzle/2/5a_1.png\">小题解法如下：<br>COMPASS：寻找方阵中的“NSWE”对，提取中间的字母得到extract<br>PLAYFAIR：左边三个playfair方格，提取密钥并连接得到remaining<br>ANAGRAM：右下角三个变位词，它们最常见的变位词是letters<br>CROSSWORD：提取右上角CROSSWORD交叉处的字母得到sort<br>MONTHS：把1到12月的月份简称画出，象形得到by<br>ROMAN NUMERALS：把长度2及以上的罗马数字提取出来，a1z26得到columns<br><br>连接得到extract remaining letters sort by columns，把剩余字母按列排序得到：<br>ten letter word describing the science of decoding encoding and encrypted communication<br>故答案为<b style=\"color: red\">CRYPTOLOGY</b>。<br><img src=\"./img/puzzle/2/5a_2.png\">"
+                }
+            ]
+        },
+
+        {
+        "id": 3,
+        "name": "教堂",
+        "image": "3.jpg",
+        "news_description": " ",
+        "news_img" : "https://mmbiz.qpic.cn/mmbiz_jpg/x0lwngPKUjhMkafUHVrsOPDlJJB0DnCrBcq8VV9uPyXHZLu4eU91gRyiaDZZrmwBN41iajDohyLsaDMibOSibVcG5Q/640?wx_fmt=jpeg&from=appmsg",
+        "news_url" : "https://mp.weixin.qq.com/s/LQL7C0d96gB2nnG8RYh_pg",
+        "puzzle_count": 5,
+        "count_demand": 4,
+        "story":"Abyss合上最后一道谜题，抬起贴了近一个小时椅子的屁股，绷直四肢，发出一些奇怪的叫声，伸了个舒舒服服的懒腰。“终于……”<br><br>“做完了！！！”拿着一支野生中性笔和一个填满了谜题答案的野生笔记本的Cryst借着蹬腿的劲大声替Abyss喊了出来。随即又立马将整张侧脸贴在桌子上。<br><br>“为什么偏偏是图书馆这个环境啊——真的是……真的是，太恐怖了！Aby居然还梦想住在这里，噫——无法想象。”Cryst猛烈地摇着头宣泄道。<br><br>“哼哼！就是得在这样的环境中解题思路才舒畅啊～”Abyss满脸得意的小表情，不过在看到桌上那几叠厚得夸张的草稿纸时也多少有点面露难色，“呃……不过工作量可能确实是有些为难Cry了……”<br><br>“你甚至觉得这还没为难到你。”Cryst嘟着嘴，喃喃自语，“所以Aby，答案知道了，你要到哪验证呢？”<br><br>“嘶——↘↗——”（“糟了，光顾着爽了！”）<br><br>“唉呀，看你这表情我就明白，”刚刚还在叫苦连天的人开始洋洋自得起来，在Abyss的注视下双手拍案而起，“是伟大的Cryst sama出力的时候了！”<br><br>Abyss在鼓掌，“啪啪啪”。<br><br>“Aby还能再敷衍点吗！”ヽ(≧□≦)ノ<br><br>“想让我夸你就拿出成果啊，略略略！”<br><br>“好！跟我到这边！”<br><br>Cryst领着Abyss到了图书馆最深处，娓娓道来:“我刚刚找书的时候就注意到这一块了，为了验证猜想，我把整个图书馆都逛了个遍！(“难怪你……”)证明了这确实是唯一一片书架上没有被拿走任何书也没有任何书掉落在地上的区域，这说明了真相——这后面就是那位神秘人留下来的暗室！(“你确定……”)来吧！喂——指引我们来到这里的神秘人，我们已经解出所有答案啦！Aby你也一起呀！(“算了吧……”)麻烦告诉我们奖励的位置吧——！”<br><br>“……的位置吧！”尽管声音很小很小，但还是被Cryst听得一清二楚。<br><br>“Aby你还是跟着说了对吧？”<br><br>（//﹏//）ヾ(≧▽≦*)o<br><br>“揉！脸！攻！击！”<br><br>“啪嗒”，Cryst退到一个书架前，一本很大的书掉到地上。二人翻开，里面有<b>第二块符文板</b>和一张纸条：城市中心，那个Abyss一开始想去的地方。<br><br><img src=\"./img/board2.png\" style=\"padding: 0 180px\"/><br><br>二人面面相觑，一股寒流涌过全身，在短暂的沉默后同时迈开了双腿。<br><br>教堂——立于城市中心的建筑——Abyss和Cryst正站在这神圣建筑的大门口前。<br><br>“你发现问题了吗，Cryst？”<br><br>“嗯……越靠近这里，月光就越强烈。”<br><br>明亮的蓝色月光透过层层阴霾洒下来，被教堂顶端切割成两半，闪烁着。<br><br>“很美……很假……”两人心底默念道。<br><br>又美又假——那就是奇，而这是一副只有在教堂周围才能观测到的奇景。<br><br>Abyss和Cryst踏入门内。在关上门之前，她们手上的符文板在几秒之内变得透明了，随后又恢复了原状——两人谁都没注意到。<br><br>钟声飘荡，悠悠不绝……好想入眠……入…眠…<br><br>“Aby？Aby！”Abyss突然瞪大眼睛，摇晃着自己肩膀的Cryst脸上两抹清晰的泪痕还未退却，泛红的眼眶，耷拉的眉眼，嘴巴也微微张开˃̣̣̥᷄⌓˂̣̣̥᷅（“这小表情真是又可爱又心疼……”）<br><br>“嗯？哈！好……好奇怪，”清醒过来的Abyss第一件事就是分析现状，“感觉我一直在往前走，眼前的景象也没有断过，只是眼一睁一闭，怎么就到这了？”二人站在正中心的讲台上，环视教堂内部，是类西方的建筑风格。<br><br>“对的Aby啊呜我也是这样‘嗖’一下过来了，呜哇就是想睡觉的那种感觉，但一看到你一副神不神鬼不鬼的样子我哇啊一下就吓醒了！”Cryst没有因为抽泣而断断续续地讲话，可嘶哑的喉咙也一字一句地扯碎了Abyss的心。<br><br>于是她拥护住了她。头在肩上，口在耳边。<br><br>“幸亏有你在，Cryst。说到底我们现在也无法确认神秘人的身份，如果你认为这是场骗局，那拉着我手逃跑的时候我绝不回头。”<br><br>Cryst的情绪也稳定下来了，与Abyss思索良久，还是决定相信那个人，即使祂默不作声。<br><br>Abyss和Cryst摸索着石壁，敲敲打打。Abyss在一阵尝试后，听到了想听到的清脆回响声，张开手掌按下去了旁边的一块石砖，一条暗道呈现在二人眼前。<br><br>“简单的密室设计。”<br><br>黑黢黢的直路，Abyss和Cryst相互搀扶着前行。<br><br>这里藏着一座坟场，碑静静的立着，花静静的躺着。毫无邪气，反倒让人安心。<br><br>在简单的默哀后，Abyss建议检查碑文，果然发现了几处格格不入的文段。<br><br>“这根本就没藏啊……”Cryst挠了挠后脑勺。<br><br>“因为题目本身就应该让人发现，藏起来的是答案。”Abyss二话不说，掏出从图书馆顺来的纸笔开始抄写。<br><br>写到一半，Abyss感觉自己头上多了些许分量，正打算抬起头却被Cryst轻压下去。<br><br>“哼嗯~这花环哪来的？”<br><br>“喏，那个角落，种了很多，看来这里的人们会定时更换。我看这一圈大小正合适！果然好看！”<br><br>这片小小眠园里闯入了两只小精灵，不过她们和这里的安魂相处得很融洽。<br>",
+        "puzzle":[
+                {
+                    "id": 1,
+                    "name": "天书",
+                    "description": "Lexicoradicodissector<br><img src=\"./img/puzzle/3/1.png\" style=\"padding: 0 140px\">",
+                    "hints": [
+                        {
+                            "id": 1,
+                            "title" :  "我毫无头绪。", 
+                            "content": "self-non-idea.",
+                            "cost": 1000
+                        },
+                        {
+                            "id": 2,
+                            "title" : " ft是什么意思？", 
+                            "content": "词汇词根分析。",
+                            "cost": 2000
+                        },
+                        {
+                            "id": 3,
+                            "title" : "我理解我要做什么了，但是我在第一步遇到了一些困难。", 
+                            "content": "1. aero mammal\n2. micro oto son\n3. multi arbor arium\n4. geo circum act astro ery\n5. aqu terra circum macro ery\n6. ab cumulo sub act dri ant",
+                            "cost": 3000
+                        }
+                    ],
+                    "milestone": [
+
+                    ] ,
+                    "answer": "TITULAR",
+                    "analysis": "题目文本：<br>1.aeromammal(3/3)<br>2.microotoson(3/7)<br>3.multiarborarium(6/6)<br>4.geocircumactastroery(2/3)<br>5.aquterracircummacroery(1 2/4)<br>6.abcumulosubactdriant(1/4)<br><br>ft.Lexico(词汇的)+radico(根)+dissector(分析者、解剖者)<br>词汇词根分析<br><br>1.aero(空气、飞行)+mamm(乳房)+al(人/物)<br>会飞的哺乳动物 bat<br><br>2.micro(微小)+oto(耳朵)+son(声音)<br>耳边微小的声音 whisper<br><br>3.multi(多)+arbor(树)+arium(场所名词)<br>多树的场所 forest<br><br>4.geo(地球)+circum(环绕)+act(动作)+astro(星星、天体)+ery(地点名词)<br>地球环绕运动的天体 sun<br><br>5.aqu(水)+terra(陆地)+circum(围绕)+macro(大范围的)+ery(地点名词)<br>被水围绕的大片陆地 land<br>被陆地围绕的大片水 lake<br>双解:la<br><br>6.ab(从)+cumulo(积云)+sub(向下)+act(运动)+dri(水滴状的)+ant(物体名词)<br>从积云向下运动的水滴状物体 rain<br><br>提取得到<b style=\"color: red\">TITULAR</b>。"
+                },
+
+                {
+                    "id": 2,
+                    "name": "顾客与蛋糕店",
+                    "description": "<img src=\"./img/puzzle/3/2.png\">",
+                    "hints": [
+                        {
+                            "id": 1,
+                            "title" :  "我毫无头绪。", 
+                            "content": "一位测试工程师走进一家酒吧……酒吧炸了。",
+                            "cost": 1000
+                        },
+                        {
+                            "id": 2,
+                            "title" : "我理解了题目的意思，但在确认答案时遇到了一些困难！", 
+                            "content": "你可以参考https://docs.pythonlang.cn/3/library/exceptions.html#concrete-exceptions。",
+                            "cost": 3000
+                        },
+                        {
+                            "id": 3,
+                            "title" : "该如何提取？", 
+                            "content": "使用每行的顾客数量作为Index。",
+                            "cost": 1000
+                        }    
+                    ],
+                    "milestone": [
+
+                    ] ,
+                    "answer": "APPOINTMENT",
+                    "analysis": "表述很像“测试工程师与酒吧”的经典笑话，考虑计算机科学领域。<br>根据IDE界面、一些“把蛋糕分成0块”三层蛋糕的第四层“，容易联想或者借助大模型搜索到这些都是Python中的错误类型，按照顾客数量提取对应位置字母得到答案<b style=\"color: red\">APPOINTMENT</b>。<br><table style=\"border-collapse:collapse;width:100%;text-align:center;\"><tr><th style=\"border:1px solid #000;\">表述</th><th style=\"border:1px solid #000;\">错误类型</th><th style=\"border:1px solid #000;\">Index</th><th style=\"border:1px solid #000;\">提取</th></tr><tr><td style=\"border:1px solid #000;text-align:left;\">两位顾客走进蛋糕店，订了π个蛋糕，我拿不出来，只好把他们打发走了。</td><td style=\"border:1px solid #000;\">ValueError</td><td style=\"border:1px solid #000;\">2</td><td style=\"border:1px solid #000;color:red;\">a</td></tr><tr><td style=\"border:1px solid #000;text-align:left;\">一位顾客走进蛋糕店，非要用我的工具自己做蛋糕，我只好把他打发走了。</td><td style=\"border:1px solid #000;\">PermissionError</td><td style=\"border:1px solid #000;\">1</td><td style=\"border:1px solid #000;color:red;\">P</td></tr><tr><td style=\"border:1px solid #000;text-align:left;\">三位顾客走进蛋糕店，让我把两个蛋糕加在一起，我只好把他们打发走了。</td><td style=\"border:1px solid #000;\">TypeError</td><td style=\"border:1px solid #000;\">3</td><td style=\"border:1px solid #000;color:red;\">p</td></tr><tr><td style=\"border:1px solid #000;text-align:left;\">两位顾客走进蛋糕店，刚说“我要订”就消失了。</td><td style=\"border:1px solid #000;\">EOFError</td><td style=\"border:1px solid #000;\">2</td><td style=\"border:1px solid #000;color:red;\">O</td></tr><tr><td style=\"border:1px solid #000;text-align:left;\">一位顾客走进蛋糕店，让我把三层蛋糕的第四层加上水果，我只好把他打发走了。</td><td style=\"border:1px solid #000;\">IndexError</td><td style=\"border:1px solid #000;\">1</td><td style=\"border:1px solid #000;color:red;\">I</td></tr><tr><td style=\"border:1px solid #000;text-align:left;\">一位顾客走进蛋糕店，让我按清单做几款蛋糕，但是没给我清单，我只好把他打发走了。</td><td style=\"border:1px solid #000;\">NameError</td><td style=\"border:1px solid #000;\">1</td><td style=\"border:1px solid #000;color:red;\">N</td></tr><tr><td style=\"border:1px solid #000;text-align:left;\">两位顾客走进蛋糕店，让我做一杯橙汁，我只好把他们打发走了。</td><td style=\"border:1px solid #000;\">AttributeError</td><td style=\"border:1px solid #000;\">2</td><td style=\"border:1px solid #000;color:red;\">t</td></tr><tr><td style=\"border:1px solid #000;text-align:left;\">一位顾客走进蛋糕店，给了我几万页的需求，但是糕点师实在看不过来，我只好把他打发走了。</td><td style=\"border:1px solid #000;\">MemoryError</td><td style=\"border:1px solid #000;\">1</td><td style=\"border:1px solid #000;color:red;\">M</td></tr><tr><td style=\"border:1px solid #000;text-align:left;\">两位顾客走进蛋糕店，要求把蛋糕分成0块，我只好把他们打发走了。</td><td style=\"border:1px solid #000;\">ZeroDivisionError</td><td style=\"border:1px solid #000;\">2</td><td style=\"border:1px solid #000;color:red;\">e</td></tr><tr><td style=\"border:1px solid #000;text-align:left;\">三位顾客走进蛋糕店，但是我听不懂他说的语言，只好把他打发走了。</td><td style=\"border:1px solid #000;\">SyntaxError</td><td style=\"border:1px solid #000;\">3</td><td style=\"border:1px solid #000;color:red;\">n</td></tr><tr><td style=\"border:1px solid #000;text-align:left;\">三位顾客走进蛋糕店，要了一款蛋糕，但我还没学会这款蛋糕怎么做，只好把他打发走了。</td><td style=\"border:1px solid #000;\">NotImplementedError</td><td style=\"border:1px solid #000;\">3</td><td style=\"border:1px solid #000;color:red;\">t</td></tr></table>"
+                },
+
+                {
+                    "id": 3,
+                    "name": "一道水题",
+                    "description": "已经一滴都不剩了。<br><img src=\"./img/puzzle/3/3.png\"><br>你可以下载<a href=\"https://www.crflowers.top/xmind/1jy68br39msj.xmind\">源文件</a>或使用<a href=\"https://docs.qq.com/mind/DVk9TTXpXV1h0bmV0?mode=mind\" target=\"_blank\">文档</a>。",
+                    "hints": [
+                        {
+                            "id": 1,
+                            "title" :  "我毫无头绪。", 
+                            "content": "顺序组词，汉字表示某一部分的笔画数。",
+                            "cost": 1000
+                        },
+                        {
+                            "id": 2,
+                            "title" : "我理解了题目的意思，但遇到了一些困难，能否再给我一个突破口？", 
+                            "content": "【江河湖海】四字是相连的。",
+                            "cost": 3000
+                        }
+                    ],
+                    "milestone": [
+
+                    ] ,
+                    "answer": "PASCAL",
+                    "analysis": "顺序组词，汉字表示去掉字中“氵”或“水”后剩下的笔画数：<br><img src=\"./img/puzzle/3/3a.png\"><br>把连线处的词汇翻译成英文，提取得到<b style=\"color: red\">PASCAL</b><br>作者注：这里，没有考虑到swamp和marsh确实是出题失误，十分抱歉！"
+                },
+
+                {
+                    "id": 4,
+                    "name": "所谓伊人",
+                    "description": "0 = 1 3 - ……<br>我终究没能彻底看透这道题，正如她的心，一直是我触不到的谜。<br>“再试一次呢？”<br><br>注：桌子图片使用 Google Nano Banana 模型生成，部分关键文字被修改，请勿使用该图。此处给出桌子下半部分的原图与《计算器使用规则》。<br><img src=\"./img/puzzle/3/4-1.png\"><br><img src=\"./img/puzzle/3/4-2.jpg\"><br><img src=\"./img/puzzle/3/4-3.png\"><br><img src=\"./img/puzzle/3/4-4.jpg\"><br><img src=\"./img/puzzle/3/4-5.png\">",
+                    "hints": [
+                        {
+                            "id": 1,
+                            "title" :  "我毫无头绪。", 
+                            "content": "观察右上角的九宫格，发现有三个 4*5 的格子遵循某种规律。注意到某个地方也出现过 4*5 的格子。",
+                            "cost": 500
+                        },
+                        {
+                            "id": 2,
+                            "title" : "数字和字母是什么？", 
+                            "content": "按键序列里面的位置，用 16 进制表示。具体可以看中间表格的表头。",
+                            "cost": 1000
+                        },
+                        {
+                            "id": 3,
+                            "title" : "四张带有灰色方格的透明纸片是干什么的？", 
+                            "content": "观察到它在图中和一个九宫格大小一样。它是用来遮挡九宫格，去掉一些信息的。",
+                            "cost": 1000
+                        },
+                        {
+                            "id": 4,
+                            "title" : "经过透明纸片处理之后的数字有什么规律？", 
+                            "content": "左侧的数字符合数独的规则；右侧的数字-9后符合数独的规则。",
+                            "cost": 2000
+                        },
+                        {
+                            "id": 5,
+                            "title" : "经过透明纸片处理之后的数字的位置有什么规律？", 
+                            "content": "每个小题对应的两个4*5区域在挡住后，有且仅有一个左侧与右侧都有16进制数字的格子，也就是说每小题答案中有且仅有一个按键按过两次。",
+                            "cost": 2000
+                        },
+                        {
+                            "id": 6,
+                            "title" : "第 1 到 4 小题的区域左上角的格子分别对应什么？", 
+                            "content": "0，7，=，AC。",
+                            "cost": 1000
+                        },
+                        {
+                            "id": 7,
+                            "title" : "第 5 到 8 小题的区域左上角的格子分别对应什么？", 
+                            "content": "0，7，=，0。",
+                            "cost": 1000
+                        },
+                        {
+                            "id": 8,
+                            "title" : "第 1 小题答案是什么？", 
+                            "content": "1 3 - Ans × 2 0 . ÷ 4 2 =",
+                            "cost": 800
+                        },
+                        {
+                            "id": 9,
+                            "title" : "第 2 小题答案是什么？", 
+                            "content": "1 4 9 ÷ 5 + 0 - Ans × 1 . 6 =",
+                            "cost": 800
+                        },
+                        {
+                            "id": 10,
+                            "title" : "第 3 小题答案是什么？", 
+                            "content": "3 ÷ 4 8 . 0 × Ans + 2 9 5 ÷ 1 6 =",
+                            "cost": 800
+                        },
+                        {
+                            "id": 11,
+                            "title" : "第 4 小题答案是什么？", 
+                            "content": "0 - Ans × 4 . + 9 5 . ÷ 1 =",
+                            "cost": 800
+                        },
+                        {
+                            "id": 12,
+                            "title" : "第 5 小题答案是什么？", 
+                            "content": "- Ans × 1 0 ÷ 4 + 5 6 . 5 =",
+                            "cost": 800
+                        },
+                        {
+                            "id": 13,
+                            "title" : "第 6 小题答案是什么？", 
+                            "content": "0 - Ans × 2 . ÷ 4 + 1 8 . 5 =",
+                            "cost": 800
+                        },
+                        {
+                            "id": 14,
+                            "title" : "第 7 小题答案是什么？", 
+                            "content": "- Ans × 7 ÷ 5 + 2 6 . 6 =",
+                            "cost": 800
+                        },
+                        {
+                            "id": 15,
+                            "title" : "第 8 小题答案是什么？", 
+                            "content": "3 7 + 0 - Ans × 1 6 . ÷ 7 =",
+                            "cost": 800
+                        },
+                        {
+                            "id": 16,
+                            "title" : "该如何提取？", 
+                            "content": "输入 ft 中的“0 =”，随后按 1 到 8 的顺序输入 8 个小题的按键序列，将得到的答案 A1Z26。",
+                            "cost": 1000
+                        },
+                        {
+                            "id": 17,
+                            "title" : "我提取出了某条已知信息，接下来我要干什么？", 
+                            "content": "“再试一次”，Ans 是上次的第 8 小题得数，重新按顺序输入按键序列。",
+                            "cost": 3000
+                        }
+                    ],
+                    "milestone": [
+                            
+                    ] ,
+                    "answer": "CYTOSINE",
+                    "analysis": "先看到四个九宫格，发现这里面有两个东西：4个4*5的方格，和一个数独的背景。<br>从给出的《计算器使用规则》可以看出来需要用到计算器，发现计算器下方的按键刚好构成一个4*5方格，猜想可能要把计算器下方按键叠放在对应的4*5方格上。<br>此时看到右上角的九宫格，发现有三个4*5的格子都有一个字母重复很多次，剩下的字母加上重复的字母刚好可以构成一个A到最大字母的序列，猜测这可能是表示顺序。中间的表格表头也验证了这一点。<br>观察中间的表格表头，1~9,A~F,10，很明显是16进制的数字。<br>ft中“1 3 - ......”刚好和中间表格的第一行前几个字符一样，猜测可能要按顺序按下计算器按键，联系前文可得是要按表格中的顺序按下按键。<br>观察得到第一行的“A”对应按键“4”，将计算器下方按键逆时针旋转90°后，“4”刚好和右上角九宫格中第一小题的“A”重合。对左上角的九宫格进行同样的处理，猜想得到验证。<br><br>随后从各方面（甚至包括预设提示的标题）可以推出以下规律：<br>1. 四张带有灰色方格的透明纸片是用来遮挡九宫格的，没被遮挡的部分就是需要按的按键（在原图中纸片和九宫格大小一样）。<br>2. 每个小题都有两种可能的方向，需要推理出哪个方向是叠放的方向。同一小题的方向相同。<br>3. 按下ft开头的“0 =”，随后按顺序依次按下每个小题对应的按键序列，8次得到的结果刚好是题目中文本“MISSING U”的A1Z26。<br>4. 经过透明纸片遮挡后，左侧的数字符合数独的规则，右侧的数字-9后符合数独的规则（九宫格有数独的背景）。<br>5. 每个小题对应的两个4*5区域在挡住后，有且仅有一个左侧与右侧都有16进制数字的格子，也就是说每小题答案中有且仅有一个按键按过两次。<br>其中4和5即使没发现，也是可以做这道题的，就是试错次数会多一些。<br><br>在推出大部分答案后，看向ft，“没能彻底看透这道题”和“再试一次呢？”，可以联想到Ans会随着上一次答案的改变而改变这个功能，从第一小题开始再按一次按键序列，A1Z26后得到真正的答案<b style=\"color: red\">CYTOSINE</b>。<br>没有设置防爆，做完三个就可以爆出来了。不过想做完的话，会发现即使找到了所有规律，第7小题仍然需要试错很多次，前面的小题还有一个地方有多解，这是一个意料之外的彩蛋，对应ft的“正如她的心，一直是我触不到的谜。”<br><img src=\"./img/puzzle/3/4a.png\">"
+                },
+
+                {
+                    "id": 5,
+                    "name": "影评家",
+                    "description": "<b>点题的电影才是好电影！</b><br><i>本题有 10 个里程碑。</i><img src=\"./img/puzzle/3/5.png\" style=\"padding: 0 120px\">",
+                    "hints": [
+                        {
+                            "id": 1,
+                            "title" : "「一行不行」怎么做？", 
+                            "content": "注意题目中两个“行”的关系，题面也是类似的。",
+                            "cost": 800
+                        },
+                        {
+                            "id": 2,
+                            "title" : "「转过去！」怎么做？", 
+                            "content": "把写出的东西与角度建立联系。",
+                            "cost": 800
+                        },
+                        {
+                            "id": 3,
+                            "title" : "「对“对”子」怎么做？", 
+                            "content": "you find“对”place！只要“对”每个英语进行翻译，并连同“对”理解即可。",
+                            "cost": 800
+                        },
+                        {
+                            "id": 4,
+                            "title" :  "「几月几日？」怎么做？", 
+                            "content": "以“甲月乙日”的形式写出每一个圈住的日期，并与对应的图片的物品建立联系。",
+                            "cost": 800
+                        },
+                        {
+                            "id": 5,
+                            "title" : "「选哪个？」怎么做？", 
+                            "content": "注意以“蜜”“沪”“霸”“奈”开头的四字名称都是一些你在生活中见到的东西。",
+                            "cost": 800
+                        },
+                        {
+                            "id": 6,
+                            "title" : "「多彩素描」怎么做？", 
+                            "content": "素描要用到很多种类的笔。",
+                            "cost": 800
+                        },
+                        {
+                            "id": 7,
+                            "title" : "「☀❀」怎么做？", 
+                            "content": "尝试描述虚线上方的画面，你可以发现它与虚线下面的对应关系。",
+                            "cost": 800
+                        },
+                        {
+                            "id": 8,
+                            "title" : "「交错解码」怎么做？", 
+                            "content": "将下方的字叠到上图合适位置，并读取有意义的内容。",
+                            "cost": 800
+                        },
+                        {
+                            "id": 9,
+                            "title" : "「悲喜交加」怎么做？", 
+                            "content": "可以直接看图说话，念出上面一行或者下面一行，另外也可以注意一些日常生活中你经常使用的东西。",
+                            "cost": 800
+                        },
+                        {
+                            "id": 10,
+                            "title" : "「文生图」怎么做？", 
+                            "content": "寻找这些企业或品牌的logo。",
+                            "cost": 800
+                        },
+                        {
+                            "id": 11,
+                            "title" : " 括号里的数字是什么意思？", 
+                            "content": "数字是影片的影剧备字号或影科备字号。",
+                            "cost": 2000
+                        },
+                        {
+                            "id": 12,
+                            "title" : "我不知道如何使用这些数字！", 
+                            "content": "你可以使用这个数据库：https://www.chinafilm.gov.cn/",
+                            "cost": 3000
+                        },
+                        {
+                            "id": 13,
+                            "title" : "该如何提取？", 
+                            "content": "部分片名与小题名存在重合，且与小题答案长度相同。提取片名“点题”位置的字母即可。",
+                            "cost": 3000
+                        }
+                    ],
+                    "milestone": [
+                        {"id": 1, "content" : "mapping", "response" : "这是小题答案之一！"},
+                        {"id": 2, "content" : "absolutezero", "response" : "这是小题答案之一！"},
+                        {"id": 3, "content" : "value", "response" : "这是小题答案之一！"},
+                        {"id": 4, "content" : "labafestival", "response" : "这是小题答案之一！"},
+                        {"id": 5, "content" : "aquaregia", "response" : "这是小题答案之一！"},
+                        {"id": 6, "content" : "height", "response" : "这是小题答案之一！"},
+                        {"id": 7, "content" : "rainbow", "response" : "这是小题答案之一！"},
+                        {"id": 8, "content" : "justice", "response" : "这是小题答案之一！"},
+                        {"id": 9, "content" : "flag", "response" : "这是小题答案之一！"},
+                        {"id": 10, "content" : "games", "response" : "这是小题答案之一！"}
+                    ] ,
+                    "answer": "MOVIE TITLE",
+                    "analysis": "小题：<br><img src=\"./img/puzzle/3/5a_1.png\"><br><img src=\"./img/puzzle/3/5a_2.png\"><br><img src=\"./img/puzzle/3/5a_3.png\"><br><img src=\"./img/puzzle/3/5a_4.png\"><br><img src=\"./img/puzzle/3/5a_5.png\"><br><img src=\"./img/puzzle/3/5a_6.png\"><br><img src=\"./img/puzzle/3/5a_7.png\"><br><img src=\"./img/puzzle/3/5a_8.png\"><br><img src=\"./img/puzzle/3/5a_9.png\"><br><img src=\"./img/puzzle/3/5a_10.png\"><br><br>META：<br><img src=\"./img/puzzle/3/5a_11.png\"><br>故答案为<b style=\"color: red\">MOVIE TITLE</b>。"
+                }
+            ]
+        },
+
+        {
+        "id": 4,
+        "name": "天文台",
+        "image": "4.jpg",
+        "news_description": " ",
+        "news_img" : "https://mmbiz.qpic.cn/mmbiz_jpg/x0lwngPKUjhMkafUHVrsOPDlJJB0DnCrLwrvSHqV62HEV6uTsKibMH2eaqX078LaWZRox67OM6E2WHk3Wz4Tgeg/640?wx_fmt=jpeg&from=appmsg",
+        "news_url" : "https://mp.weixin.qq.com/s/YpDNPcfThc1bSbA7X0rcaw",
+        "puzzle_count": 5,
+        "count_demand": 4,
+        "story":"一片模糊的视线，似有似无的声音。<br><br>“Abyss？起床啦Abyss？”<br><br>是Cryst的轻声细语。<br><br>“呃啊……我怎么又睡着了——诶？不对啊，不是Cryst你靠在我肩上睡吗？你的外套怎么在我身上啊！还有！墓园呢？怎么回到教堂中心了……”<br><br>睡眼惺忪的Abyss脱下多出的外套，慌慌张张地问个不停。她不喜欢这种未知感，这会让她害怕；但她喜欢Cryst在身边，这会让她安心。<br><br>Cryst将手上的什么东西放在一旁，一屁股坐在Abyss身边，缓缓开口道：“Aby就是太累了啦！我一头歪到地上被疼醒了，刚想说你几句就发现你不知道什么时候又睡着了。你也是，坐着都能睡着(^▽^)”Cryst做了个鬼脸，Abyss面红耳赤。<br><br>“然后我看剩下的谜题不多了，而且乍一看好像不是很难，我就都给它完成了！”Cryst用一副骄傲的小表情邀功。<br><br>“啊？可那些都不简单啊……”<br><br>“是啊是啊，没一个好解的，呜呜(╥﹏╥)以后再也不逞强了！”Cryst一秒破功。<br><br>“嘿嘿，其实Cryst很棒的！然后呢？”Abyss边说边把外套披回到原主身上。<br><br>“然后……然后那里面什么都没发生，我就先把你背过来了。而且走到一半时……哦不对不对！什么都没发生！”Cryst回味着——走到一半时，Abyss醒过一次，却抱的更紧了，还念叨着让她再睡一会。看来她是没印象了，于是Cryst决定藏在心底。<br><br>“Aby你过来。”Cryst将Abyss拉到讲台上，这里多了一条密道，“从这里的楼梯下去有一个房间，锁着进不去。门口放着<b>一块符文板</b>，还有一块嵌着碎晶的圆盘。”Cryst指着刚刚放在一旁的物件描述着。<br><br><img src=\"./img/board3.png\" style=\"padding: 0 180px\"/><br><br>“这个东西是……”Abyss一下子就认出了这个物件，“这是定位盘啊，天体仪的配件！”<br><br>“什么、什么东西？哪里有？”Cryst一听就头大了。<br><br>“我明白了，这又是祂给我们的提示，那么下一站显而易见了——天文台——就在我们坐电梯下来的那栋楼最高处的对面，我大概知道怎么走了。”Abyss的精气神完全恢复了。<br><br>“能不能先让我眯一会儿啊？就一会儿……求你了Aby……”Cryst贴在Abyss身后撒娇。她清楚现在这个节骨眼也不是时候，只当是开了个玩笑。<br><br>“来吧，我背你过去。”<br><br>Abyss和Cryst神情严肃，面对她们心中最大的敌人，久久迈不开腿，也说不出话。<br><br>但该来的总归是要来的。<br><br>“Aby，做好准备了吗？”<br><br>“呼——来吧。”<br><br>一阵极其强烈的心理斗争。<br><br>“叮咚！”电梯门缓缓开启。<br><br>Abyss和Cryst踏足天幕之上，置身星辰之间。<br><br>“哇哦……”<br><br>Cryst没有高声地呐喊，只有发自内心地赞叹。<br><br>“……好美！”<br><br>就连Abyss也深深沉醉于其中。<br><br>少顷，二人从痴迷中回过神来，低头凝视着眼前的星象图，以及明显缺了一块的星体仪。<br><br>Abyss将定位盘嵌入其中，随后便着手研究。<br><br>“这个仪器是能转的，会根据它所显示的方位以及时间来改变我们头上的星象。”<br><br>Cryst四处游荡着，注意到一架直通天顶的望远镜。<br><br>“哦？太好了Cryst！一会我有什么认不出来的图像时你就替我看一看！”<br><br>“好嘞——哎等等，我们要看什么啊？”<br><br>Abyss从完整的星体仪底下抽出一沓资料，用指关节敲了敲说道：“喏，宇宙在膨胀，星系退行速度与距离成……正比，遥远的星系……”<br><br>“别别别别念了——！我就随口一问！”<br><br>“嘿嘿嘿……咳咳，开始工作吧！”<br><br>Abyss赶紧把资料扔到一旁，她感到疑惑，她感到害怕，她不想再看到最上面那张纸。<br><br>那是一段<span style=\"color: red\">血文——<br><br>你见过星星吗？<br><br>你能摸到它吗？<br><br>你能吃了它吗？<br><br>你能杀了它吗？<br><br>……<br><br>我是星星吗？<br></span>",
+        "puzzle":[
+                {
+                    "id": 1,
+                    "name": "星途WeG01ng",
+                    "description": "<b>O</b>utside or <b>I</b>nside, <br>I'm always on your side. <br><i>本题有1个里程碑。</i><img src=\"./img/puzzle/4/1.png\">",
+                    "hints": [
+                        {
+                            "id": 1,
+                            "title" :  "我毫无头绪。", 
+                            "content": "本题取材于微信小程序《星途WeGoing》, 可以试玩一下。",
+                            "cost": 1500
+                        },
+                        {
+                            "id": 2,
+                            "title" : "本题使用的加密方式是什么？", 
+                            "content": "五位二进制。",
+                            "cost": 3000
+                        },
+                        {
+                            "id": 3,
+                            "title" : "该如何处理某些缺失的信息？", 
+                            "content": "根据该游戏的规则，如果想从一个轨道成功切换到下一个轨道，那么只有一种情况。",
+                            "cost": 3000
+                        }
+                    ],
+                    "milestone": [
+                        {"id": 1, "content" : "miss", "response" : "人生漫旅迢迢，璞玉机缘缀道。\n一朝擦肩误许，转身便隔尘嚣。\n请提交正确答案【OPPORTUNITY】。"}
+                    ] ,
+                    "answer": "OPPORTUNITY",
+                    "analysis": "结合题目和ft易推知本题使用五位二进制进行提取。<br>外圈（Outside）记作0，内圈（Inside）记作1。<br>从左上角的大圆之后的第一个圆开始记录，得<br>0110? 0?00? ?00?? ?00?1<br>根据《星途WeGoing》的规则，飞船在切换轨道时只能在内圈，在外圈会撞死，<br>故所有的无星轨道都记作1。<br>五位二进制转换为miss，提交后得到里程碑：<br><br>人生漫旅迢迢，璞玉机缘缀道。<br>一朝擦肩误许，转身便隔尘嚣。<br>请提交正确答案【OPPORTUNITY】。<br><br>得到本题最终答案<b style=\"color: red\">OPPORTUNITY</b>。<br>"
+                },
+
+                {
+                    "id": 2,
+                    "name": "星迹战棋",
+                    "description": "技能国际象棋～就是在传统的国际象棋里加入Puzzle～好好玩～😈<br><img src=\"./img/puzzle/4/2.png\">",
+                    "hints": [
+                        {
+                            "id": 1,
+                            "title" :  "我毫无头绪。", 
+                            "content": "每个部分是一个融合了多种规则的游戏，你需要据此完成相应的任务。",
+                            "cost": 1500
+                        },
+                        {
+                            "id": 2,
+                            "title" : "第1部分不会，怎么做!", 
+                            "content": "利用棋子连续将军击杀黑王，观察棋子行动轨迹。",
+                            "cost": 3000
+                        },
+                        {
+                            "id": 3,
+                            "title" : "第2部分不会，怎么做!", 
+                            "content": "先扫雷，把所有的雷点标出来，即可发现答案，注意棋子所在位置无雷。",
+                            "cost": 3000
+                        },
+                        {
+                            "id": 4,
+                            "title" : "第3部分不会，怎么做!", 
+                            "content": "斗地主和UNO的杂交规则，找出让黑方必胜的唯一解法，注意UNO的功能牌需要考虑花色问题，提取黑方打出的最后一张牌。",
+                            "cost": 3000
+                        }
+                    ],
+                    "milestone": [
+                        {"id": 1, "content" : "tra", "response" : "(5)"}
+                    ] ,
+                    "answer": "TRACE",
+                    "analysis": "1.中国象棋x国际象棋<br>利用白方的炮协助白方完成将杀,两步杀具体步骤为:<br>白(红)炮c5 黑Kb8 白Qe5#<br>观察白方棋子行动轨迹为T<br>2.扫雷x国际象棋 feat.军棋<br>完成扫雷即可(注意有棋子的格子没有雷),完成后将有雷格子连起来得到字母R<br>3.扑克牌xUNO feat.国际象棋<br>注意到闹钟在黑方一侧,因此需通过策略部署设计出黑方先行必胜解法,具体为:<br>①黑 ban<br>②黑 红10<br>③黑 红9<br>④白 黑10<br>⑤黑 黑A<br>提取最后一张牌为A(ace)<br>连起来为最终答案<b style=\"color: red\">TRACE</b>。<br><img src=\"./img/puzzle/4/2a.png\">"
+                },
+
+                {
+                    "id": 3,
+                    "name": "新建 Microsoft Excel 工作表.xlsx",
+                    "description": "<i>本题有 9 个里程碑。</i><br><img src=\"./img/puzzle/4/3-1.png\"><br><img src=\"./img/puzzle/4/3-2.png\"><br><img src=\"./img/puzzle/4/3-3.png\"><br><img src=\"./img/puzzle/4/3-4.png\"><br><img src=\"./img/puzzle/4/3-5.png\"><br><img src=\"./img/puzzle/4/3-6.png\"><br><img src=\"./img/puzzle/4/3-7.png\"><br><img src=\"./img/puzzle/4/3-8.png\"><br><img src=\"./img/puzzle/4/3-9.png\"><br><img src=\"./img/puzzle/4/3-10.png\">",
+                    "hints": [
+                        {
+                            "id": 1,
+                            "title" :  "我毫无头绪！", 
+                            "content": "双箭头上的数字的表示表格的行列数，你需要据此找到缺失的表格。",
+                            "cost": 2000
+                        },
+                        {
+                            "id": 2,
+                            "title" : "①与什么有关？", 
+                            "content": "数学运算。",
+                            "cost": 1000
+                        },
+                        {
+                            "id": 3,
+                            "title" : "②与什么有关？", 
+                            "content": "时间。",
+                            "cost": 1000
+                        },
+                        {
+                            "id": 4,
+                            "title" : "③与什么有关？", 
+                            "content": "生物学。",
+                            "cost": 1000
+                        },
+                        {
+                            "id": 5,
+                            "title" : "④与什么有关？", 
+                            "content": "化学。",
+                            "cost": 1000
+                        },
+                        {
+                            "id": 6,
+                            "title" : "⑤与什么有关？", 
+                            "content": "电子设备。",
+                            "cost": 1000
+                        },
+                        {
+                            "id": 7,
+                            "title" : "⑥与什么有关？", 
+                            "content": "地理学与考古学。",
+                            "cost": 1000
+                        },
+                        {
+                            "id": 8,
+                            "title" : "⑦与什么有关？", 
+                            "content": "棋类。",
+                            "cost": 1000
+                        },
+                        {
+                            "id": 9,
+                            "title" : "⑧与什么有关？", 
+                            "content": "计算机科学。",
+                            "cost": 1000
+                        },
+                        {
+                            "id": 10,
+                            "title" : "⑨与什么有关？",
+                            "content": "语言。",
+                            "cost": 1000
+                        },
+                        {
+                            "id": 11,
+                            "title" : "〇如何提取？", 
+                            "content": "使用搜索引擎或思考小题答案与该题题目的联系，对不同区域进行对应操作即可。",
+                            "cost": 2000
+                        }
+                    ],
+                    "milestone": [
+                        {"id": 1, "content" : "type", "response" : "这是小题答案之一！"},
+                        {"id": 2, "content" : "median", "response" : "这是小题答案之一！"},
+                        {"id": 3, "content" : "mdeterm", "response" : "这是小题答案之一！"},
+                        {"id": 4, "content" : "counta", "response" : "这是小题答案之一！"},
+                        {"id": 5, "content" : "columns", "response" : "这是小题答案之一！"},
+                        {"id": 6, "content" : "odd", "response" : "这是小题答案之一！"},
+                        {"id": 7, "content" : "int", "response" : "这是小题答案之一！"},
+                        {"id": 8, "content" : "lcm", "response" : "这是小题答案之一！"},
+                        {"id": 9, "content" : "min", "response" : "这是小题答案之一！"}
+                    ] ,
+                    "answer": "AGGREGATE",
+                    "analysis": "每张图的数字代表从这个方向看过去能看到的表头数。可以找到以下这些表，提取数字处的内容：<br><img src=\"./img/puzzle/4/3a-1.png\"><br><img src=\"./img/puzzle/4/3a-2.png\"><br><img src=\"./img/puzzle/4/3a-3.png\"><br><img src=\"./img/puzzle/4/3a-4.png\"><br><img src=\"./img/puzzle/4/3a-5.png\"><br><img src=\"./img/puzzle/4/3a-6.png\"><br><img src=\"./img/puzzle/4/3a-7.png\"><br><img src=\"./img/puzzle/4/3a-8.png\"><br><img src=\"./img/puzzle/4/3a-9.png\"><br>得到答案：<br>TYPE<br>MEDIAN<br>MDETERM<br>COUNTA<br>COLUMNS<br>ODD<br>INT<br>LCM<br>MIN<br><br>它们都是EXCEL中的函数，按照对应规则对〇中的对应区域进行操作后，A1Z26得到答案<b style=\"color: red\">AGGREGATE</b>。"
+                },
+
+                {
+                    "id": 4,
+                    "name": "回心转意",
+                    "description": "“如果我们能够再次辗转相遇，请不要忘记我留下的痕迹。”<br><img src=\"./img/puzzle/4/4.png\">",
+                    "hints": [
+                        {
+                            "id": 1,
+                            "title" :  "我毫无头绪。", 
+                            "content": "观察图中带线实心圆和空心圆两种图案的特点，并结合ft理解。",
+                            "cost": 1000
+                        },
+                        {
+                            "id": 2,
+                            "title" : "图中实心圆和空心圆是什么意思？", 
+                            "content": "实心圆和空心圆的大小相同，且是成对出现的，因此你需要让它们“相遇”。",
+                            "cost": 2000
+                        },
+                        {
+                            "id": 3,
+                            "title" : "我应该怎么做？", 
+                            "content": "以无圆一端为圆心，旋转每一个实心圆到空心圆的位置。",
+                            "cost": 4000
+                        },
+                        {
+                            "id": 4,
+                            "title" : "该如何提取？", 
+                            "content": "旋转轨迹象形。",
+                            "cost": 2000
+                        },
+                        {
+                            "id": 5,
+                            "title" : "我不知道如何对某些特殊的图形进行处理。", 
+                            "content": "灰色实心圆都是已经与空心圆重合的，所以灰色是为了表示该位置同时有一个实心圆和一个空心圆。",
+                            "cost": 2000
+                        }
+                    ],
+                    "milestone": [
+                        
+                    ] ,
+                    "answer": "BRATISLAVA",
+                    "analysis": "每条线一端有一个实心圆，一端没有。根据ft的提示，以无圆一端为圆心，旋转每一个实心圆到空心圆的位置，提取轨迹可以得到：<img src=\"./img/puzzle/4/4a.png\"><br>（灰色表示实心圆和空心圆重合）<br><br>故答案为<b style=\"color: red\">BRATISLAVA</b>。"
+                },
+
+                {
+                    "id": 5,
+                    "name": "麦席森式相爱",
+                    "description": "传说在计算机发明之前……<br><i>本题有 8 个里程碑。</i><br><img src=\"./img/puzzle/4/5.png\"><br><h2>题目文本</h2><br><h3>例</h3>今有一人，行长廊之上。廊贯东西，绵亘不绝，地分作单行无穷之格。<br>初始之际，诸格皆「甲」色，人手持一牍，色亦为「甲」。<br>若格为「甲」色，牍为「甲」色，则涂其格为「乙」色，「东」进一格，复染其牍为「乙」色。<br>若格为「乙」色，牍为「甲」色，则涂其格为「乙」色，「西」进一格，复染其牍为「乙」色。<br>若格为「甲」色，牍为「乙」色，则涂其格为「乙」色，「西」进一格，复染其牍为「甲」色。<br>若格为「乙」色，牍为「乙」色，则涂其格为「乙」色，「东」进一格，继而「凝立不复动」。<br>注：文中「格」为人所立之格，「牍」为人手持之牍。<br>问：其人行之「步数」几何？<br><br>解答：用黄色字表示人的位置，绿色字表示人手中卡片的颜色，左西右东。<br>第 0 步：…甲甲甲甲甲甲… (甲)<br>第 1 步：…甲甲甲乙甲甲… (乙)<br>第 2 步：…甲甲甲乙乙甲… (甲)<br>第 3 步：…甲甲甲乙乙甲… (乙)<br>第 4 步：…甲甲乙乙乙甲… (甲)<br>第 5 步：…甲乙乙乙乙甲… (乙)<br>第 6 步：…甲乙乙乙乙甲… (乙)止。<br>故其人行之「步数」为 6。<br><br>注：中间答案验证包括从问题得到的数字。若该数字不大，请尝试将该数字完整输入，否则请尝试使用格式类似a*b^c 的计数法，其中 a,b,c 为正整数且 a,b 尽量小。若 a=1，你需要输入 b^c。<br>特别地，对于第三题，在开始和得到答案中间还会得到一个较大的数字，它也将参与验证。<br><br><h3>第一题</h3>今有一人，行长廊之上。廊贯东西，绵亘不绝，地分作单行无穷之格。<br>初始之际，一段「乙」色格自西至东绵延，计「八千零三十八万」格，其人立于斯段之最西。<br>此外诸格，皆为「甲」色，人手持一牍，色亦为「甲」。<br>若格为「甲」色，牍为「甲」色，则涂其格为「甲」色，「东」进一格，继而「凝立不复动」。<br>若格为「乙」色，牍为「甲」色，则涂其格为「乙」色，「东」进一格，复染其牍为「乙」色。<br>若格为「甲」色，牍为「乙」色，则涂其格为「甲」色，「西」进一格，复染其牍为「丙」色。<br>若格为「乙」色，牍为「乙」色，则涂其格为「乙」色，「东」进一格，复染其牍为「乙」色。<br>若格为「甲」色，牍为「丙」色，则涂其格为「乙」色，「西」进一格，复染其牍为「己」色。<br>若格为「乙」色，牍为「丙」色，则涂其格为「甲」色，「西」进一格，复染其牍为「丁」色。<br>若格为「甲」色，牍为「丁」色，则涂其格为「甲」色，「西」进一格，复染其牍为「戊」色。<br>若格为「乙」色，牍为「丁」色，则涂其格为「乙」色，「西」进一格，复染其牍为「丁」色。<br>若格为「甲」色，牍为「戊」色，则涂其格为「乙」色，「西」进一格，复染其牍为「己」色。<br>若格为「乙」色，牍为「戊」色，则涂其格为「乙」色，「西」进一格，复染其牍为「戊」色。<br>若格为「甲」色，牍为「己」色，则涂其格为「乙」色，「东」进一格，复染其牍为「庚」色。<br>若格为「乙」色，牍为「己」色，则涂其格为「甲」色，「东」进一格，复染其牍为「庚」色。<br>若格为「甲」色，牍为「庚」色，则涂其格为「甲」色，「东」进一格，复染其牍为「甲」色。<br>若格为「乙」色，牍为「庚」色，则涂其格为「乙」色，「东」进一格，复染其牍为「庚」色。<br>注：文中「格」为人所立之格，「牍」为人手持之牍。<br>问：其人行之「步数」几何？<br>提取方式：取前 2 位 A1Z26 得到 1 个字母。<br><br><br><h3>第二题</h3>温馨提示：若没有很强的搜索能力，不建议做此小题。不做此小题并不会让你完全无法获取整道题的答案。<br>五百载光阴荏苒，长廊上的格子早已被磨损，但长廊仍然存在着。<br>现在有八个人甲、乙、丙、丁、戊、己、庚、辛，每人站在一条长廊上，每条长廊每个位置都写着数或者「空」。<br>一条长廊可以看作一条实数轴，单位长度为一里；<br>最开始，甲和戊所在长廊的每个位置上都写着它的坐标，其他长廊的每个位置上都写「空」；<br>甲在写着三的位置，其他人在坐标为零的位置。八人共用一张最开始为「甲」色的卡片。<br>他们拿到的指令如下：<br><br>一、若牍为「甲」色，则丙丁「东」行「一」里，更「丙」数为「甲」数，更「丁」数为「零」，更「戊」数为「戊」数加一，染其牍为「乙」色。<br>二、若牍为「乙」色，「戊」数为「零」，则「凝立不复动」。<br>三、若牍为「乙」色，「戊」数不为「零」，则乙「西」行「甲减丙」里，甲「西」行「甲减丙」里，更「己」数为「丁」数，更「丙」数为「空」，更「丁」数为「空」，丙丁「西」行「一」里，更「戊」数为「戊」数减一，染其牍为「丙」色。<br>四、若牍为「丙」色，「甲」数不及「零」，则更「乙」数为「甲」数之相反数，染其牍为「乙」色。<br>五、若牍为「丙」色，「甲」数非不及「零」，「乙」数不为「空」，则染其牍为「乙」色。<br>六、若牍为「丙」色，「甲」数非不及「零」，「乙」数为「空」，「己」数为「零」，则丙丁「东」行「一」里，更「丙」数为「甲」数，更「丁」数为「一」，丙丁「东」行「一」里，更「丙」数为「甲」数减一，更「丁」数为「零」，更「戊」数为「戊」数加二，染其牍为「乙」色。<br>七、若牍为「丙」色，「甲」数非不及「零」，「乙」数为「空」，「己」数为「一」，则甲乙「西」行「一」里，更「庚」数为「乙」数，甲乙丙丁「东」行「一」里，更「丙」数为「甲」数，更「丁」数为「二」，丙丁「东」行「一」里，更「丙」数为「甲」数减「庚」数，更「丁」数为「零」，更「戊」数为「戊」数加二，染其牍为「乙」色。<br>八、若牍为「丙」色，「甲」数非不及「零」，「乙」数为「空」，「己」数为「二」，则更「庚」数为「甲」数，甲乙「西」行「一」里，甲「西」行「乙减一」里，乙「西」行「乙减一」里，更「辛」数为「乙」数，乙「西」行「甲减庚」里，甲「西」行「甲减庚」里，更「乙」数为「辛」数之半，染其牍为「乙」色。<br><br>注：「甲」数为甲位置上的数，做运算时也可写作「甲」，其他数同理。<br>问：结束的时候，乙所在长廊的坐标为三的位置写的数的倒数是多少？<br>提取方式：得到的数应该是 2 的正整数次方。将得到的数的每一位进行编号，个位为第 0 位，随后每往左移动一位，编号就加一。提取第 108575 到第 108570 位，每两位 A1Z26 一次，得到 3 个字母。<br><br><br><h3>第三题</h3>时光流转，千年一瞬。两条无限延伸的长廊中的格子被后人重新筑起，如今甲和乙已分别踏入了那两条长廊中。<br>最开始的时候，甲手上拿着一张涂着「甲」色的卡片，乙没有。<br>甲所站的长廊颜色如下：…空空空甲甲甲甲……甲甲甲甲空空空……，黄色表示甲站的位置。<br>乙所站的长廊格子均为「空」色。已知最开始的时候甲所在长廊一共有 3^10^102221+8^10^103259 个「甲」色格子。<br>他们拿到的指令如下：<br><br>若甲格  为「空」色，乙格不为「空」色，牍为「甲」色，则涂甲格为「空」色，涂乙格为  原  色，甲「暂止以待」，乙「暂止以待」，复染其牍为「丁」色。<br>若甲格不为「空」色，乙格不为「乙」色，牍为「甲」色，则涂甲格为「空」色，涂乙格为「乙」色，甲「东」进一格，乙「暂止以待」，复染其牍为「甲」色。<br>若甲格不为「空」色，乙格  为「乙」色，牍为「甲」色，则涂甲格为「空」色，涂乙格为「甲」色，甲「暂止以待」，乙「西」进一格，复染其牍为「乙」色。<br>若甲格  为「空」色，乙格  为「空」色，牍为「乙」色，则涂甲格为「空」色，涂乙格为「乙」色，甲「暂止以待」，乙「东」进一格，复染其牍为「丙」色。<br>若甲格  为「空」色，乙格  为「甲」色，牍为「乙」色，则涂甲格为「空」色，涂乙格为「乙」色，甲「暂止以待」，乙「西」进一格，复染其牍为「丙」色。<br>若甲格  为「空」色，乙格  为「乙」色，牍为「乙」色，则涂甲格为「空」色，涂乙格为「甲」色，甲「暂止以待」，乙「西」进一格，复染其牍为「乙」色。<br>若甲格  为「空」色，乙格  为「空」色，牍为「丙」色，则涂甲格为「空」色，涂乙格为「空」色，甲「东」进一格，乙「西」进一格，复染其牍为「甲」色。<br>若甲格  为「空」色，乙格不为「空」色，牍为「丙」色，则涂甲格为「空」色，涂乙格为  原  色，甲「暂止以待」，乙「东」进一格，复染其牍为「丙」色。<br>若甲格  为「空」色，乙格  为「空」色，牍为「丁」色，则涂甲格为「空」色，涂乙格为「空」色，甲「东」进一格，乙「暂止以待」，复染其牍为「戊」色。<br>若甲格  为「空」色，乙格  为「甲」色，牍为「丁」色，则涂甲格为「甲」色，涂乙格为「空」色，甲「西」进一格，乙「西」进一格，复染其牍为「丁」色。<br>若甲格  为「空」色，乙格  为「乙」色，牍为「丁」色，则涂甲格为「乙」色，涂乙格为「空」色，甲「西」进一格，乙「西」进一格，复染其牍为「丁」色。<br>若甲格  为「空」色，乙格  为「乙」色，牍为「戊」色，则涂甲格为「空」色，涂乙格为「乙」色，甲「暂止以待」，乙「暂止以待」，继而「凝立不复动」。<br>若甲格不为「空」色，乙格  为「空」色，牍为「戊」色，则涂甲格为「空」色，涂乙格为「甲」色，甲「东」进一格，乙「暂止以待」，复染其牍为「戊」色。<br>若甲格不为「空」色，乙格  为「甲」色，牍为「戊」色，则涂甲格为「空」色，涂乙格为「乙」色，甲「东」进一格，乙「暂止以待」，复染其牍为「戊」色。<br>若甲格不为「空」色，乙格  为「乙」色，牍为「戊」色，则涂甲格为「空」色，涂乙格为「甲」色，甲「东」进一格，乙「西」进一格，复染其牍为「己」色。<br>若甲格不为「丙」色，乙格  为「空」色，牍为「己」色，则涂甲格为  原  色，涂乙格为「乙」色，甲「暂止以待」，乙「东」进一格，复染其牍为「庚」色。<br>若甲格不为「丙」色，乙格  为「甲」色，牍为「己」色，则涂甲格为  原  色，涂乙格为「乙」色，甲「暂止以待」，乙「西」进一格，复染其牍为「庚」色。<br>若甲格不为「丙」色，乙格  为「乙」色，牍为「己」色，则涂甲格为  原  色，涂乙格为「甲」色，甲「暂止以待」，乙「西」进一格，复染其牍为「己」色。<br>若甲格  为「空」色，乙格  为「空」色，牍为「庚」色，则涂甲格为「空」色，涂乙格为「空」色，甲「暂止以待」，乙「西」进一格，继而「凝立不复动」。<br>若甲格  为「空」色，乙格不为「空」色，牍为「庚」色，则涂甲格为「空」色，涂乙格为  原  色，甲「暂止以待」，乙「东」进一格，复染其牍为「庚」色。<br>若甲格不为「空」色，乙格  为「空」色，牍为「庚」色，则涂甲格为  原  色，涂乙格为「空」色，甲「暂止以待」，乙「西」进一格，复染其牍为「戊」色。<br>若甲格不为「空」色，乙格不为「空」色，牍为「庚」色，则涂甲格为  原  色，涂乙格为  原  色，甲「暂止以待」，乙「东」进一格，复染其牍为「庚」色。<br>注：文中「格」为人所立之格，「牍」为甲手持之牍。<br><br>问：结束的时候，乙所在长廊的「乙」色格子共有多少个？<br>提取方式：应该得到一个 6 位数，每两位 A1Z26 一次，得到 3 个字母。<br>",
+                    "hints": [
+                        {
+                            "id": 1,
+                            "title" :  "我毫无头绪。", 
+                            "content": "搜索标题的人名试试？",
+                            "cost": 500
+                        },
+                        {
+                            "id": 2,
+                            "title" : "我想知道一些解决这类题目的技巧。", 
+                            "content": "先试着研究指令列表在做什么操作，再根据题目所给数据进行计算。",
+                            "cost": 800
+                        },
+                        {
+                            "id": 3,
+                            "title" : "我想知道一些解决较复杂计算的工具。", 
+                            "content": "你可以使用 Mathematica 或 Maple 等较高级计算器，搜索网页上的计算器，或使用 AI 工具编写程序进行计算。第一种方式最推荐，第三种方式只适合处理一些简单的、普通计算器无法处理的问题，并且有出错的可能。",
+                            "cost": 800
+                        },
+                        {
+                            "id": 4,
+                            "title" : "第 1 小题的公式是什么？", 
+                            "content": "若初始有n个乙色格子，则步数为3n^2+5n+1。",
+                            "cost": 1000
+                        },
+                        {
+                            "id": 5,
+                            "title" : "第 2 小题的八个人分别在做什么？", 
+                            "content": "甲：存储坐标；乙：存储函数值；丙：递归调用栈，存储坐标；丁：递归调用栈，存储状态（0为刚开始，1为计算函数的某个部分，2为计算函数的另一个部分）；戊：栈元素计数器变量；己：当前处理元素状态变量；庚、辛：临时变量。",
+                            "cost": 1000
+                        },
+                        {
+                            "id": 6,
+                            "title" : "第 2 小题在计算什么？", 
+                            "content": "一个函数f(x)，若x<0则f(x)=-x，否则f(x)=f(x-f(x-1))/2，题目计算的是1/f(3)。",
+                            "cost": 2000
+                        },
+                        {
+                            "id": 7,
+                            "title" : "我知道第 2 小题在进行什么操作了，但我无法完成计算。我想知道它是什么领域的东西。", 
+                            "content": "大数学（Googology）与集合论。",
+                            "cost": 800
+                        },
+                        {
+                            "id": 8,
+                            "title" : "我需要能直接搜索到的第 2 小题所计算东西的名称。", 
+                            "content": "题目中计算的函数叫做伪燃烧函数。",
+                            "cost": 4000
+                        },
+                        {
+                            "id": 9,
+                            "title" : "我想知道关于第 3 小题的一个关键操作。", 
+                            "content": "将甲所在位置的非空格子改为空，并在乙所在长廊上将计数器加一。计数器使用二进制计数，甲色对应0，乙色对应1。",
+                            "cost": 2000
+                        },
+                        {
+                            "id": 10,
+                            "title" : "第 3 小题的公式是什么？", 
+                            "content": "设初始甲纸带上连续非空格子的长度为n，则乙所在长廊（计数器）上的数字为floor(log2(n))，其中floor为向下取整。计数器使用二进制计数，甲色对应0，乙色对应1。",
+                            "cost": 4000
+                        }  
+                    ],
+                    "milestone": [
+                        {"id": 1, "content" : "19382833601900000", "response" : "参考示例，最后一步也要算哦！"},
+                        {"id": 2, "content" : "19382833601900001", "response" : "这是小题数字答案之一！"},
+                        {"id": 3, "content" : "2^1541023937", "response" : "这是小题数字答案之一！"},
+                        {"id": 4, "content" : "3*10^103259", "response" : "这是小题中间答案之一！"},
+                        {"id": 5, "content" : "120118", "response" : "这是小题数字答案之一！"},
+                        {"id": 6, "content" : "s", "response" : "这是小题答案之一！"},
+                        {"id": 7, "content" : "cho", "response" : "这是小题答案之一！"},
+                        {"id": 8, "content" : "lar", "response" : "这是小题答案之一！"}
+                    ],
+                    "answer": "SCHOLAR",
+                    "analysis": "这是图灵机。    <br>第一小题模拟即可。设初始乙色格子数为n，不难算出步数为3n^2+5n+1（当然也可以转换成图灵机的格式直接扔给 AI），代入n=80380000得步数为19382833601900001，提取前两位A1Z26得到s。    <br>第二小题是实数轴上的“图灵机”（不是经典图灵机，而是类似一种叫做Blum-Shub-Smale的东西）。八个人做的事分别如下：甲：存储坐标；乙：存储函数值；丙：递归调用栈，存储坐标；丁：递归调用栈，存储状态（状态0为刚开始，1为f(x-1)，2为计算f(x-f(x-1))）；戊：栈元素计数器变量；己：当前处理元素状态变量；庚、辛：临时变量。    <br>得到一个函数f(x)，若x<0则f(x)=-x，否则f(x)=f(x-f(x-1))/2，题目计算的是1/f(3)。    <br>然而递归几次你会发现几乎算不出来，搜索到这个函数叫做伪燃烧函数，f(3)的值为2^(-1541023937)，计算过程过于复杂，此处不展示，有兴趣的可以去看知乎专栏https://www.zhihu.com/column/c_1909357362600481699    <br>（亲测在不提供领域等信息的前提下 ChatGPT5 Thinking 能够搜索到这个函数，仅提示了这是一个有名字的函数）    <br>然后就可以提取了。Mathematica 什么的计算器可以用 PowerMod 算，也可以自己或者让 AI 写程序（会比较麻烦，但是实测 manus 能算出来），得到要求的那六位是030815，A1Z26得到cho。    <br>第三小题进行了这样的操作：    <br>1.从头开始把甲纸带上面的非空格子涂掉，一直到末尾，在乙纸带上用二进制计数涂掉的格子数量，甲色对应0，乙色对应1    <br>2.计数完成后把乙纸带上的计数器复制到甲纸带上    <br>3.和1一样的操作    <br>从得出的操作不难看出来，1计算的是初始甲纸带上连续非空格子的长度，3计算的就是1计算出来长度的二进制的长度，所以如果1计算出来是n，则最终答案是floor(log2(n))，其中floor为向下取整。（这题也可以直接用较小的数模拟后找规律，比手推操作快很多）    <br>代入题中n，得到这一步答案是3*10^103259，问的是乙色格子数量，也就是这个数二进制中1的数量，使用 Mathematica 的 DigitCount 函数即可计算，答案是120118，A1Z26 得到 lar。    <br>三个小题的答案连起来得到 <b style=\"color: red\">SCHOLAR</b>。    <br>    <br>    <br>提取的Mathematica程序（可在 https://www.wolframalpha.com 在线运行）    <br>DigitCount[3*10^103259,2,1]<br>    <br>IntegerDigits[PowerMod[2,1541023937,10^108576]][[1;;5]]    <br>实测Deepseek可以生成这两段程序<br>"
+                }
+
+            ]
+        },
+
+        {
+        "id": 5,
+        "name": "孤岛",
+        "image": "5.jpg",
+        "news_description": " ",
+        "news_img" : "https://mmbiz.qpic.cn/mmbiz_jpg/x0lwngPKUjjlMxe1xgfO5RbgkGeCWsaFibVFMZa02gjzJvPeJL6HHPyz3DxqJTwZRGrYHJcnwwic3fM1YhLYUa9Q/640?wx_fmt=jpeg&from=appmsg",
+        "news_url" : "https://mp.weixin.qq.com/s/M_ROh2KFLpgfPdFSyfTuUg",
+        "puzzle_count": 1,
+        "count_demand": 1,
+        "story":"bling bling……<br><br>“Aby你看天花板上那两颗星星是不是一直在闪啊！”<br><br>“好像指向了一个位置，我过去看看。”<br><br>“——哦！这开了一道暗格！”Abyss发出了略带惊喜的语气。<br><br><img src=\"./img/board4.png\" style=\"padding: 0 180px\"/><br><br>“<b>又一块板子？</b>”Cryst已经有些无感了。<br><br>“不止哦——”<br><br>Abyss和Cryst同时一惊，这是那位神秘人的声音，这次她们终于听到清晰的声音了，是一种平和的女声。<br><br>“——啊，当然这个格子里只有这个了……不过这就是最后一块了。Abyss和Cryst……没记错吧？辛苦了，请二位回到教堂吧，也不用火急火燎地赶过去了，在我的干涉下快点慢点都一样的。之前真是抱歉一直没来得及说……”<br><br>“叮咚——！”电梯门敞开。<br><br>“那……”“走。”<br><br>“呼——刚刚上电梯的时候满脑子都是不要出事。”放松下来的Cryst索性一屁股坐在角落靠着念叨起来，“Aby？你说她说的‘干涉’是什么意思啊……”<br><br>“——就是字面意思哦……”<br><br>“不好意思，”Abyss低声喝止，“在好闺蜜之间说悄悄话时请不要随意打断，谢谢。”<br><br>“啊——抱……抱歉，实在是太久没聊过了嘛……现在不再多说一点……”<br><br>“打住！不就是想交朋友吗！”Cryst一下就听出了言外之意，“起码不能总让我们称呼你‘神秘人’吧？”<br><br>“……霙（yīng），上面一个下雨的‘雨’，下面一个英语的‘英’——还是忘不掉啊……”<br><br>“为什么要忘掉，有我们记着……”Cryst重新站了起来。<br><br>两人没有听到回应，但直觉告诉她们霙是开心的。<br><br>“这不好吗？啊！！！！！！”电梯内的二人瞬间粘在了一起。<br><br>电梯毫无预兆地急坠——<br><br>“？！”<br><br>在坠毁前一刻，电梯停下了。<br><br>“这个这个！真的不是我……真的，抱歉。”<br><br>Abyss和Cryst加紧往教堂赶。<br><br>熟悉的月光，熟悉的钟身，新现的天幕。<br><br>“变……变了？”“变了啊……”<br><br>“嗯……从天幕透过来的月光投到了正中心，我们试着做点什么吧。”<br>",
+        "puzzle":[
+                {
+                    "id": 1,
+                    "name": "孤岛",
+                    "description": "<b><i>时间，真理，神明，宇宙……<br>当这些超越维度的存在暗涌交织，汇聚于这座孤绝之地，所谓“孤岛”的真相，原来是……</b></i>",
+                    "hints": [
+                        {
+                            "id": 1,
+                            "title" :  "我该如何处理小题答案？", 
+                            "content": "填入符文板。",
+                            "cost": 5000
+                        },
+                        {
+                            "id": 2,
+                            "title" : "我已经对小题答案进行了处理，但还是不知道下一步该怎么做。", 
+                            "content": "尝试把符文板叠起来。",
+                            "cost": 10000
+                        },
+                        {
+                            "id": 3,
+                            "title" : "该如何提取？", 
+                            "content": "提取不与其他字母相邻处的字母。",
+                            "cost": 10000
+                        },
+                        {
+                            "id": 4,
+                            "title" : "我在进行操作后发现较为混乱，难以提取，是忽略了什么信息？", 
+                            "content": "每个折点都位于一个18*18网格中每个小格的正中心。",
+                            "cost": 5000
+                        }
+                    ],
+                    "milestone": [
+                        
+                    ] ,
+                    "answer": "RECAPTURE THE ETERNITY CORE",
+                    "analysis": "先把小题答案填入符文板：<br><img src=\"./img/puzzle/5/1a_1.png\"><br><img src=\"./img/puzzle/5/1a_2.png\"><br><img src=\"./img/puzzle/5/1a_3.png\"><br><img src=\"./img/puzzle/5/1a_4.png\"><br>把四张图重合得到：<br><img src=\"./img/puzzle/5/1a_5.png\">提取”孤岛“处的字母，得到答案<b style=\"color: red\">RECAPTURE THE ETERNITY CORE</b>。"
+                }
+            ]
+        },  
+    
+        {
+        "id": 6,
+        "name": "尾声",
+        "image": "6.jpg",
+        "news_description": " ",
+        "news_img" : "https://mmbiz.qpic.cn/mmbiz_jpg/x0lwngPKUjhAM2znz4WG9pyqHzLib4IaeuFuicC1ygfdPp52CsiaNpFpqgvsW4q8gXmVBoyU2O4rxcibiaFyDwtbvzQ/640?wx_fmt=jpeg&amp;from=appmsg",
+        "news_url" : "https://mp.weixin.qq.com/s/K80qJwfiPJvgZ6HctvVaVQ",
+        "puzzle_count": 0,
+        "count_demand": 0,
+        "story":"符文板叠在一起，月光下洒，穿过了第一板块——准确来说是让其透明——然后是第二板块、第三板块……最终，每块板上不同位置的字母显现在同一平面上了。<br><br>“现在去那条密道里吧，门开了。”<br><br>“啪嗒、啪嗒”，这是Cryst的脚步。<br><br>“咔、咔”，这是Abyss的脚步。<br><br>二人来到半掩的门前，跓足，抬手。<br><br>一抹蓝色蝴蝶从手隙飞过。再抬眼，流光漫溢，蝶翼轻振，碎光铺满周身。同时，一个人影飞扑过来……<br><br>“A!by——ss！Cry——sttt！”<br><br>一名身穿白色连衣裙的少女挽住了两人的手臂，大声喊出了她们的名字，可正是这似曾相识的嗓音，令二人感到惊讶。<br><br>“霙？”<br><br>“霙！”<br><br>“嗯嗯！”霙松开双手，转身弹去了眼角的泪水，表情因突然的举动而略显难堪，可笑容却又和世上所有感到幸福的人一样，是如此天真烂漫。<br><br>这种童真的感觉很快让Cryst感到亲近：“霙，难道你就一直在这个小房间里吗？”<br><br>“没有的事啦！在一个地方待久了，总会变的。”<br><br>“……那么，这座教堂存在多少年了？”Abyss冷冰冰地打断了对话，这让Cryst疑惑地歪着头。霙收回了些许笑意，嘴巴一张一合：“一个世纪了。”<br><br>“Aby？”<br><br>Cryst的衣角被揪住，她有些僵住的双腿被迫向后拖开，与地面发出摩擦声响，似是一道分界线。<br><br>Abyss继续向对面的身形质问：“我们已经一步一步来到了你的面前，想逃也出不去了，这已经是我对一个陌生人的极限了。我很不想打起来，特别是刚刚才结识的朋友——所以朋友，你是什么身份？到底想做什么？”<br><br>霙手无寸铁，双手交叠于身前，手臂下沉却未完全压低，微抬着让交叠的手立在那里，指尖相扣的力道悄然收紧，既无进攻的姿态，也没露出半分退缩的意味，只是静静迎着Abyss的质问。<br><br>“总之，你想知道答案……我敢保证，这是最后一个谜团了——「探索者」Abyss、「探索者」Cryst，我是「探索者」霙……我马上就把永恒核心给你们。”<br><br>？！<br><br>？？！！<br><br>“啊……”<br><br>“你是永恒核心守护者？！”<br><br>“欸嘿，果然头衔还是从别人口中蹦出来才不会尴尬。”<br><br>Abyss反应过来霙是前辈的事实，心中疑问少了些，可却有一股无名火伴随着疑虑冲了上来。她一个箭步冲上去抓紧霙的衣领——<br><br>“那为什么不早说啊！”<br><br>“为什么要创造这个领域！”<br><br>“为什么既想交朋友却又隐瞒朋友？”<br><br>“为什么你们守护者都这么有距离感？”<br><br>“为什么我总是琢磨不透守护者的想法……”<br><br>Abyss的手无力地下垂，碰到了一只粉嫩的小手，被握住了。<br><br>“Cryst？”<br><br>对哦……为什么在听到“守护者”这个词后就愣在原地了？平常不是最崇拜尊敬他们了吗？<br><br>“Aby，你还记得我意外闯入禁书库那一次吗？”<br><br>“……啊？你……你看到了什么？”<br><br>Cryst抬起眼，正好和霙的眼神对撞。前者眼中满是不解，后者后退一步，替后辈道出了真相。<br><br>“永恒核心守护者将永恒核心融入体内，不死不灭。但若取出……”原先的少女声线突然变得低沉、沙哑，五官也逐渐凑在一起，拼出数条皱纹，“其身形将化为乌有，相关的一切都会被抹除，不再存在于任何人的记忆之中。”霙的老婆婆苦瓜脸又瞬间回到了青春洋溢的少女羞涩脸。“毕竟永恒的本质是记忆啊。而且Abyss，你说的对，我的精神思维早就被消磨殆尽了。本来我应该在长久的历练中步步登天的，可琢磨了这么久也只是搞出这场不影响平民百姓的领域而已，连攻击都不会了，真失败啊……”<br><br>哪怕是自责、是愧疚，霙脸上的笑容也未曾削减半分，也许这就是她仅存的永恒吧。<br><br>“好啦！我的使命可以结束了！”霙不等两小只回应便独自解开发束，捋顺长发，向空中一甩，唤起蝶翼闪闪。只一瞬，无数蓝花细石化为一蝶又一蝶，按既定的轨迹飞扑向霙的手心，流光溢彩。<br><br>片刻，蝶散，人将终。<br><br>“给……”已经站不住脚跟的霙交出了她守护一生的命运。<br><br>一切发生的太快，明明还想再多陪陪，明明还没为刚刚的失礼而赔不是，明明……明明才刚开始做朋友……<br><br>“谢谢前辈，辛苦了，霙。”<br><br>在Abyss机械地伸出手抱住核心的同一时间，石砖碎成渣滓，蝴蝶化作斋粉，她连忙抓住Cryst的手，向外逃散。<br><br>与死亡共舞的永恒之人，终于放慢了脚步，“扑通”一声落入它怀。<br><br>在霙彻底消散的前一秒，Cryst回了一次头，和霙的视线相撞，看到了永生难忘却不得不忘的一幕——<br><br>皮毛分解，血肉消融，筋骨粉碎。这一切仅仅发生在数秒之内。<br><br>“再……”<br><br>Abyss带着Cryst一个飞跃冲回了教堂，楼梯口被掩埋了。<br><br>“果然和我想的一样，这里面就是存放永恒核心的位置。”Abyss长吁一口气，擦了一下额头上的汗，“而且费尽心思解开了这么多谜题，最后还要放一道体力陷阱吗？真是恶趣味——Cryst？你……你怎么哭了？”<br><br>Cryst这才反应过来自己眼角挂着泪水，经Abyss这么一问便倾洪而下。可她没有抽泣，也没有哭声，就是呆呆地站着，任凭泪水滴落。<br><br>“Aby，我们刚刚好像……失去了一位很重要的朋友。”<br><br><br><br>永恒核心在二人手上发光，给予她们“星韵”的祝福。在永恒核心旁边的桌子上还有一张地图。<br><br>“看起来这就是下一个目的地了……”Abyss拿起地图，一边说一边沉思着。<br><br>与此同时，另一边——<br><br>“怎么可能……”她单膝跪在冰面上，盯着眼前那个“神”……<br><br>神微笑着，向她走来……<br>",
+        "puzzle":[
+
+            ]
+        }      
+    ]
+
+
+}

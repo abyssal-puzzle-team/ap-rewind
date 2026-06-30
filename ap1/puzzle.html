@@ -362,7 +362,7 @@
         </div>
     </div>
 
-    <script>
+    <script src="puzzle_data.js">
         (function() {
             const params = new URLSearchParams(window.location.search);
             const chapterId = parseInt(params.get('chapter'));
@@ -398,7 +398,7 @@
             async function init() {
                 let data;
                 try {
-                    const res = await fetch('puzzle_info.json');
+                    const data = puzzleData;
                     data = await res.json();
                 } catch(e) {
                     document.getElementById('mainContent').innerHTML = '<p style="text-align:center;color:#c62828;">数据加载失败，请确认 puzzle_info.json 存在。</p>';

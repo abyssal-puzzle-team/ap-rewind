@@ -198,7 +198,7 @@
     <div class="container" id="mainContent">
         <p style="text-align:center;padding:60px;color:#999;">加载中...</p>
     </div>
-    <script>
+    <script src="puzzle_data.js">
         (function() {
             const toast = document.getElementById('toast');
             function showToast(msg, type='info') {
@@ -211,7 +211,7 @@
             }
             async function loadData() {
                 try {
-                    const res = await fetch('puzzle_info.json');
+                    const data = puzzleData;
                     if (!res.ok) throw new Error('加载失败');
                     return await res.json();
                 } catch (e) {

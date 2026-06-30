@@ -211,7 +211,7 @@
         <p style="text-align:center;color:#999;padding:60px;">加载中...</p>
     </div>
 
-    <script>
+    <script src="puzzle_data.js">
         (function() {
             const params = new URLSearchParams(window.location.search);
             const chapterId = parseInt(params.get('id'));
@@ -227,7 +227,7 @@
             async function init() {
                 let data;
                 try {
-                    const res = await fetch('puzzle_info.json');
+                    const data = puzzleData;
                     data = await res.json();
                 } catch (e) {
                     mainEl.innerHTML = '<p style="text-align:center;color:#c62828;">数据加载失败。</p>';
