@@ -216,23 +216,100 @@
         (function() {
             const params = new URLSearchParams(window.location.search);
             const chapterId = parseInt(params.get('id'));
-            // ... 省略参数检查 ...
+            if (!chapterId) {
+                document.getElementById('mainContent').innerHTML = '<p style="text-align:center;color:#c62828;padding:60px;">缺少章节参数。</p>';
+                return;
+            }
 
+            // 隐藏元素引用
             const headerEl = document.getElementById('headerContainer');
             const mainEl = document.getElementById('mainContent');
 
             async function init() {
-                const data = puzzleData;  // 直接使用
-                if (!data || !data.chapters) {
-                    mainEl.innerHTML = '<p style="text-align:center;color:#c62828;">数据加载失败。</p>';
+                const data = puzzleData;
+                
+                const chapter = data.chapters.find(c => c.id === chapterId);
+                if (!chapter) {
+                    mainEl.innerHTML = '<p style="text-align:center;color:#c62828;">章节未找到。</p>';
                     mainEl.classList.remove('hidden-init');
                     mainEl.classList.add('visible-init');
                     return;
                 }
 
-                const chapter = data.chapters.find(c => c.id === chapterId);
-                // ... 后续不变，但请删除原来的 try-catch 中对 fetch 的引用 ...
+                // 设置头部信息
+                document.getElementById('headerTitle').textContent = '#' + chapter.id + ' ' + chapter.name;
+                document.getElementById('headerSubtitle').textContent = chapter.puzzle_count + ' 道谜题';
+
+                const headerImg = document.getElementById('headerImg');
+                headerImg.src = 'img/' + (chapter.image || 'placeholder.png');
+                headerImg.onerror = () => {
+                    headerImg.style.display = 'none';
+                    document.getElementById('headerContainer').style.background = 'linear-gradient(135deg, #3a2f28, #5a3e2b)';
+                };
+
+                // 构建内容
+                let html = '';
+                html += '<div class="story-box">';
+                html += '<h2>【剧情】</h2>';
+                const story = chapter.story || chapter.news_description || '';
+                if (story.trim()) {
+                    html += story;
+                } else {
+                    html += '<p style="color:#999;font-style:italic;">剧情内容待补充……</p>';
+                }
+                if (chapter.news_url) {
+                    html += '<p style="margin-top:12px;text-indent:0;"><a href="' + chapter.news_url + '" target="_blank" style="color:#8b4513;">原始文章</a></p>';
+                }
+                html += '</div>';
+
+                html += '<div class="topic-list" id="topic-list">';
+                html += '<h2>【谜题】</h2><ul>';
+                chapter.puzzle.forEach(p => {
+                    html += '<li><a href="puzzle.html?chapter=' + chapterId + '&puzzle=' + p.id + '">' + p.name + '</a></li>';
+                });
+                html += '</ul></div>';
+
+                mainEl.innerHTML = html;
+
+                // 收集页面内所有图片（包括header背景图）
+                const allImages = document.querySelectorAll('img');
+                const imageLoadPromises = Array.from(allImages).map(img => {
+                    return new Promise((resolve) => {
+                        if (!img.src || img.src.startsWith('data:')) {
+                            resolve();
+                            return;
+                        }
+                        if (img.complete) {
+                            resolve();
+                        } else {
+                            img.onload = () => resolve();
+                            img.onerror = () => resolve();
+                        }
+                    });
+                });
+
+                // 最多等待 5 秒
+                const timeout = new Promise(resolve => setTimeout(resolve, 5000));
+                await Promise.race([Promise.all(imageLoadPromises), timeout]);
+
+                // 滚动到锚点（无动画，避免二次跳动）
+                if (window.location.hash) {
+                    const target = document.querySelector(window.location.hash);
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop,
+                            behavior: 'instant'
+                        });
+                    }
+                }
+
+                // 显示所有内容
+                headerEl.classList.remove('hidden-init');
+                headerEl.classList.add('visible-init');
+                mainEl.classList.remove('hidden-init');
+                mainEl.classList.add('visible-init');
             }
+
             init();
         })();
     </script>
