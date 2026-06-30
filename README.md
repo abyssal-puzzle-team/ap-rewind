@@ -4,13 +4,13 @@
 
 目前已添加的往期内容：
 
-- Abyssal Puzzle 1
-- Abyssal Puzzle 2 [源仓库](https://github.com/abyssal-puzzle-team/Abyssal)
-- Abyssal Puzzle 3 [源仓库](https://github.com/abyssal-puzzle-team/abyssal3)
+- Abyssal Puzzle
+- Legacy 1
+- Legacy 2 [源仓库](https://github.com/abyssal-puzzle-team/Abyssal)
+- Legacy 3 [源仓库](https://github.com/abyssal-puzzle-team/abyssal3)
 
 # Todo
 
-- 添加Abyssal Puzzle 4
 - 优化手机端布局
 
 # Licenses

@@ -110,19 +110,19 @@
         <a href="https://abyssal-puzzle.top" target="_blank">主页</a>
         <a href="https://github.com/abyssal-puzzle-team/ap-rewind" target="_blank">GitHub</a>
         <div class="dropdown">
-            <button class="dropbtn" onclick="toggleDropdown()">OLD ▾</button>
-            <div id="oldDropdown" class="dropdown-content">
-                <a href="./old/one">OLD 1</a>
-                <a href="./old/two">OLD 2</a>
-                <a href="./old/three">OLD 3</a>
-                <a href="./old/four">OLD 4</a>
+            <button class="dropbtn" onclick="toggleDropdown()">Legacy ▾</button>
+            <div id="LegacyDropdown" class="dropdown-content">
+                <a href="./Legacy/one">Legacy 1</a>
+                <a href="./Legacy/two">Legacy 2</a>
+                <a href="./Legacy/three">Legacy 3</a>
+                <a href="./Legacy/four">Legacy 4</a>
             </div>
         </div>
     </div>
 
     <script>
         function toggleDropdown() {
-            document.getElementById("oldDropdown").classList.toggle("show");
+            document.getElementById("LegacyDropdown").classList.toggle("show");
         }
         window.onclick = function(event) {
             if (!event.target.matches('.dropbtn')) {
