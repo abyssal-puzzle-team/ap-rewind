@@ -7,11 +7,10 @@
 - Abyssal Puzzle 1
 - Abyssal Puzzle 2 [源仓库](https://github.com/abyssal-puzzle-team/Abyssal)
 - Abyssal Puzzle 3 [源仓库](https://github.com/abyssal-puzzle-team/abyssal3)
-- Abyssal Puzzle 4  [源仓库](https://github.com/abyssal-puzzle-team/abyssal-puzzle4)
+- Abyssal Puzzle 4 [源仓库](https://github.com/abyssal-puzzle-team/abyssal-puzzle4)
 
 # Todo
 
-- 添加Abyssal Puzzle 4
 - 优化手机端布局
 
 # Licenses
